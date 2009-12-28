@@ -45,7 +45,7 @@ class _rex488_BackendCategories extends _rex488_BackendBase implements _rex488_B
   }
 
   /*
-   * add
+   * write
    *
    * liefert die kategorien der aktuellen parent zurück
    *
