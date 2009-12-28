@@ -41,35 +41,35 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
     {
       if($value['parent'] === 0)
       {
-	if($value['id'] == parent::$category_id)
-	{
-	  $selector = ' class="current"';
-	} else if(is_array(self::$parents) && in_array($value['id'], self::$parents) === true)
-	{
-	  $selector = ' class="parent"';
-	} else
-	{
-	  $selector = '';
-	}
+        if($value['id'] == parent::$category_id)
+        {
+          $selector = ' class="current"';
+        } else if(is_array(self::$parents) && in_array($value['id'], self::$parents) === true)
+        {
+          $selector = ' class="parent"';
+        } else
+        {
+          $selector = '';
+        }
 
-	// open the list tag
+        // open the list tag
 
-	self::$categories .= '<li>';
+        self::$categories .= '<li>';
 
-	// create the link element with its corresponding configuration
+        // create the link element with its corresponding configuration
 
-	self::$categories .= _rex488_FrontendCategory::format_category($value, $selector, $show_post_count);
+        self::$categories .= _rex488_FrontendCategory::format_category($value, $selector, $show_post_count);
 
-	// if possible, fetch the children of the current category
+        // if possible, fetch the children of the current category
 
-	if($value['children'] > 0 && (self::$parents[$key] == $value['id'] || $opener === true))
-	{
-	  self::get_children($value['id'], $opener, $show_post_count);
-	}
+        if($value['children'] > 0 && (self::$parents[$key] == $value['id'] || $opener === true))
+        {
+          self::get_children($value['id'], $opener, $show_post_count);
+        }
 
-	// close the list tag
+        // close the list tag
 
-	self::$categories .= '</li>' . "\n";
+        self::$categories .= '</li>' . "\n";
       }
     }
 
@@ -97,26 +97,26 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
     {
       if($value['parent'] == $id)
       {
-	if($value['id'] == parent::$category_id)
-	{
-	  $selector = ' class="current"';
-	} else if(is_array(self::$parents) && in_array($value['id'], self::$parents) === true)
-	{
-	  $selector = ' class="parent"';
-	} else
-	{
-	  $selector = '';
-	}
+        if($value['id'] == parent::$category_id)
+        {
+          $selector = ' class="current"';
+        } else if(is_array(self::$parents) && in_array($value['id'], self::$parents) === true)
+        {
+          $selector = ' class="parent"';
+        } else
+        {
+          $selector = '';
+        }
 
-	self::$categories .= '<li>';
-	self::$categories .= _rex488_FrontendCategory::format_category($value, $selector, $show_post_count);
+        self::$categories .= '<li>';
+        self::$categories .= _rex488_FrontendCategory::format_category($value, $selector, $show_post_count);
 
-	if($value['children'] > 0 && (self::$parents[$key] == $value['id'] || $opener == true))
-	{
-	  self::get_children($value['id'], $opener, $show_post_count);
-	}
+        if($value['children'] > 0 && (self::$parents[$key] == $value['id'] || $opener == true))
+        {
+          self::get_children($value['id'], $opener, $show_post_count);
+        }
 
-	self::$categories .= '</li>' . "\n";
+        self::$categories .= '</li>' . "\n";
       }
     }
 
@@ -141,12 +141,12 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
     {
       if($key == $id)
       {
-	self::$parents[$key] = $id;
+        self::$parents[$key] = $id;
 
-	if($id > 0)
-	{
-	  self::get_parents($value['parent']);
-	}
+        if($id > 0)
+        {
+          self::get_parents($value['parent']);
+        }
       }
     }
   }
