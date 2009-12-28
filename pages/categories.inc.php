@@ -49,13 +49,9 @@ $categories = _rex488_BackendCategories::read();
 		{
 	?>
 		<tr id="rex-category-<?php echo $category['id']; ?>">
-			<td class="rex-icon"><a
-				href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>">
-			<span class="rex-i-element rex-i-category"> <span
-				class="rex-i-element-text">Editieren</span> </span> </a></td>
+			<td class="rex-icon"><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>"><span class="rex-i-element rex-i-category"><span class="rex-i-element-text">Editieren</span></span></a></td>
 			<td><?php echo $category['id']; ?></td>
-			<td><a
-				href="index.php?page=rexblog&subpage=categories&parent=<?php echo $category['id']; ?>"><?php echo $category['name']; ?></a></td>
+			<td><a href="index.php?page=rexblog&subpage=categories&parent=<?php echo $category['id']; ?>"><?php echo $category['name']; ?></a></td>
 			<td class="priority-handle"></td>
 			<td><a href="#">ändern</a></td>
 			<td><a href="#">löschen</a></td>
