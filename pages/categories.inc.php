@@ -59,8 +59,7 @@ $categories = _rex488_BackendCategories::read();
         </tr>
         <?php
           }
-        } else
-        {
+        } else {
         ?>
         <tr>
           <td colspan="7" align="center">
