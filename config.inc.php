@@ -20,7 +20,7 @@ define('_rex488_PATH', $REX['INCLUDE_PATH'] . '/addons/rexblog/');
 // Sprach-Konfiguration
 
 if($REX['REDAXO'])
-	$I18N->appendFile(dirname(__FILE__) . '/lang/');
+$I18N->appendFile(dirname(__FILE__) . '/lang/');
 
 // Addon-Konfiguration
 
@@ -67,7 +67,7 @@ function __autoload($classname) {
 // Subpages definieren
 
 $REX['ADDON']['rexblog']['SUBPAGES'] = array(
-	array('categories', 'Kategorien', '', array('clang' => $REX['CUR_CLANG']))
+array('categories', 'Kategorien', '', array('clang' => $REX['CUR_CLANG']))
 );
 
 ?>
