@@ -47,21 +47,21 @@ $REX['PERM'][] = "rexblog[]";
 function _rex488_autoload($params)
 {
   static $classes = array(
-  '_rex488_BackendBase'               => 'backend/class.backend.base.php',
-  '_rex488_BackendCache'              => 'backend/class.backend.cache.php',
-  '_rex488_BackendException'          => 'backend/class.backend.exception.php',
-  '_rex488_BackendCategoryInterface'  => 'backend/interface/interface.backend.categories.php',
-  '_rex488_BackendPost'               => 'backend/class.backend.post.php',
-  '_rex488_BackendCategories'         => 'backend/class.backend.categories.php',
-  '_rex488_FrontendBase'              => 'frontend/class.frontend.base.php',
-  '_rex488_FrontendDesignator'        => 'frontend/class.frontend.designator.php',
-  '_rex488_FrontendCategories'        => 'frontend/class.frontend.categories.php',
-  '_rex488_FrontendCategory'          => 'frontend/class.frontend.category.php',
-  '_rex488_FrontendMetadata'          => 'frontend/class.frontend.metadata.php',
-  '_rex488_FrontendMetadataCategory'  => 'frontend/class.frontend.metadata.category.php',
-  '_rex488_FrontendMetadataPost'      => 'frontend/class.frontend.metadata.post.php',
-  '_rex488_FrontendPost'              => 'frontend/class.frontend.post.php',
-  '_rex488_FrontendPagination'        => 'frontend/class.frontend.pagination.php',
+    '_rex488_BackendBase'               => 'backend/class.backend.base.php',
+    '_rex488_BackendCache'              => 'backend/class.backend.cache.php',
+    '_rex488_BackendException'          => 'backend/class.backend.exception.php',
+    '_rex488_BackendCategoryInterface'  => 'backend/interface/interface.backend.categories.php',
+    '_rex488_BackendPost'               => 'backend/class.backend.post.php',
+    '_rex488_BackendCategories'         => 'backend/class.backend.categories.php',
+    '_rex488_FrontendBase'              => 'frontend/class.frontend.base.php',
+    '_rex488_FrontendDesignator'        => 'frontend/class.frontend.designator.php',
+    '_rex488_FrontendCategories'        => 'frontend/class.frontend.categories.php',
+    '_rex488_FrontendCategory'          => 'frontend/class.frontend.category.php',
+    '_rex488_FrontendMetadata'          => 'frontend/class.frontend.metadata.php',
+    '_rex488_FrontendMetadataCategory'  => 'frontend/class.frontend.metadata.category.php',
+    '_rex488_FrontendMetadataPost'      => 'frontend/class.frontend.metadata.post.php',
+    '_rex488_FrontendPost'              => 'frontend/class.frontend.post.php',
+    '_rex488_FrontendPagination'        => 'frontend/class.frontend.pagination.php',
   );
 
   $classname = $params['subject'];
