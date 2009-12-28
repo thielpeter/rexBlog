@@ -13,13 +13,9 @@
 
 _rex488_BackendBase::get_instance();
 
-// read categories from current $parent
+// read categories from current parent
 
-$categories = _rex488_BackendCategories::read($parent);
-
-// write cache while in development
-
-//_rex488_BackendCache::write_category_cache();
+$categories = _rex488_BackendCategories::read();
 
 ?>
 
@@ -72,7 +68,7 @@ $categories = _rex488_BackendCategories::read($parent);
 	} else {
 		?>
 		<tr>
-			<td colspan="7">
+			<td colspan="7" align="center">
 			<p>In dieser Kategorie sind keine Unterkategorien vorhanden.</p>
 			</td>
 		</tr>
