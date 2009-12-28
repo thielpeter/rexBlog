@@ -1,0 +1,11 @@
+#rexblog-categories td.priority-handle
+{
+	background:transparent url(../img/priority.gif) center center no-repeat;
+	cursor:pointer;
+}
+
+#rexblog-categories td.processing
+{
+	background:transparent url(../img/ajax.gif) center center no-repeat;
+	cursor:wait;
+}

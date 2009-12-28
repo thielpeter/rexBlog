@@ -36,27 +36,28 @@ $REX['PERM'][] = "rexblog[]";
 
 // Funktionen einbinden
 
-require dirname(__FILE__) . '/functions/function.frontend.common.php';
+require dirname(__FILE__) . '/functions/function.backend.core.php';
+require dirname(__FILE__) . '/functions/function.frontend.core.php';
 
 // Autoload für Klassen
 
 function __autoload($classname) {
 	static $classes = array(
-		'_rex488_BackendBase' => 'backend/class.backend.base.php',
-		'_rex488_BackendCache' => 'backend/class.backend.cache.php',
-		'_rex488_BackendException' => 'backend/class.backend.exception.php',
-		'_rex488_BackendCategoryInterface' => 'backend/interface/interface.backend.categories.php',
-		'_rex488_BackendPost' => 'backend/class.backend.post.php',
-		'_rex488_BackendCategories' => 'backend/class.backend.categories.php',
-		'_rex488_FrontendBase' => 'frontend/class.frontend.base.php',
-		'_rex488_FrontendDesignator' => 'frontend/class.frontend.designator.php',
-		'_rex488_FrontendCategories' => 'frontend/class.frontend.categories.php',
-		'_rex488_FrontendCategory' => 'frontend/class.frontend.category.php',
-		'_rex488_FrontendMetadata' => 'frontend/class.frontend.metadata.php',
-		'_rex488_FrontendMetadataCategory' => 'frontend/class.frontend.metadata.category.php',
-		'_rex488_FrontendMetadataPost' => 'frontend/class.frontend.metadata.post.php',
-		'_rex488_FrontendPost' => 'frontend/class.frontend.post.php',
-		'_rex488_FrontendPagination' => 'frontend/class.frontend.pagination.php',
+		'_rex488_BackendBase'								=> 'backend/class.backend.base.php',
+		'_rex488_BackendCache'							=> 'backend/class.backend.cache.php',
+		'_rex488_BackendException'					=> 'backend/class.backend.exception.php',
+		'_rex488_BackendCategoryInterface' 	=> 'backend/interface/interface.backend.categories.php',
+		'_rex488_BackendPost'								=> 'backend/class.backend.post.php',
+		'_rex488_BackendCategories'					=> 'backend/class.backend.categories.php',
+		'_rex488_FrontendBase'							=> 'frontend/class.frontend.base.php',
+		'_rex488_FrontendDesignator'				=> 'frontend/class.frontend.designator.php',
+		'_rex488_FrontendCategories'				=> 'frontend/class.frontend.categories.php',
+		'_rex488_FrontendCategory'					=> 'frontend/class.frontend.category.php',
+		'_rex488_FrontendMetadata'					=> 'frontend/class.frontend.metadata.php',
+		'_rex488_FrontendMetadataCategory'	=> 'frontend/class.frontend.metadata.category.php',
+		'_rex488_FrontendMetadataPost'			=> 'frontend/class.frontend.metadata.post.php',
+		'_rex488_FrontendPost'							=> 'frontend/class.frontend.post.php',
+		'_rex488_FrontendPagination'				=> 'frontend/class.frontend.pagination.php',
 	);
 
 	if(isset($classes[$classname])) {
@@ -69,5 +70,9 @@ function __autoload($classname) {
 $REX['ADDON']['rexblog']['SUBPAGES'] = array(
 	array('categories', 'Kategorien', '', array('clang' => $REX['CUR_CLANG']))
 );
+
+// Stylesheet und Javascript einbinden
+
+rex_register_extension('PAGE_HEADER', '_rex488_add_pageheader');
 
 ?>

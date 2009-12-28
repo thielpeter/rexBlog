@@ -238,7 +238,8 @@ class _rex488_FrontendBase
 	public static function get_article_base()
 	{
 		$article = OOArticle::getArticleById(rex_request('article_id', 'int'));
-		$article_name = strtolower($article->getName());
+		$article_name = rex_parse_article_name($article->getName());
+		$article_name = strtolower($article_name);
 		return $article_name;
 	}
 }
