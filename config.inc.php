@@ -24,12 +24,12 @@ if($REX['REDAXO'])
 
 // Addon-Konfiguration
 
-$REX['ADDON']['rxid']['rexblog'] = '488';
-$REX['ADDON']['page']['rexblog'] = 'rexblog';
-$REX['ADDON']['name']['rexblog'] = 'Rexblog';
-$REX['ADDON']['perm']['rexblog'] = "rexblog[]";
-$REX['ADDON']['version']['rexblog'] = file_get_contents(_rex488_PATH . 'version');
-$REX['ADDON']['author']['rexblog'] = 'mediastuttgart werbeagentur';
+$REX['ADDON']['rxid']['rexblog']        = '488';
+$REX['ADDON']['page']['rexblog']        = 'rexblog';
+$REX['ADDON']['name']['rexblog']        = 'Rexblog';
+$REX['ADDON']['perm']['rexblog']        = "rexblog[]";
+$REX['ADDON']['version']['rexblog']     = file_get_contents(_rex488_PATH . 'version');
+$REX['ADDON']['author']['rexblog']      = 'mediastuttgart werbeagentur';
 $REX['ADDON']['supportpage']['rexblog'] = 'http://www.mediastuttgart.de';
 
 $REX['PERM'][] = "rexblog[]";
@@ -73,7 +73,7 @@ $REX['ADDON']['rexblog']['SUBPAGES'] = array(
         array('categories', 'Kategorien', '', array('clang' => $REX['CUR_CLANG']))
 );
 
-// Stylesheet und Javascript einbinden
+// Stylesheets und Javascript einbinden
 
 rex_register_extension('PAGE_HEADER', '_rex488_add_pageheader');
 
