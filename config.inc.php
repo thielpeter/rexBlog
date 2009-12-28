@@ -22,12 +22,12 @@ if($REX['REDAXO']) {
 
 // Addon-Konfiguration
 
-$REX['ADDON']['rxid']['rexblog'] 		= '488';
-$REX['ADDON']['page']['rexblog'] 		= 'rexblog';
-$REX['ADDON']['name']['rexblog'] 		= 'Rexblog';
-$REX['ADDON']['perm']['rexblog'] 		= "rexblog[]";
-$REX['ADDON']['version']['rexblog']     = file_get_contents(_rex488_PATH . 'version');
-$REX['ADDON']['author']['rexblog']      = 'mediastuttgart werbeagentur';
+$REX['ADDON']['rxid']['rexblog'] = '488';
+$REX['ADDON']['page']['rexblog'] = 'rexblog';
+$REX['ADDON']['name']['rexblog'] = 'Rexblog';
+$REX['ADDON']['perm']['rexblog'] = "rexblog[]";
+$REX['ADDON']['version']['rexblog'] = file_get_contents(_rex488_PATH . 'version');
+$REX['ADDON']['author']['rexblog'] = 'mediastuttgart werbeagentur';
 $REX['ADDON']['supportpage']['rexblog'] = 'http://www.mediastuttgart.de';
 
 $REX['PERM'][] = "rexblog[]";
