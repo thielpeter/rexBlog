@@ -34,9 +34,7 @@ $categories = _rex488_BackendCategories::read();
 	</colgroup>
 	<thead>
 		<tr>
-			<th class="rex-icon"><a class="rex-i-element rex-i-category-add"
-				href="index.php?page=rexblog&subpage=categories&func=add"> <span
-				class="rex-i-element-text">hinzufügen</span> </a></th>
+			<th class="rex-icon"><a class="rex-i-element rex-i-category-add" href="index.php?page=rexblog&subpage=categories&func=add"><span class="rex-i-element-text">hinzufügen</span></a></th>
 			<th>ID</th>
 			<th>Kategorie</th>
 			<th>Prio</th>
@@ -49,7 +47,7 @@ $categories = _rex488_BackendCategories::read();
 	{
 		foreach($categories as $key => $category)
 		{
-			?>
+	?>
 		<tr id="rex-category-<?php echo $category['id']; ?>">
 			<td class="rex-icon"><a
 				href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>">
@@ -72,7 +70,7 @@ $categories = _rex488_BackendCategories::read();
 			<p>In dieser Kategorie sind keine Unterkategorien vorhanden.</p>
 			</td>
 		</tr>
-		<?php
+	<?php
 	}
 	?>
 	</tbody>
