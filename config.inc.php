@@ -39,7 +39,7 @@ $REX['PERM'][] = "rexblog[]";
 require dirname(__FILE__) . '/functions/function.backend.core.php';
 require dirname(__FILE__) . '/functions/function.frontend.core.php';
 
-// Autoload f�r Klassen
+// Autoload für Klassen
 
 function __autoload($classname)
 {
