@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
@@ -9,7 +9,7 @@
  *
  * http://www.opensource.org/licenses/mit-license.php
  * http://de.wikipedia.org/wiki/MIT-Lizenz
-*/
+ */
 
 function _rex488_base_loader()
 {
