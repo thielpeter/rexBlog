@@ -13,7 +13,7 @@
 
 _rex488_BackendBase::get_instance();
 
-// read categories from current parent
+// read categories from the current parent
 
 $categories = _rex488_BackendCategories::read();
 
