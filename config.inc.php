@@ -26,7 +26,7 @@ if($REX['REDAXO'])
 
 $REX['ADDON']['rxid']['rexblog']        = '488';
 $REX['ADDON']['page']['rexblog']        = 'rexblog';
-$REX['ADDON']['name']['rexblog']        = 'Rexblog';
+$REX['ADDON']['name']['rexblog']        = 'rexblog';
 $REX['ADDON']['perm']['rexblog']        = "rexblog[]";
 $REX['ADDON']['version']['rexblog']     = file_get_contents(_rex488_PATH . 'version');
 $REX['ADDON']['author']['rexblog']      = 'mediastuttgart werbeagentur';
