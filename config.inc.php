@@ -22,15 +22,23 @@ define('_rex488_PATH', $REX['INCLUDE_PATH'] . '/addons/rexblog/');
 if($REX['REDAXO'])
   $I18N->appendFile(dirname(__FILE__) . '/lang/');
 
+// Addon-Version
+
+$REX['ADDON']['version']['rexblog']     = file_get_contents(_rex488_PATH . 'version');
+
 // Addon-Konfiguration
 
 $REX['ADDON']['rxid']['rexblog']        = '488';
 $REX['ADDON']['page']['rexblog']        = 'rexblog';
 $REX['ADDON']['name']['rexblog']        = 'rexblog';
 $REX['ADDON']['perm']['rexblog']        = "rexblog[]";
-$REX['ADDON']['version']['rexblog']     = file_get_contents(_rex488_PATH . 'version');
+
+// Addon-Auhtor-Informationen
+
 $REX['ADDON']['author']['rexblog']      = 'mediastuttgart werbeagentur';
-$REX['ADDON']['supportpage']['rexblog'] = 'http://www.mediastuttgart.de';
+$REX['ADDON']['supportpage']['rexblog'] = 'http://bitbucket.org/mediastuttgart/rexblog/wiki/';
+
+// Addon-Permissions
 
 $REX['PERM'][] = "rexblog[]";
 
