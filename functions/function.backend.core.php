@@ -9,13 +9,16 @@
  *
  * http://www.opensource.org/licenses/mit-license.php
  * http://de.wikipedia.org/wiki/MIT-Lizenz
- */
+*/
 
 function _rex488_add_pageheader()
 {
-	$page_header = '<link rel="stylesheet" type="text/css" href="include/addons/rexblog/files/css/backend.css" media="screen" />';
-	
-	return $page_header;
+  $page_header = "\n";
+  $page_header .= '<link rel="stylesheet" type="text/css" href="include/addons/rexblog/files/css/backend.css" />' . "\n";
+  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.tablednd.js"></script>' . "\n";
+  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/backend.js"></script>' . "\n";
+
+  return $page_header;
 }
 
 ?>
