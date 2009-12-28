@@ -11,69 +11,26 @@
  * http://de.wikipedia.org/wiki/MIT-Lizenz
 */
 
-session_start();
+if (defined('_rex488_PATH')) return;
+define('_rex488_PATH', $REX['INCLUDE_PATH'] . '/addons/rexblog/');
 
-/**
- *
- * Rexblog (Redaxo 4.2.1 Blog Addon)
- *
- * @package rexblog
- * @version $Rev: 66 $
- * @svn svn:$Id: config.inc.php 66 2009-11-15 13:27:29Z svn $
- *
- */
+// Sprach-Konfiguration
 
-$rex_addon_page = 'rexblog';
-
-/**
- * create language object
- *
- * @global
- * @param
- * @throws
- * @return
- */
-
-if ($REX['REDAXO'])
-{
+if($REX['REDAXO']) {
   $I18N->appendFile(dirname(__FILE__) . '/lang/');
 }
 
-/**
- * basic addon configuration
- *
- * @global
- * @param
- * @throws
- * @return
- */
+// Addon-Konfiguration
 
-$REX['ADDON']['rxid'][$rex_addon_page] = '488';
-$REX['ADDON']['page'][$rex_addon_page] = $rex_addon_page;
-$REX['ADDON']['name'][$rex_addon_page] = 'Rexblog';
-$REX['ADDON']['perm'][$rex_addon_page] = "rexblog[]";
-$REX['ADDON']['extperm'][$rex_addon_page] = "rexblog[categories]";
-$REX['ADDON']['extperm'][$rex_addon_page] = "rexblog[postings]";
-$REX['ADDON']['extperm'][$rex_addon_page] = "rexblog[comments]";
-$REX['ADDON']['extperm'][$rex_addon_page] = "rexblog[trackbacks]";
-$REX['ADDON']['extperm'][$rex_addon_page] = "rexblog[settings]";
+$REX['ADDON']['rxid']['rexblog'] 		= '488';
+$REX['ADDON']['page']['rexblog'] 		= 'rexblog';
+$REX['ADDON']['name']['rexblog'] 		= 'Rexblog';
+$REX['ADDON']['perm']['rexblog'] 		= "rexblog[]";
+$REX['ADDON']['version']['rexblog']     = file_get_contents(_rex488_PATH . 'version');
+$REX['ADDON']['author']['rexblog']      = 'mediastuttgart werbeagentur';
+$REX['ADDON']['supportpage']['rexblog'] = 'http://www.mediastuttgart.de';
+
 $REX['PERM'][] = "rexblog[]";
-$REX['EXTPERM'][] = "rexblog[categories]";
-$REX['EXTPERM'][] = "rexblog[postings]";
-$REX['EXTPERM'][] = "rexblog[comments]";
-$REX['EXTPERM'][] = "rexblog[trackbacks]";
-$REX['EXTPERM'][] = "rexblog[settings]";
-
-/**
- * sidebar array
- *
- * @global
- * @param
- * @throws
- * @return
- */
-
-$REX['ADDON']['REXBLOG']['SIDEBAR_CONTENT'] = array();
 
 /**
  * define subpages based on perms
