@@ -52,6 +52,7 @@ class _rex488_BackendBase
     global $REX;
 
     self::$sql = rex_sql::getInstance();
+    self::$sql->debugsql = 1;
     self::$prefix = $REX['TABLE_PREFIX'];
     self::$parent_category_id = rex_request('parent', 'int');
   }
