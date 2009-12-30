@@ -13,9 +13,11 @@
 
 class _rex488_BackendBase
 {
+  const PAGE = 'rexblog';
+
   private static $instance = null;
   
-  protected static $parent_category_id = 0;
+  protected static $parent_id = 0;
   protected static $sql;
   protected static $prefix = 'rex_';
 
@@ -54,7 +56,7 @@ class _rex488_BackendBase
     self::$sql = rex_sql::getInstance();
     self::$sql->debugsql = 0;
     self::$prefix = $REX['TABLE_PREFIX'];
-    self::$parent_category_id = rex_request('parent', 'int');
+    self::$parent_id = rex_request('parent', 'int');
   }
 
   /*

@@ -15,7 +15,7 @@ _rex488_BackendBase::get_instance();
 
 // set new state for category
 
-if(rex_request('toggle', 'int') > 0)
+if(rex_request('func', 'string') == 'state')
 {
   _rex488_BackendCategories::state();
 }
@@ -69,7 +69,7 @@ if(rex_request('func', 'string') == "")
           <td class="priority-handle"></td>
           <td><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>">ändern</a></td>
           <td><a href="index.php?page=rexblog&subpage=categories&delete=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>">löschen</a></td>
-          <td><a href="index.php?page=rexblog&subpage=categories&toggle=<?php echo $category['id']; ?>&state=<?php echo $category['status']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" class="<?php echo $status_classname; ?>"><?php echo $status_description; ?></a></td>
+          <td><a href="index.php?page=rexblog&subpage=categories&func=state&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" class="<?php echo $status_classname; ?>"><?php echo $status_description; ?></a></td>
         </tr>
         <?php
           }
