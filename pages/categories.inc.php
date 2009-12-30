@@ -13,9 +13,21 @@
 
 _rex488_BackendBase::get_instance();
 
+// set new state for category
+
+if(rex_request('toggle', 'int') > 0)
+{
+  _rex488_BackendCategories::state();
+}
+
 // read categories from the current parent
 
 $categories = _rex488_BackendCategories::read();
+
+// echo rex_message('Die aktuelle Parent id lautet', 'rex-info', 'p');
+
+if(rex_request('func', 'string') == "")
+{
 
 ?>
 
@@ -34,7 +46,7 @@ $categories = _rex488_BackendCategories::read();
       </colgroup>
       <thead>
         <tr>
-          <th class="rex-icon"><a class="rex-i-element rex-i-category-add" href="index.php?page=rexblog&subpage=categories&func=add"><span class="rex-i-element-text">hinzufügen</span></a></th>
+          <th class="rex-icon"><a class="rex-i-element rex-i-category-add" href="index.php?page=rexblog&subpage=categories&func=add&parent=<?php echo rex_request('parent', 'int'); ?>"><span class="rex-i-element-text">hinzufügen</span></a></th>
           <th>ID</th>
           <th>Kategorie</th>
           <th>Prio</th>
@@ -47,15 +59,17 @@ $categories = _rex488_BackendCategories::read();
         {
           foreach($categories as $key => $category)
           {
+            $status_description = ($category['status'] == 1) ? 'online' : 'offline';
+            $status_classname = ($category['status'] == 1) ? 'rex-online' : 'rex-offline';
         ?>
         <tr id="rex-category-<?php echo $category['id']; ?>">
-          <td class="rex-icon"><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>"><span class="rex-i-element rex-i-category"><span class="rex-i-element-text">Editieren</span></span></a></td>
+          <td class="rex-icon"><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>"><span class="rex-i-element rex-i-category"><span class="rex-i-element-text">Editieren</span></span></a></td>
           <td><?php echo $category['id']; ?></td>
           <td><a href="index.php?page=rexblog&subpage=categories&parent=<?php echo $category['id']; ?>"><?php echo $category['name']; ?></a></td>
           <td class="priority-handle"></td>
-          <td><a href="#">ändern</a></td>
-          <td><a href="#">löschen</a></td>
-          <td><a href="#" class="rex-online">online</a></td>
+          <td><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>">ändern</a></td>
+          <td><a href="index.php?page=rexblog&subpage=categories&delete=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>">löschen</a></td>
+          <td><a href="index.php?page=rexblog&subpage=categories&toggle=<?php echo $category['id']; ?>&state=<?php echo $category['status']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" class="<?php echo $status_classname; ?>"><?php echo $status_description; ?></a></td>
         </tr>
         <?php
           }
@@ -73,3 +87,6 @@ $categories = _rex488_BackendCategories::read();
     </table>
   </form>
 </div>
+<?php
+}
+?>

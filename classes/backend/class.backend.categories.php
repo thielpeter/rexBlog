@@ -76,6 +76,26 @@ class _rex488_BackendCategories extends _rex488_BackendBase implements _rex488_B
     
   }
 
+  /*
+   * state
+   *
+   * setzt den status der kategorie
+   *
+   * @param
+   * @return
+   * @throws
+   *
+   */
+
+  public static function state()
+  {
+    $new_state = (rex_request('state', 'int') == 1) ? 0 : 1;
+
+    parent::$sql->table = parent::$prefix . '488_rexblog_categories';
+    parent::$sql->setValue('status', $new_state);
+    parent::$sql->wherevar = "WHERE ( cid = '" . rex_request('toggle', 'int') . "' )";
+    parent::$sql->update();
+  }
 }
 
 ?>

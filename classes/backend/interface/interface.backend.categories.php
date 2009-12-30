@@ -14,10 +14,10 @@
 interface _rex488_BackendCategoryInterface
 {
   /*
-   * add
+   * write
    *
-   * fügt auf basis des parameters parent
-   * eine kategorie in die datenbank ein
+   * fügt eine kategorie in die datenbank ein
+   * oder aktualisiert eine vorhandene
    *
    * @param string $mode modus für update oder insert
    * @return boolean $success liefert bei erfolg true zurück
@@ -29,8 +29,7 @@ interface _rex488_BackendCategoryInterface
   /*
    * read
    *
-   * liefert auf basis von parent die
-   * unterkategorien der aktuellen kategorie zurück
+   * liefert die unterkategorien der aktuellen kategorie zurück
    *
    * @param
    * @return array $categories array der kategorien
@@ -51,6 +50,20 @@ interface _rex488_BackendCategoryInterface
    */
 
   public static function sort($priorities);
-}
+
+  /*
+   * state
+   *
+   * setzt den status der kategorie
+   *
+   * @param
+   * @return
+   * @throws
+   *
+   */
+
+  public static function state();
+
+  }
 
 ?>
