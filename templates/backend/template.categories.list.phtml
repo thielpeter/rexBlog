@@ -12,9 +12,23 @@
  */
 
 $categories = _rex488_BackendCategories::read();
+$breadcrumb = _rex488_BackendCategories::breadcrumb();
 
 ?>
 <div class="rex-addon-output-v2">
+  <div class="rex-toolbar">
+    <div class="rex-toolbar-content">
+      <ul id="rex-navi-path">
+        <li>Pfad</li>
+        <?php
+        foreach($breadcrumb as $value)
+        {
+          echo '<li> : <a href="index.php?page=rexblog&subpage=categories&parent=' . $value['parent'] . '">' . $value['name'] . '</a></li>';
+        }
+        ?>
+      </ul>
+    </div>
+  </div>
   <form action="index.php?page=rexblog&subpage=categories" method="post">
     <table class="rex-table" id="rexblog-categories">
       <caption>Liste der Kategorien</caption>
@@ -44,7 +58,7 @@ $categories = _rex488_BackendCategories::read();
           {
             $status_description = ($category['status'] == 1) ? 'online' : 'offline';
             $status_classname = ($category['status'] == 1) ? 'rex-online' : 'rex-offline';
-        ?>
+            ?>
         <tr id="rex-category-<?php echo $category['id']; ?>">
           <td class="rex-icon"><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>"><span class="rex-i-element rex-i-category"><span class="rex-i-element-text">Editieren</span></span></a></td>
           <td><?php echo $category['id']; ?></td>
@@ -54,16 +68,17 @@ $categories = _rex488_BackendCategories::read();
           <td><a href="index.php?page=rexblog&subpage=categories&func=delete&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" onclick="return confirm('Sicher löschen?');">löschen</a></td>
           <td><a href="index.php?page=rexblog&subpage=categories&func=state&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" class="<?php echo $status_classname; ?>"><?php echo $status_description; ?></a></td>
         </tr>
-        <?php
+            <?php
           }
-        } else {
-        ?>
+        } else
+        {
+          ?>
         <tr>
           <td colspan="7" align="center">
             <p>In dieser Kategorie sind keine Unterkategorien vorhanden.</p>
           </td>
         </tr>
-        <?php
+          <?php
         }
         ?>
       </tbody>
