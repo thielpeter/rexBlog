@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
@@ -13,15 +13,22 @@
 
 class _rex488_BackendBase
 {
+  // const
+
   const PAGE = 'rexblog';
 
+  // private
+
   private static $instance = null;
-  
+
+  //protected
+
   protected static $parent_id = 0;
   protected static $sql;
   protected static $prefix = 'rex_';
+  protected static $subpage = '';
 
-  /*
+  /**
    * get_instance
    *
    * instantiiert die basisklasse mit hilfe der
@@ -42,7 +49,7 @@ class _rex488_BackendBase
     return self::$instance;
   }
 
-  /*
+  /**
    * __construct
    *
    * geschützte konstruktor funktion
@@ -53,20 +60,28 @@ class _rex488_BackendBase
   {
     global $REX;
 
-    self::$sql = rex_sql::getInstance();
-    self::$sql->debugsql = 0;
-    self::$prefix = $REX['TABLE_PREFIX'];
-    self::$parent_id = rex_request('parent', 'int');
+    // define required base variables
+
+    self::$sql            = rex_sql::getInstance();
+    self::$sql->debugsql  = 0;
+    self::$prefix         = $REX['TABLE_PREFIX'];
+    self::$parent_id      = rex_request('parent', 'int');
+    self::$subpage        = rex_request('subpage', 'string');
+
   }
 
-  /*
+  /**
    * __clone
    *
-   * geschützte klone funktion
+   * geschützte clone funktion
    *
    */
 
-  private function  __clone() {}
+  private function  __clone()
+  {
+
+  }
+
 }
 
 ?>

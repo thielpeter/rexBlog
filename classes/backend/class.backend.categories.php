@@ -20,6 +20,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
   //protected
 
   protected static $entry_id = 0;
+  protected static $info_pool = array();
 
   /**
    * read
@@ -35,18 +36,18 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
   public static function read()
   {
     $categories = parent::$sql->getArray(
-      sprintf("
+    sprintf("
       SELECT * FROM %s
       LEFT JOIN %s
       ON ( %s = %s )
       WHERE ( %s = '%d' )
       ORDER BY priority ASC",
-      parent::$prefix . "488_rexblog_categories_id",
-      parent::$prefix . "488_rexblog_categories",
-      parent::$prefix . "488_rexblog_categories.cid",
-      parent::$prefix . "488_rexblog_categories_id.id",
-      parent::$prefix . "488_rexblog_categories_id.parent",
-      parent::$parent_id)
+    parent::$prefix . "488_rexblog_categories_id",
+    parent::$prefix . "488_rexblog_categories",
+    parent::$prefix . "488_rexblog_categories.cid",
+    parent::$prefix . "488_rexblog_categories_id.id",
+    parent::$prefix . "488_rexblog_categories_id.parent",
+    parent::$parent_id)
     );
 
     return $categories;
@@ -109,7 +110,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
     if(parent::$sql->update() === true)
     {
-      header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&notify=success');
+      header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=4');
     }
   }
 }

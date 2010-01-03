@@ -50,6 +50,7 @@ function _rex488_autoload($params)
     '_rex488_BackendBase'               => 'backend/class.backend.base.php',
     '_rex488_BackendCache'              => 'backend/class.backend.cache.php',
     '_rex488_BackendException'          => 'backend/class.backend.exception.php',
+    '_rex488_BackendErrorHandling'      => 'backend/class.backend.errorhandling.php',
     '_rex488_BackendCategoryInterface'  => 'backend/interface/interface.backend.categories.php',
     '_rex488_BackendPost'               => 'backend/class.backend.post.php',
     '_rex488_BackendCategories'         => 'backend/class.backend.categories.php',
