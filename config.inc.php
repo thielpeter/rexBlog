@@ -100,7 +100,7 @@ if(!function_exists('__autoload'))
 
 // Backend und Frontend Eigenschaften, Funktionen und Assets
 
-if($REX['REDAXO'])
+if($REX['REDAXO'] && rex_request('page', 'string') == 'rexblog')
 {
   // Subpages definieren
 

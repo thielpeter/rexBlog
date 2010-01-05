@@ -9,3 +9,38 @@
 	background:transparent url(../img/ajax.gif) center center no-repeat;
 	cursor:wait;
 }
+
+div.rex-form-wrapper
+{
+  border-top:1px solid #FFF;
+}
+
+div.error
+{
+  background-color:#fae9e5;
+}
+
+label.label-error
+{
+  color:#EA1144;
+  font-weight:900;
+}
+
+label.error
+{
+  margin-left:150px;
+  width:400px !important;
+  color:#EA1144;
+  font-weight:900;
+}
+
+input.error
+{
+  background-color:#fff;
+  border:1px solid #cbcbcb;
+}
+
+.rex-validate-message
+{
+  display:none;
+}

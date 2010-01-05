@@ -1,0 +1,74 @@
+<?php
+
+/**
+ * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ *
+ * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
+ * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
+ * folgenden Web-Adressen eingesehen werden.
+ *
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://de.wikipedia.org/wiki/MIT-Lizenz
+ */
+
+?>
+<div class="rex-addon-output-v2">
+
+  <div class="rex-message rex-validate-message">
+    <div class="rex-warning">
+      <p><span>Es wurden Fehler bei der Eingabe festgestellt.</span></p>
+    </div>
+  </div>
+
+  <div id="rex-addon-editmode" class="rex-form">
+    <form action="index.php?page=rexblog&subpage=categories" method="post" id="categories-form">
+      <input type="hidden" name="page" value="rexblog" />
+      <input type="hidden" name="subpage" value="categories" />
+      <input type="hidden" name="parent" value="<?php echo rex_request('parent', 'int'); ?>" />
+      <input type="hidden" name="func" value="write" />
+      <fieldset>
+        <legend><span>Kategorie hinzufügen</span></legend>
+        <div class="rex-form-wrapper">
+
+          <!-- category name -->
+          <div class="rex-form-row">
+            <p class="rex-form-text">
+              <label for="name">Kategorie</label>
+              <input id="name" name="name" type="text" class="rex-form-text" value="" />
+            </p>
+          </div>
+          <!-- /category name -->
+
+          <!-- category keywords -->
+          <div class="rex-form-row">
+            <p class="rex-form-textarea">
+              <label for="keywords">Suchbegriffe</label>
+              <textarea id="keywords" name="keywords" class="rex-form-textarea" rows="5"></textarea>
+            </p>
+          </div>
+          <!-- /category keywords -->
+
+          <!-- category description -->
+          <div class="rex-form-row">
+            <p class="rex-form-textarea">
+              <label for="description">Beschreibung</label>
+              <textarea id="description" name="description" class="rex-form-textarea" rows="10"></textarea>
+            </p>
+          </div>
+          <!-- /category description -->
+
+          <!-- form actions -->
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-submit rex-form-submit-2">
+              <input type="submit" name="submit" class="rex-form-submit submit" value="Speichern" />
+              <input type="reset" name="reset" class="rex-form-submit rex-form-submit-2 reset" value="Zurücksetzen" />
+              <input type="submit" name="cancel" class="rex-form-submit rex-form-submit-2 cancel" value="Abbrechen" />
+            </p>
+          </div>
+          <!-- /form actions -->
+
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

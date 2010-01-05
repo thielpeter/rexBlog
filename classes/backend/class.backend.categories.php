@@ -65,7 +65,52 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
   public static function write($mode = 'update')
   {
+    // if the cancel button was pressed, abort write function
 
+    if(isset($_REQUEST['cancel']))
+    {
+      header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=5');
+
+      // exit after redirection
+
+      exit();
+    }
+
+    // at first we insert the id into the id table
+
+    parent::$sql->table = parent::$prefix . '488_rexblog_categories_id';
+    parent::$sql->setValue('parent', parent::$parent_id);
+    parent::$sql->insert();
+
+    // next we collect the last insert id, we want to work on
+
+    $id =  parent::$sql->last_insert_id;
+
+    // now we set the priority corresponding to the last insert id
+
+    parent::$sql->table = parent::$prefix . '488_rexblog_categories_id';
+    parent::$sql->setValue('priority', 1000000 + $id);
+    parent::$sql->wherevar = "WHERE ( id = '" . $id . "' )";
+    parent::$sql->update();
+
+    // finally we write the corresponding values into the categories table
+
+    parent::$sql->table = parent::$prefix . '488_rexblog_categories';
+    parent::$sql->setValue('cid', $id);
+    parent::$sql->setValue('name', rex_request('name', 'string'));
+    parent::$sql->setValue('clang', 0);
+    parent::$sql->wherevar = "WHERE ( id = '" . $id . "' )";
+
+    // if the insert was successfull, redirect to default page
+
+    if(parent::$sql->insert())
+    {
+      header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=1');
+
+      // exit after redirection
+
+      exit();
+    }
   }
 
   /**
@@ -81,6 +126,64 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
   public static function sort($priorities)
   {
+
+  }
+
+  /**
+   * delete
+   *
+   * löscht eine kategorien anhand der übergebenen id.
+   * zugleich wird überprüft, ob die zu löschende kategorie
+   * noch unterkategorien enthält.
+   *
+   * @param
+   * @return
+   * @throws
+   *
+   */
+
+  public static function delete()
+  {
+    // search for children of the category beeing deleted
+
+    parent::$sql->setQuery("
+      SELECT id
+      FROM " . parent::$prefix . "488_rexblog_categories_id
+      WHERE ( parent = '" . rex_request('id', 'int') . "' )
+    ");
+
+    // if the category has children, throw an error
+
+    if(parent::$sql->getRows() > 0)
+    {
+      header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&warning=3');
+
+      // exit after redirection
+
+      exit();
+    }
+
+    // else delete everything from the categories table
+    
+    parent::$sql->table = parent::$prefix . '488_rexblog_categories';
+    parent::$sql->wherevar = "WHERE ( cid = '" . rex_request('id', 'int') . "' ) ";
+    parent::$sql->delete();
+
+    // and delete everything from the categories id table
+
+    parent::$sql->table = parent::$prefix . '488_rexblog_categories_id';
+    parent::$sql->wherevar = "WHERE ( id = '" . rex_request('id', 'int') . "' ) ";
+
+     // if deleting was successfull, redirect to initial page
+
+    if(parent::$sql->delete())
+    {
+      header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=3');
+
+      // exit after redirection
+
+      exit();
+    }
 
   }
 

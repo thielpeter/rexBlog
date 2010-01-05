@@ -28,6 +28,15 @@ echo _rex488_BackendErrorHandling::error_handling();
 switch(rex_request('func', 'string'))
 {
   /**
+   * führt die write anweisung aus, nach welcher
+   * eine kategorie in die datenbank gepsichert wird.
+   */
+
+  case 'write':
+    _rex488_BackendCategories::write();
+    break;
+
+  /**
    * führt die delete anweisung aus, nach welcher
    * eine kategorie anhand der überlieferten id
    * aus der datenbank gelöscht wird.
@@ -45,6 +54,16 @@ switch(rex_request('func', 'string'))
 
   case 'state':
     _rex488_BackendCategories::state();
+    break;
+
+  /**
+   * führt die add anweisung aus, welche das
+   * benötigte template zum hinzufügen einer
+   * kategorie lädt.
+   */
+
+  case 'add':
+    include _rex488_PATH . 'templates/backend/template.categories.add.phtml';
     break;
 
   /**

@@ -11,6 +11,51 @@
 
 jQuery(document).ready(function()
 {
+  ///////////////////////////////////////////////////////////////
+  // categories form validation
+ 
+  var validator = jQuery("form#categories-form").validate(
+  {
+    rules: {
+      name: {
+        required: true,
+        minlength: 3
+      }
+    },
+    messages: {
+      name: {
+        required: "Die Bezeichnung der Kategorie darf nicht leer sein.",
+        minlength: jQuery.format("Die Bezeichnung der Kategorie muss mindestens {0} Zeichen lang sein.")
+      }
+    },
+    highlight: function(element, errorClass)
+    {
+      jQuery(element).addClass(errorClass);
+      jQuery(element.form).find("label[for=" + element.id + "]").addClass('label-error');
+      jQuery(element.form).find("label[for=" + element.id + "]").parent().parent().addClass(errorClass);
+      jQuery('.rex-validate-message').css('display', 'block');
+    },
+    unhighlight: function(element, errorClass)
+    {
+      jQuery(element).removeClass(errorClass);
+      jQuery(element.form).find("label[for=" + element.id + "]").removeClass('label-error');
+      jQuery(element.form).find("label[for=" + element.id + "]").parent().parent().removeClass(errorClass);
+      jQuery('.rex-validate-message').css('display', 'none');
+    }
+  });
+
+  jQuery('.reset').click(function()
+  {
+    validator.resetForm();
+    jQuery('.rex-validate-message').css('display', 'none');
+    jQuery('form#categories-form').find('*').removeClass('error');
+    jQuery('form#categories-form').find('*').removeClass('label-error');
+  });
+
+
+  ///////////////////////////////////////////////////////////////
+  // categories sorting
+
   jQuery('a').removeAttr('accesskey');
   jQuery('a').removeAttr('tabindex');
 	
@@ -20,11 +65,11 @@ jQuery(document).ready(function()
     dragHandle: "priority-handle",
     onDragStart: function(table, row)
     {
-      //jQuery("#rexblog-categories td").css('opacity', 0.25);
+    //jQuery("#rexblog-categories td").css('opacity', 0.25);
     },
     onDragMove: function(table, row)
     {
-      //jQuery("#rexblog-categories tr.category-drag td").css('opacity', 1);
+    //jQuery("#rexblog-categories tr.category-drag td").css('opacity', 1);
     },
     onDrop: function(table, row)
     {

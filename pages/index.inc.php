@@ -15,7 +15,7 @@ require $REX['INCLUDE_PATH'] . '/layout/top.php';
 
 // Title definieren
 
-rex_title('rexblog V' . $REX['ADDON']['version']['rexblog'], $REX['ADDON']['rexblog']['SUBPAGES']);
+rex_title('rexblog (v' . $REX['ADDON']['version']['rexblog'] . ')', $REX['ADDON']['rexblog']['SUBPAGES']);
 
 // Subpages auswerten
 

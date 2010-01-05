@@ -35,7 +35,8 @@ abstract class _rex488_BackendErrorHandling extends _rex488_BackendBase
           1 => 'Die Kategorie wurde erfolgreich angelegt.',
           2 => 'Die Kategorie wurde erfolgreich gespeichert.',
           3 => 'Die Kategorie wurde erfolgreich gelöscht.',
-          4 => 'Der Status der Kategorie wurde erfolgreich geändert.'
+          4 => 'Der Status der Kategorie wurde erfolgreich geändert.',
+          5 => 'Die Eingabe wurde erfolgreich abgebrochen.'
         ),
         'warning' => array(
           1 => 'Die Kategorie konnte nicht angelegt werden. Es fehlen Pflichtangaben.',
