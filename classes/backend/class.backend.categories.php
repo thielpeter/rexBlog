@@ -241,7 +241,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
    * erzeugt ein array aller elternkategorien
    * basierend auf der aktuellen parent kategorie
    *
-   * @return array $breadcrumb array of parent locations
+   * @return array $breadcrumb array of parent elements
    */
 
   public static function breadcrumb()
@@ -250,20 +250,30 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
     while($parent > 0)
     {
-      // TODO select only needed entries
+      $query = sprintf("
+        SELECT %s, %s, %s, %s
+        FROM %s
+        LEFT JOIN %s ON ( %s = %s )
+        WHERE ( %s = %d )
+      ",
+      parent::$prefix . "488_rexblog_categories_id.id",
+      parent::$prefix . "488_rexblog_categories_id.parent",
+      parent::$prefix . "488_rexblog_categories.name",
+      parent::$prefix . "488_rexblog_categories.cid",
+      parent::$prefix . "488_rexblog_categories_id",
+      parent::$prefix . "488_rexblog_categories",
+      parent::$prefix . "488_rexblog_categories_id.id",
+      parent::$prefix . "488_rexblog_categories.cid",
+      parent::$prefix . "488_rexblog_categories_id.id",
+      $parent
+      );
 
-      parent::$sql->setQuery("
-        SELECT *
-        FROM rex_488_rexblog_categories_id
-        LEFT JOIN rex_488_rexblog_categories
-        ON ( rex_488_rexblog_categories_id.id = rex_488_rexblog_categories.cid )
-        WHERE rex_488_rexblog_categories_id.id = '" . $parent . "'
-      ");
+      parent::$sql->setQuery($query);
       
-      self::$breadcrumb[parent::$sql->getValue('rex_488_rexblog_categories_id.id')]['name'] = parent::$sql->getValue('rex_488_rexblog_categories.name');
-      self::$breadcrumb[parent::$sql->getValue('rex_488_rexblog_categories_id.id')]['parent'] = parent::$sql->getValue('rex_488_rexblog_categories_id.id');
+      self::$breadcrumb[parent::$sql->getValue(parent::$prefix . '488_rexblog_categories_id.id')]['name'] = parent::$sql->getValue(parent::$prefix . '488_rexblog_categories.name');
+      self::$breadcrumb[parent::$sql->getValue(parent::$prefix . '488_rexblog_categories_id.id')]['parent'] = parent::$sql->getValue(parent::$prefix . '488_rexblog_categories_id.id');
       
-      $parent = parent::$sql->getValue('rex_488_rexblog_categories_id.parent');
+      $parent = parent::$sql->getValue(parent::$prefix . '488_rexblog_categories_id.parent');
     }
     
     self::$breadcrumb[0]['name'] = 'Startseite';
