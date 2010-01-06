@@ -62,14 +62,14 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
   {
     if(isset($_REQUEST['cancel'])) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=5');
-      exit();
+        exit();
     }
 
     parent::$sql->table = parent::$prefix . '488_categories';
     parent::$sql->setValue('parent_id', parent::$parent_id);
     parent::$sql->insert();
 
-    $category_id =  parent::$sql->last_insert_id;
+    $category_id = parent::$sql->last_insert_id;
 
     parent::$sql->table = parent::$prefix . '488_categories';
     parent::$sql->setValue('category_id', $category_id);
@@ -83,7 +83,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
     if(parent::$sql->update()) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=1');
-      exit();
+        exit();
     }
   }
 
@@ -118,19 +118,21 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
   public static function delete()
   {
-    parent::$sql->setQuery("SELECT id FROM " . parent::$prefix . "488_categories WHERE ( parent_id = '" . rex_request('id', 'int') . "' )");
+    self::$entry_id = rex_request('id', 'int');
+    
+    parent::$sql->setQuery("SELECT id FROM " . parent::$prefix . "488_categories WHERE ( parent_id = '" . self::$entry_id . "' )");
 
     if(parent::$sql->getRows() > 0) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&warning=3');
-      exit();
+        exit();
     }
 
     parent::$sql->table = parent::$prefix . '488_categories';
-    parent::$sql->wherevar = "WHERE ( category_id = '" . rex_request('id', 'int') . "' ) ";
+    parent::$sql->wherevar = "WHERE ( category_id = '" . self::$entry_id . "' ) ";
 
     if(parent::$sql->delete()) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=3');
-      exit();
+        exit();
     }
   }
 
@@ -164,7 +166,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
     if(parent::$sql->update() === true) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=4');
-      exit();
+        exit();
     }
   }
 
