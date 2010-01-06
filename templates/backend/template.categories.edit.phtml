@@ -25,17 +25,18 @@
       <input type="hidden" name="page" value="rexblog" />
       <input type="hidden" name="subpage" value="categories" />
       <input type="hidden" name="parent" value="<?php echo rex_request('parent', 'int'); ?>" />
+      <input type="hidden" name="id" value="<?php echo rex_request('id', 'int'); ?>" />
       <input type="hidden" name="func" value="write" />
-      <input type="hidden" name="mode" value="insert" />
+      <input type="hidden" name="mode" value="update" />
       <fieldset>
-        <legend><span>Kategorie hinzufügen</span></legend>
+        <legend><span>Kategorie bearbeiten</span></legend>
         <div class="rex-form-wrapper">
 
           <!-- category name -->
           <div class="rex-form-row">
             <p class="rex-form-text">
               <label for="title">Kategorie</label>
-              <input id="title" name="title" type="text" class="rex-form-text" value="" />
+              <input id="title" name="title" type="text" class="rex-form-text" value="<?php echo $category['title']; ?>" />
             </p>
           </div>
           <!-- /category name -->
@@ -44,7 +45,7 @@
           <div class="rex-form-row">
             <p class="rex-form-textarea">
               <label for="keywords">Suchbegriffe</label>
-              <textarea id="keywords" name="keywords" class="rex-form-textarea" rows="5"></textarea>
+              <textarea id="keywords" name="keywords" class="rex-form-textarea" rows="5"><?php echo $category['keywords']; ?></textarea>
             </p>
           </div>
           <!-- /category keywords -->
@@ -53,7 +54,7 @@
           <div class="rex-form-row">
             <p class="rex-form-textarea">
               <label for="description">Beschreibung</label>
-              <textarea id="description" name="description" class="rex-form-textarea" rows="10"></textarea>
+              <textarea id="description" name="description" class="rex-form-textarea" rows="10"><?php echo $category['description']; ?></textarea>
             </p>
           </div>
           <!-- /category description -->
@@ -62,6 +63,7 @@
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-submit rex-form-submit-2">
               <input type="submit" name="submit" class="rex-form-submit submit" value="Speichern" />
+              <input type="submit" name="update" class="rex-form-submit rex-form-submit-2 update" value="Übernehmen" />
               <input type="reset" name="reset" class="rex-form-submit rex-form-submit-2 reset" value="Zurücksetzen" />
               <input type="submit" name="cancel" class="rex-form-submit rex-form-submit-2 cancel" value="Abbrechen" />
             </p>

@@ -39,7 +39,7 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
 
     foreach(parent::$category_path as $key => $value)
     {
-      if($value['parent'] === 0)
+      if($value['parent_id'] === 0 && $value['status'] == '1')
       {
         if($value['id'] == parent::$category_id)
         {
@@ -95,7 +95,7 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
 
     foreach(parent::$category_path as $key => $value)
     {
-      if($value['parent'] == $id)
+      if($value['parent_id'] == $id && $value['status'] == '1')
       {
         if($value['id'] == parent::$category_id)
         {
@@ -145,7 +145,7 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
 
         if($id > 0)
         {
-          self::get_parents($value['parent']);
+          self::get_parents($value['parent_id']);
         }
       }
     }

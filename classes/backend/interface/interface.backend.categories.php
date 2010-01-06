@@ -24,7 +24,7 @@ interface _rex488_BackendCategoryInterface
    * @throws
    */
 
-  public static function write($mode = 'update');
+  public static function write();
 
   /*
    * read

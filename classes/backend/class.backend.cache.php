@@ -9,103 +9,160 @@
  *
  * http://www.opensource.org/licenses/mit-license.php
  * http://de.wikipedia.org/wiki/MIT-Lizenz
- */
+*/
 
-class _rex488_BackendCache extends _rex488_BackendBase
+abstract class _rex488_BackendCache extends _rex488_BackendBase
 {
-  private static $url;
+  private static $category_url;
 
-    /**
-   * initialize class objects
+  /**
+   * write_category_cache
    *
    * initializes needed class objects
    *
-   * @throws
-   * @global	$REX
    * @param
    * @return
+   * @throws
    */
 
   public static function write_category_cache()
   {
-    $result = parent::$sql->getArray("SELECT * FROM " . parent::$prefix . "488_rexblog_categories_id
-												 						LEFT JOIN " . parent::$prefix . "488_rexblog_categories
-																		ON (" . parent::$prefix . "488_rexblog_categories_id.id = " . parent::$prefix . "488_rexblog_categories.cid)
-																		ORDER BY priority ASC");
-		
-    $content = "<?php\n\n";
-    $content .= "\$REX['ADDON']['rexblog']['categories'] = array (\n";
+    $result = parent::$sql->getArray("SELECT * FROM " . parent::$prefix . "488_categories ORDER BY priority ASC");
 
-    foreach ($result as $value)
+    ///////////////////////////////////////////////////////////////////////////
+    // prepare cache file header for categories
+
+    $content = "<?php ";
+    $content .= "\$REX['ADDON']['rexblog']['categories'] = array (";
+
+    foreach ($result as $key => $value)
     {
-			global $REX;
-			
-      $url = "";
-      self::$url = "";
+      global $REX;
 
-      $id = $value['id'];
-      $parent = $value['parent'];
-      $name = $value['name'];
-      $keywords = $value['meta_keywords'];
-      $description = $value['meta_description'];
-      self::$url[$id] = $value['name'];
+      ///////////////////////////////////////////////////////////////////////////
+      // unset category_url variables
 
-      if ($parent > 0)
-			self::get_parents($parent);
+      self::$category_url = "";
+      $category_url = "";
 
-      self::$url = array_reverse(self::$url);
+      ///////////////////////////////////////////////////////////////////////////
+      // assign category variables
 
-      $append_url = self::prepare_url($name);
+      $category_id                = $value['id'];
+      $category_category_id       = $value['category_id'];
+      $category_parent_id         = $value['parent_id'];
+      $category_title             = $value['title'];
+      $category_keywords          = $value['keywords'];
+      $category_description       = $value['description'];
+      $category_status            = $value['status'];
 
-      foreach(self::$url as $value)
-      {
-	$value = self::prepare_url($value);
-	$url .= $value . '/';
+      ///////////////////////////////////////////////////////////////////////////
+      // assign category url value
+
+      self::$category_url[$category_id] = $value['title'];
+
+      ///////////////////////////////////////////////////////////////////////////
+      // assign category url value
+
+      if ($category_parent_id > 0) {
+        self::get_parents($category_parent_id);
       }
 
-      $url .= $append_url . '.html';
+      ///////////////////////////////////////////////////////////////////////////
+      // reverse category array for proper sorting
 
-      parent::$sql->setQuery("SELECT * FROM " . parent::$prefix . "488_rexblog_categories_id WHERE parent = " . $id . "");
-      $children = (self::$sql->getRows() > 0) ? 1 : 0;
+      self::$category_url = array_reverse(self::$category_url);
 
-      $content .= $id . " => ";
-      $content .= "array (\n";
-      $content .= "	'id' => " . $id . ",\n";
-      $content .= "	'parent' => " . $parent . ",\n";
-      $content .= "	'children' => " . $children . ",\n";
-      $content .= "	'name' => '" . $name . "',\n";
-      $content .= "	'keywords' => '" . $keywords . "',\n";
-      $content .= "	'description' => '" . $description . "',\n";
-      $content .= "	'url' => '" . $url . "'\n";
-      $content .= "),\n";
+      ///////////////////////////////////////////////////////////////////////////
+      // loop through categories to generate proper url
+
+      foreach(self::$category_url as $k => $v) {
+        $v = self::prepare_url($v);
+          $category_url .= $v . '/';
+      }
+
+      ///////////////////////////////////////////////////////////////////////////
+      // append the category title to the end
+
+      $category_url .= self::prepare_url($category_title) . '.html';
+
+      ///////////////////////////////////////////////////////////////////////////
+      // query database for potential childrens
+
+      parent::$sql->setQuery("SELECT * FROM " . parent::$prefix . "488_categories WHERE parent_id = " . $category_id . "");
+
+      ///////////////////////////////////////////////////////////////////////////
+      // if the category has children assign var
+
+      $category_children = (self::$sql->getRows() > 0) ? 1 : 0;
+
+      ///////////////////////////////////////////////////////////////////////////
+      // generate proper cachefile content
+
+      $content .= $category_id . " => ";
+      $content .= "array (";
+      $content .= "'id' => " . $category_id . ", ";
+      $content .= "'category_id' => " . $category_category_id . ", ";
+      $content .= "'parent_id' => " . $category_parent_id . ", ";
+      $content .= "'children' => " . $category_children . ", ";
+      $content .= "'title' => '" . $category_title . "', ";
+      $content .= "'keywords' => '" . $category_keywords . "', ";
+      $content .= "'description' => '" . $category_description . "', ";
+      $content .= "'status' => '" . $category_status . "', ";
+      $content .= "'url' => '" . $category_url . "'";
+      $content .= "), ";
     }
 
-    $content .= ")\n";
-    $content .= "\n?>";
+    ///////////////////////////////////////////////////////////////////////////
+    // add cache file footer
 
-    $file = $REX['INCLUDE_PATH'] . '/generated/files/_rex488_categories.inc.php';
+    $content .= "); ?>";
 
-    rex_put_file_contents($file, $content);
+    ///////////////////////////////////////////////////////////////////////////
+    // write the cache file into redaxos generated folder
+
+    rex_put_file_contents($REX['INCLUDE_PATH'] . '/generated/files/_rex488_categories.inc.php', $content);
   }
 
-  private function prepare_url($url)
+  /**
+   * prepare_url
+   *
+   * formatiert die übergebene variable als url
+   *
+   * @param string $url string to format
+   * @return string $url formated string
+   * @throws
+   */
+
+  private static function prepare_url($url)
   {
     $url = rex_parse_article_name($url);
     $url = strtolower($url);
     return $url;
   }
 
-  private function get_parents($parent)
-  {
-    $result = parent::$sql->getArray("SELECT * FROM " . parent::$prefix . "488_rexblog_categories_id
-								LEFT JOIN " . parent::$prefix . "488_rexblog_categories
-								ON (" . parent::$prefix . "488_rexblog_categories.cid = " . parent::$prefix . "488_rexblog_categories_id.id)
-								WHERE " . parent::$prefix . "488_rexblog_categories.cid = " . $parent . "
-								ORDER BY priority ASC");
-    self::$url[$result[0]['id']] = $result[0]['name'];
+  /**
+   * get_parents
+   *
+   * erweitert das url array um die elternkategorien
+   *
+   * @param int $parent id for the parent category
+   * @return
+   * @throws
+   */
 
-    if ($result[0]['parent'] > 0)
-      self::get_parents($result[0]['parent']);
+  private static function get_parents($parent)
+  {
+    $result = parent::$sql->getArray("
+      SELECT * FROM " . parent::$prefix . "488_categories
+      WHERE category_id = " . $parent . "
+      ORDER BY priority ASC
+    ");
+
+    self::$category_url[$result[0]['id']] = $result[0]['title'];
+
+    if ($result[0]['parent_id'] > 0)
+      self::get_parents($result[0]['parent_id']);
   }
 }
 

@@ -1,0 +1,26 @@
+<?php
+
+if(_rex488_is_category())
+{
+	
+?>
+	<div class="_rex488_post_overview">
+		<h1><a href="<?php echo _rex488_the_url(); ?>"><?php echo _rex488_the_title(); ?></a></h1>
+                <p><?php echo _rex488_the_excerpt('excerpt', 50, 'all'); ?></p>
+		<p>Geposted am <?php echo _rex488_the_post_date('d.m.Y'); ?> um <?php echo _rex488_the_post_date('H:i'); ?> Uhr</p>
+	</div>
+<?php
+
+} else if(_rex488_is_post()) {
+	
+?>
+	<div class="_rex488_post_details">
+		<h1><a href="<?php echo _rex488_the_url(); ?>"><?php echo _rex488_the_title(); ?></a></h1>
+		<p><?php echo _rex488_the_post(); ?></p>
+		<p>Geposted am <?php echo _rex488_the_post_date('d.m.Y'); ?> um <?php echo _rex488_the_post_date('H:i'); ?> Uhr</p>
+	</div>
+<?php
+
+}
+
+?>

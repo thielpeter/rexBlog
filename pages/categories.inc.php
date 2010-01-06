@@ -67,6 +67,17 @@ switch(rex_request('func', 'string'))
     break;
 
   /**
+   * führt die add anweisung aus, welche das
+   * benötigte template zum hinzufügen einer
+   * kategorie lädt.
+   */
+
+  case 'edit':
+    $category = _rex488_BackendCategories::read(rex_request('id', 'int'));
+    include _rex488_PATH . 'templates/backend/template.categories.edit.phtml';
+    break;
+
+  /**
    * als default funktion wird einfach nur die liste
    * der kategorien der aktuellen parent angezeigt.
    */

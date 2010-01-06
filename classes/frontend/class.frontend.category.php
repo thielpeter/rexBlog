@@ -28,7 +28,7 @@ abstract class _rex488_FrontendCategory extends _rex488_FrontendCategories
   public static function format_category($value = array(), $selector = "", $show_post_count = false)
   {
     $category  .= '<a' . $selector . ' href="' . self::prepare_url($value['url']) . '">';
-    $category  .= $value['name'];
+    $category  .= $value['title'];
     $category  .= '</a>';
 
     if($show_post_count === true)

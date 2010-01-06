@@ -41,7 +41,7 @@ abstract class _rex488_BackendErrorHandling extends _rex488_BackendBase
         'warning' => array(
           1 => 'Die Kategorie konnte nicht angelegt werden. Es fehlen Pflichtangaben.',
           2 => 'Die Kategorie konnte nicht gespeichert werden. Es fehlen Pflichtangaben.',
-          3 => 'Die Kategorie konnte nicht gelöscht werden. Sie enthält noch Unterkategorien.',
+          3 => 'Die Kategorie konnte nicht gelöscht werden, da sie noch Unterkategorien enthält.',
           4 => 'Der Status der Kategorie konnte nicht geändert werden.'
         )
       )
