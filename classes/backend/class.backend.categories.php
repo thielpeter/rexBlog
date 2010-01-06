@@ -36,17 +36,9 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
   public static function read()
   {
     $categories = parent::$sql->getArray(
-    sprintf("
-      SELECT * FROM %s
-      LEFT JOIN %s ON ( %s = %s )
-      WHERE ( %s = '%d' )
-      ORDER BY priority ASC",
-      parent::$prefix . "488_rexblog_categories_id",
-      parent::$prefix . "488_rexblog_categories",
-      parent::$prefix . "488_rexblog_categories.cid",
-      parent::$prefix . "488_rexblog_categories_id.id",
-      parent::$prefix . "488_rexblog_categories_id.parent",
-      parent::$parent_id)
+      sprintf("SELECT * FROM %s WHERE ( %s = '%d' ) ORDER BY priority ASC",
+        parent::$prefix . "488_categories", "parent_id", parent::$parent_id
+      )
     );
 
     return $categories;
@@ -55,60 +47,42 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
   /**
    * write
    *
-   * liefert die kategorien der aktuellen parent zurück
+   * schreibt die übergebenen daten für die kategorie
+   * in die datenbank. hierbei unterscheidet man, ob
+   * die kategorie neu angelegt wird, oder eine
+   * vorhandene kategorie erneuert wird.
    *
-   * @param
-   * @return array $categories array der aktuellen kategorien
+   * @param string $mode insert or update
+   * @return
    * @throws
    *
    */
 
   public static function write($mode = 'update')
   {
-    // if the cancel button was pressed, abort write function
-
-    if(isset($_REQUEST['cancel']))
-    {
+    if(isset($_REQUEST['cancel'])) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=5');
-
-      // exit after redirection
-
       exit();
     }
 
-    // at first we insert the id into the id table
-
-    parent::$sql->table = parent::$prefix . '488_rexblog_categories_id';
-    parent::$sql->setValue('parent', parent::$parent_id);
+    parent::$sql->table = parent::$prefix . '488_categories';
+    parent::$sql->setValue('parent_id', parent::$parent_id);
     parent::$sql->insert();
 
-    // next we collect the last insert id, we want to work on
+    $category_id =  parent::$sql->last_insert_id;
 
-    $id =  parent::$sql->last_insert_id;
-
-    // now we set the priority corresponding to the last insert id
-
-    parent::$sql->table = parent::$prefix . '488_rexblog_categories_id';
-    parent::$sql->setValue('priority', 1000000 + $id);
-    parent::$sql->wherevar = "WHERE ( id = '" . $id . "' )";
-    parent::$sql->update();
-
-    // finally we write the corresponding values into the categories table
-
-    parent::$sql->table = parent::$prefix . '488_rexblog_categories';
-    parent::$sql->setValue('cid', $id);
-    parent::$sql->setValue('name', rex_request('name', 'string'));
+    parent::$sql->table = parent::$prefix . '488_categories';
+    parent::$sql->setValue('category_id', $category_id);
     parent::$sql->setValue('clang', 0);
-    parent::$sql->wherevar = "WHERE ( id = '" . $id . "' )";
+    parent::$sql->setValue('title', rex_request('title', 'string'));
+    parent::$sql->setValue('keywords', rex_request('keywords', 'string'));
+    parent::$sql->setValue('description', rex_request('description', 'string'));
+    parent::$sql->setValue('priority', 1000000 + $category_id);
+    parent::$sql->setValue('status', 0);
+    parent::$sql->wherevar = "WHERE ( id = '" . $category_id . "' )";
 
-    // if the insert was successfull, redirect to default page
-
-    if(parent::$sql->insert())
-    {
+    if(parent::$sql->update()) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=1');
-
-      // exit after redirection
-
       exit();
     }
   }
@@ -144,47 +118,20 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
   public static function delete()
   {
-    // search for children of the category beeing deleted
+    parent::$sql->setQuery("SELECT id FROM " . parent::$prefix . "488_categories WHERE ( parent_id = '" . rex_request('id', 'int') . "' )");
 
-    parent::$sql->setQuery("
-      SELECT id
-      FROM " . parent::$prefix . "488_rexblog_categories_id
-      WHERE ( parent = '" . rex_request('id', 'int') . "' )
-    ");
-
-    // if the category has children, throw an error
-
-    if(parent::$sql->getRows() > 0)
-    {
+    if(parent::$sql->getRows() > 0) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&warning=3');
-
-      // exit after redirection
-
       exit();
     }
 
-    // else delete everything from the categories table
-    
-    parent::$sql->table = parent::$prefix . '488_rexblog_categories';
-    parent::$sql->wherevar = "WHERE ( cid = '" . rex_request('id', 'int') . "' ) ";
-    parent::$sql->delete();
+    parent::$sql->table = parent::$prefix . '488_categories';
+    parent::$sql->wherevar = "WHERE ( category_id = '" . rex_request('id', 'int') . "' ) ";
 
-    // and delete everything from the categories id table
-
-    parent::$sql->table = parent::$prefix . '488_rexblog_categories_id';
-    parent::$sql->wherevar = "WHERE ( id = '" . rex_request('id', 'int') . "' ) ";
-
-     // if deleting was successfull, redirect to initial page
-
-    if(parent::$sql->delete())
-    {
+    if(parent::$sql->delete()) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=3');
-
-      // exit after redirection
-
       exit();
     }
-
   }
 
   /**
@@ -200,40 +147,24 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
   public static function state()
   {
-    // set id of the category to work on
-
     self::$entry_id = rex_request('id', 'int');
 
-    // set query for category state
-
     $state = parent::$sql->setQuery(
-      sprintf("
-        SELECT *
-        FROM %s
-        WHERE ( %s = '%d' )",
-        parent::$prefix . "488_rexblog_categories",
-        "cid",
-        self::$entry_id
+      sprintf("SELECT * FROM %s WHERE ( %s = '%d' )",
+        parent::$prefix . "488_categories", "category_id", self::$entry_id
       )
     );
     
-    // receive current state from the database
-    
     $state = parent::$sql->getValue('status');
-
-    // set new state based on current statevalue
-
     $state = ($state == 1) ? 0 : 1;
 
-    parent::$sql->table = parent::$prefix . '488_rexblog_categories';
+    parent::$sql->table = parent::$prefix . '488_categories';
     parent::$sql->setValue('status', $state);
-    parent::$sql->wherevar = "WHERE ( cid = '" . self::$entry_id . "' )";
+    parent::$sql->wherevar = "WHERE ( category_id = '" . self::$entry_id . "' )";
 
-    // if state change was successfull redirect client
-
-    if(parent::$sql->update() === true)
-    {
+    if(parent::$sql->update() === true) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=4');
+      exit();
     }
   }
 
@@ -244,45 +175,30 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
    * @return array $breadcrumb array of parent elements
    */
 
-  public static function breadcrumb()
+  public static function breadcrumb($home = 'Home')
   {
     $parent = parent::$parent_id;
 
     while($parent > 0)
     {
-      $query = sprintf("
-        SELECT %s, %s, %s, %s
-        FROM %s
-        LEFT JOIN %s ON ( %s = %s )
-        WHERE ( %s = %d )
-      ",
-      parent::$prefix . "488_rexblog_categories_id.id",
-      parent::$prefix . "488_rexblog_categories_id.parent",
-      parent::$prefix . "488_rexblog_categories.name",
-      parent::$prefix . "488_rexblog_categories.cid",
-      parent::$prefix . "488_rexblog_categories_id",
-      parent::$prefix . "488_rexblog_categories",
-      parent::$prefix . "488_rexblog_categories_id.id",
-      parent::$prefix . "488_rexblog_categories.cid",
-      parent::$prefix . "488_rexblog_categories_id.id",
-      $parent
+      parent::$sql->setQuery(
+        sprintf("SELECT %s, %s, %s, %s FROM %s WHERE ( %s = %d )",
+          "id", "category_id", "parent_id", "title", parent::$prefix . "488_categories", "category_id", $parent
+        )
       );
-
-      parent::$sql->setQuery($query);
       
-      self::$breadcrumb[parent::$sql->getValue(parent::$prefix . '488_rexblog_categories_id.id')]['name'] = parent::$sql->getValue(parent::$prefix . '488_rexblog_categories.name');
-      self::$breadcrumb[parent::$sql->getValue(parent::$prefix . '488_rexblog_categories_id.id')]['parent'] = parent::$sql->getValue(parent::$prefix . '488_rexblog_categories_id.id');
+      self::$breadcrumb[parent::$sql->getValue('id')]['title'] = parent::$sql->getValue('title');
+      self::$breadcrumb[parent::$sql->getValue('id')]['parent_id'] = parent::$sql->getValue('id');
       
-      $parent = parent::$sql->getValue(parent::$prefix . '488_rexblog_categories_id.parent');
+      $parent = parent::$sql->getValue('parent_id');
     }
     
-    self::$breadcrumb[0]['name'] = 'Startseite';
-    self::$breadcrumb[0]['parent'] = 0;
+    self::$breadcrumb[0]['title'] = $home;
+    self::$breadcrumb[0]['parent_id'] = 0;
 
     self::$breadcrumb = array_reverse(self::$breadcrumb);
 
     return self::$breadcrumb;
   }
 }
-
 ?>

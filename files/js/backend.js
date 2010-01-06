@@ -17,13 +17,13 @@ jQuery(document).ready(function()
   var validator = jQuery("form#categories-form").validate(
   {
     rules: {
-      name: {
+      title: {
         required: true,
         minlength: 3
       }
     },
     messages: {
-      name: {
+      title: {
         required: "Die Bezeichnung der Kategorie darf nicht leer sein.",
         minlength: jQuery.format("Die Bezeichnung der Kategorie muss mindestens {0} Zeichen lang sein.")
       }
