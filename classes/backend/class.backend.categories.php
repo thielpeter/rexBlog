@@ -38,10 +38,10 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
   {
     if(isset($id))
     {
-      self::$entry_id = $id;
+      parent::$entry_id = $id;
       $result = parent::$sql->getArray(
         sprintf("SELECT * FROM %s WHERE ( %s = '%d' ) ORDER BY priority ASC",
-          parent::$prefix . "488_categories", "category_id", self::$entry_id
+          parent::$prefix . "488_categories", "category_id", parent::$entry_id
         )
       );
 
@@ -81,7 +81,6 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
   public static function write()
   {
     self::$mode = rex_request('mode', 'string');
-    self::$entry_id = rex_request('id', 'int');
 
     if(isset($_REQUEST['cancel'])) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=5');
@@ -128,19 +127,19 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
       parent::$sql->setValue('title', rex_request('title', 'string'));
       parent::$sql->setValue('keywords', rex_request('keywords', 'string'));
       parent::$sql->setValue('description', rex_request('description', 'string'));
-      parent::$sql->wherevar = "WHERE ( category_id = '" . self::$entry_id . "' )";
+      parent::$sql->wherevar = "WHERE ( category_id = '" . parent::$entry_id . "' )";
 
       if(parent::$sql->update())
       {
         $category = rex_register_extension_point('REX488_CAT_UPDATED', parent::$sql, array(
-          'category_id' => self::$entry_id,
+          'category_id' => parent::$entry_id,
           'title'       => rex_request('title', 'string'),
           'keywords'    => rex_request('keywords', 'string'),
           'description' => rex_request('description', 'string')
         ));
 
         if(isset($_REQUEST['update'])) {
-          header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&func=edit&id=' . self::$entry_id . '&parent=' . parent::$parent_id  . '&info=2');
+          header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&func=edit&id=' . parent::$entry_id . '&parent=' . parent::$parent_id  . '&info=2');
         } else {
           header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=2');
         }
@@ -197,9 +196,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
   public static function delete()
   {
-    self::$entry_id = rex_request('id', 'int');
-    
-    parent::$sql->setQuery("SELECT id, parent_id FROM " . parent::$prefix . "488_categories WHERE ( parent_id = '" . self::$entry_id . "' )");
+    parent::$sql->setQuery("SELECT id, parent_id FROM " . parent::$prefix . "488_categories WHERE ( parent_id = '" . parent::$entry_id . "' )");
 
     if(parent::$sql->getRows() > 0) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&warning=3');
@@ -207,13 +204,13 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
     }
 
     parent::$sql->table = parent::$prefix . '488_categories';
-    parent::$sql->wherevar = "WHERE ( id = '" . self::$entry_id . "' ) ";
+    parent::$sql->wherevar = "WHERE ( id = '" . parent::$entry_id . "' ) ";
 
     if(parent::$sql->delete())
     {
       $category = rex_register_extension_point('REX488_CAT_DELETED', parent::$sql, array(
-        'id'          => self::$entry_id,
-        'category_id' => self::$entry_id
+        'id'          => parent::$entry_id,
+        'category_id' => parent::$entry_id
       ));
 
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=3');
@@ -222,7 +219,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
   }
 
   /**
-   * state
+   * visualize
    *
    * setzt den status der kategorie
    *
@@ -232,13 +229,11 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
    *
    */
 
-  public static function state()
+  public static function visualize()
   {
-    self::$entry_id = rex_request('id', 'int');
-
     $state = parent::$sql->setQuery(
       sprintf("SELECT * FROM %s WHERE ( %s = '%d' )",
-        parent::$prefix . "488_categories", "category_id", self::$entry_id
+        parent::$prefix . "488_categories", "category_id", parent::$entry_id
       )
     );
     
@@ -247,13 +242,13 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
     parent::$sql->table = parent::$prefix . '488_categories';
     parent::$sql->setValue('status', $state);
-    parent::$sql->wherevar = "WHERE ( category_id = '" . self::$entry_id . "' )";
+    parent::$sql->wherevar = "WHERE ( category_id = '" . parent::$entry_id . "' )";
 
     if(parent::$sql->update())
     {
       $category = rex_register_extension_point('REX488_CAT_STATUS', parent::$sql, array(
-        'id'          => self::$entry_id,
-        'category_id' => self::$entry_id,
+        'id'          => parent::$entry_id,
+        'category_id' => parent::$entry_id,
         'status'      => $state
       ));
 

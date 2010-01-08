@@ -24,18 +24,6 @@ interface _rex488_BackendCategoryInterface
    * @throws
    */
 
-  public static function write();
-
-  /*
-   * read
-   *
-   * liefert die unterkategorien der aktuellen kategorie zurück
-   *
-   * @param
-   * @return array $categories array der kategorien
-   * @throws
-   */
-
   public static function read();
 
   /*
@@ -49,10 +37,22 @@ interface _rex488_BackendCategoryInterface
    *
    */
 
+  public static function write();
+
+  /*
+   * read
+   *
+   * liefert die unterkategorien der aktuellen kategorie zurück
+   *
+   * @param
+   * @return array $categories array der kategorien
+   * @throws
+   */
+
   public static function sort();
 
   /*
-   * state
+   * visualize
    *
    * setzt den status der kategorie
    *
@@ -62,7 +62,20 @@ interface _rex488_BackendCategoryInterface
    *
    */
 
-  public static function state();
+  public static function visualize();
+
+  /*
+   * delete
+   *
+   * löscht eine kategorie
+   *
+   * @param
+   * @return
+   * @throws
+   *
+   */
+
+  public static function delete();
 
   }
 

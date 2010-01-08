@@ -66,7 +66,7 @@ $breadcrumb = _rex488_BackendCategories::breadcrumb('Startseite');
           <td class="handle"></td>
           <td><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>">ändern</a></td>
           <td><a href="index.php?page=rexblog&subpage=categories&func=delete&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" onclick="return confirm('Sicher löschen?');">löschen</a></td>
-          <td><a href="index.php?page=rexblog&subpage=categories&func=state&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" class="<?php echo $status_classname; ?>"><?php echo $status_description; ?></a></td>
+          <td><a href="index.php?page=rexblog&subpage=categories&func=visualize&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" class="<?php echo $status_classname; ?>"><?php echo $status_description; ?></a></td>
         </tr>
             <?php
           }

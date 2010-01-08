@@ -23,6 +23,7 @@ class _rex488_BackendBase
 
   //protected
 
+  protected static $entry_id = 0;
   protected static $parent_id = 0;
   protected static $sql;
   protected static $prefix = 'rex_';
@@ -60,14 +61,12 @@ class _rex488_BackendBase
   {
     global $REX;
 
-    // define required base variables
-
     self::$sql            = rex_sql::getInstance();
     self::$sql->debugsql  = 0;
     self::$prefix         = $REX['TABLE_PREFIX'];
+    self::$entry_id       = rex_request('id', 'int');
     self::$parent_id      = rex_request('parent', 'int');
     self::$subpage        = rex_request('subpage', 'string');
-
   }
 
   /**
@@ -77,11 +76,7 @@ class _rex488_BackendBase
    *
    */
 
-  private function  __clone()
-  {
-
-  }
+  private function  __clone() {}
 
 }
-
 ?>
