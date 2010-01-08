@@ -57,6 +57,16 @@ switch(rex_request('func', 'string'))
     break;
 
   /**
+   * führt die state anweisung aus, nach welcher
+   * einer kategorie anhand der überlieferten id
+   * einer neue status zugewiesen wird.
+   */
+
+  case 'sort':
+    _rex488_BackendCategories::sort();
+    break;
+
+  /**
    * führt die add anweisung aus, welche das
    * benötigte template zum hinzufügen einer
    * kategorie lädt.

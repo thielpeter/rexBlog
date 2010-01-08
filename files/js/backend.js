@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
@@ -7,14 +7,14 @@
  *
  * http://www.opensource.org/licenses/mit-license.php
  * http://de.wikipedia.org/wiki/MIT-Lizenz
-*/
+ */
 
 jQuery(document).ready(function()
 {
   ///////////////////////////////////////////////////////////////
   // categories form validation
  
-  var validator = jQuery("form#categories-form").validate(
+  var validator = jQuery("#rex-form-categories").validate(
   {
     rules: {
       title: {
@@ -48,53 +48,39 @@ jQuery(document).ready(function()
   {
     validator.resetForm();
     jQuery('.rex-validate-message').css('display', 'none');
-    jQuery('form#categories-form').find('*').removeClass('error');
-    jQuery('form#categories-form').find('*').removeClass('label-error');
+    jQuery('#rex-form-categories').find('*').removeClass('error');
+    jQuery('#rex-form-categories').find('*').removeClass('label-error');
   });
 
 
   ///////////////////////////////////////////////////////////////
   // categories sorting
-
-  jQuery('a').removeAttr('accesskey');
-  jQuery('a').removeAttr('tabindex');
 	
-  jQuery("#rexblog-categories").tableDnD(
+  jQuery("#rex-categories").tableDnD(
   {
-    onDragClass: "category-drag",
-    dragHandle: "priority-handle",
-    onDragStart: function(table, row)
-    {
-    //jQuery("#rexblog-categories td").css('opacity', 0.25);
-    },
-    onDragMove: function(table, row)
-    {
-    //jQuery("#rexblog-categories tr.category-drag td").css('opacity', 1);
-    },
+    onDragClass: "drag",
+    dragHandle: "handle",
     onDrop: function(table, row)
     {
       var rows = table.tBodies[0].rows;
       var categories = "";
+      var category = "";
 			
-      for (var i = 0; i < rows.length; i++)
-      {
+      for (var i = 0; i < rows.length; i++) {
         category = rows[i].id;
         category = category.replace('rex-category-', '');
         categories += category + "~";
       }
 
-      //jQuery("#rexblog-categories td").fadeTo(250, 0.25);
-      jQuery("#rexblog-categories td.priority-handle").addClass('processing');
+      jQuery("#rex-categories").addClass('processing');
       jQuery.post('index.php?page=rexblog&subpage=categories', {
-        sort_categories: "sort",
-        categories_array: categories
+        output: "false",
+        func: "sort",
+        categories: categories
       },
-      function(data)
-      {
-        setTimeout(function()
-        {
-          //jQuery("#rexblog-categories td").fadeTo(250, 1);
-          jQuery("#rexblog-categories td.priority-handle").removeClass('processing');
+      function(data) {
+        setTimeout(function() {
+          jQuery("#rex-categories").removeClass('processing');
         }, 1000);
       })
     }

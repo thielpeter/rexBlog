@@ -161,9 +161,21 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
    *
    */
 
-  public static function sort($priorities)
+  public static function sort()
   {
+    $categories = rex_request('categories', 'string');
+    $categories = substr($categories, 0, strlen($categories) - 1);
+    $categories = explode('~', $categories);
 
+    foreach($categories as $key => $value)
+    {
+      parent::$sql->table = parent::$prefix . '488_categories';
+      parent::$sql->setValue('priority', 1000000 + $key);
+      parent::$sql->wherevar = "WHERE ( id = '" . $value . "' ) ";
+      parent::$sql->update();
+    }
+
+    exit();
   }
 
   /**
@@ -233,7 +245,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
     parent::$sql->setValue('status', $state);
     parent::$sql->wherevar = "WHERE ( category_id = '" . self::$entry_id . "' )";
 
-    if(parent::$sql->update() === true)
+    if(parent::$sql->update())
     {
       $category = rex_register_extension_point('REX488_CAT_STATUS', parent::$sql, array(
         'id'          => self::$entry_id,

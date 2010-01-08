@@ -1,13 +1,23 @@
-#rexblog-categories td.priority-handle
+#rex-categories td.handle
 {
-	background:transparent url(../img/priority.gif) center center no-repeat;
-	cursor:pointer;
+  background:transparent url(../img/priority.gif) center center no-repeat;
+  cursor:pointer;
 }
 
-#rexblog-categories td.processing
+#rex-categories.processing td.handle
 {
-	background:transparent url(../img/ajax.gif) center center no-repeat;
-	cursor:wait;
+  background:transparent url(../img/ajax.gif) center center no-repeat;
+  cursor:wait;
+}
+
+#rex-categories.processing
+{
+  cursor:wait;
+}
+
+#rex-categories tr.drag td
+{
+  background-color:#DFE9E9;
 }
 
 div.rex-form-wrapper

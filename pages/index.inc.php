@@ -9,29 +9,32 @@
  *
  * http://www.opensource.org/licenses/mit-license.php
  * http://de.wikipedia.org/wiki/MIT-Lizenz
- */
+*/
 
-require $REX['INCLUDE_PATH'] . '/layout/top.php';
+if(!rex_request('output', 'boolean'))
+  require $REX['INCLUDE_PATH'] . '/layout/top.php';
 
 // Title definieren
 
-rex_title('rexblog (v' . $REX['ADDON']['version']['rexblog'] . ')', $REX['ADDON']['rexblog']['SUBPAGES']);
+if(!rex_request('output', 'boolean'))
+  rex_title('rexblog (v' . $REX['ADDON']['version']['rexblog'] . ')', $REX['ADDON']['rexblog']['SUBPAGES']);
 
 // Subpages auswerten
 
 switch($subpage)
 {
-	case 'categories':
-		require _rex488_PATH . 'pages/categories.inc.php';
-		break;
-	default:
-		require _rex488_PATH . 'pages/categories.inc.php';
-		break;
+  case 'categories':
+    require _rex488_PATH . 'pages/categories.inc.php';
+    break;
+  default:
+    require _rex488_PATH . 'pages/categories.inc.php';
+    break;
 }
 
 // Fusszeile einbinden
 
-require $REX['INCLUDE_PATH'] . '/layout/bottom.php';
+if(!rex_request('output', 'boolean'))
+  require $REX['INCLUDE_PATH'] . '/layout/bottom.php';
 
 ?>
 

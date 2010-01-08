@@ -49,7 +49,7 @@ interface _rex488_BackendCategoryInterface
    *
    */
 
-  public static function sort($priorities);
+  public static function sort();
 
   /*
    * state

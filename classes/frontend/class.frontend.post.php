@@ -18,19 +18,18 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
   private static $the_post;
   private static $the_post_date;
   private static $the_excerpt;
+  private static $the_pathlist;
 
   public static function get_post_overview($the_page_amount)
   {
-    global $REX;
-    
-    $working_path = parent::$post_path;
+    self::$the_pathlist = parent::$post_path;
 
     parent::$the_page_amount  = $the_page_amount;
     parent::$the_page_current = rex_request('page', 'int');
     parent::$the_page_current = (parent::$the_page_current > 1) ? parent::$the_page_current - 1 : parent::$the_page_current;
-    parent::$the_page_max     = ceil(count($working_path) / parent::$the_page_amount);
+    parent::$the_page_max     = ceil(count(parent::$post_path) / parent::$the_page_amount);
 
-    $paginated_post = array_chunk($working_path, parent::$the_page_amount);
+    $paginated_post = array_chunk(self::$the_pathlist, parent::$the_page_amount);
 
     if(is_array($paginated_post) && count($paginated_post) > 0)
     {
@@ -58,8 +57,6 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
 
   public static function get_post_details()
   {
-    global $REX;
-
     foreach(parent::$post_path as $key => $value)
     {
       if($value['id'] == parent::$post_id)
@@ -93,7 +90,7 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
     return self::$the_post;
   }
 
-  public static function _rex488_the_post_date($date_format)
+  public static function _rex488_the_post_date($date_format = 'd.m.Y')
   {
     $the_date = strtotime(self::$the_post_date);
     $the_date = date($date_format, $the_date);
@@ -108,12 +105,9 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
     if(empty($the_excerpt_post))
       $the_excerpt_post = self::$the_post;
 
-    if($clean == 'all')
-    {
+    if($clean == 'all') {
       $the_excerpt_post = strip_tags($the_excerpt_post);
-    }
-    else if(!empty($clean))
-    {
+    } else if(!empty($clean)) {
       $the_excerpt_post = strip_tags($the_excerpt_post, $clean);
     }
 
@@ -125,22 +119,19 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
 
   private static function prepare_excerpt($string, $length)
   {
-    $explode 	= explode(' ', $string);
-    $string  	= '';
-    $dots 		= '...';
+    $explode  = explode(' ', $string);
+    $string   = '';
+    $dots     = '...';
 
-    if(count($explode) <= $length)
-    {
+    if(count($explode) <= $length) {
       $dots = '';
     }
 
-    for($i = 0; $i < $length; $i++)
-    {
+    for($i = 0; $i < $length; $i++) {
       $string .= $explode[$i] . " ";
     }
 
-    if ($dots)
-    {
+    if($dots) {
       $string = substr($string, 0, strlen($string));
     }
 
@@ -149,13 +140,9 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
 
   private static function prepare_url($url)
   {
-    global $REX;
-
-    if(!$REX['MOD_REWRITE'])
-    {
+    if(!parent::$rewrite) {
       return rex_getUrl(rex_request('article_id', 'int')) . '&_rex488_uri=' . $url;
-    } else
-    {
+    } else {
       return parent::get_article_base() . '/' . $url;
     }
   }

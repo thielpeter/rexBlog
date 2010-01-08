@@ -30,7 +30,7 @@ $breadcrumb = _rex488_BackendCategories::breadcrumb('Startseite');
     </div>
   </div>
   <form action="index.php?page=rexblog&subpage=categories" method="post">
-    <table class="rex-table" id="rexblog-categories">
+    <table class="rex-table" id="rex-categories">
       <caption>Liste der Kategorien</caption>
       <colgroup>
         <col width="40" />
@@ -63,7 +63,7 @@ $breadcrumb = _rex488_BackendCategories::breadcrumb('Startseite');
           <td class="rex-icon"><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>"><span class="rex-i-element rex-i-category"><span class="rex-i-element-text">Editieren</span></span></a></td>
           <td><?php echo $category['id']; ?></td>
           <td><a href="index.php?page=rexblog&subpage=categories&parent=<?php echo $category['id']; ?>"><?php echo $category['title']; ?></a></td>
-          <td class="priority-handle"></td>
+          <td class="handle"></td>
           <td><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>">ändern</a></td>
           <td><a href="index.php?page=rexblog&subpage=categories&func=delete&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" onclick="return confirm('Sicher löschen?');">löschen</a></td>
           <td><a href="index.php?page=rexblog&subpage=categories&func=state&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" class="<?php echo $status_classname; ?>"><?php echo $status_description; ?></a></td>

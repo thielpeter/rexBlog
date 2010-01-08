@@ -31,8 +31,7 @@ abstract class _rex488_FrontendCategory extends _rex488_FrontendCategories
     $category  .= $value['title'];
     $category  .= '</a>';
 
-    if($show_post_count === true)
-    {
+    if($show_post_count === true) {
       $category .=  '<span> (' . _rex488_FrontendCategories::get_category_post_count($value['id']) . ')</span>';
     }
 
@@ -51,13 +50,9 @@ abstract class _rex488_FrontendCategory extends _rex488_FrontendCategories
 
   private static function prepare_url($unprepared_url)
   {
-    global $REX;
-
-    if(!$REX['MOD_REWRITE'])
-    {
+    if(!parent::$rewrite) {
       $prepared_url = rex_getUrl(rex_request('article_id', 'int')) . '&_rex488_uri=' . $unprepared_url;
-    } else
-    {
+    } else {
       $prepared_url = parent::get_article_base() . '/' . $unprepared_url;
     }
 

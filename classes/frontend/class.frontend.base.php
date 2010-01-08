@@ -22,6 +22,7 @@ class _rex488_FrontendBase
   protected static $category_id = 0;
   protected static $post_id;
 
+  protected static $rewrite;
   protected static $prefix = 'rex_';
   protected static $sql;
 
@@ -64,6 +65,7 @@ class _rex488_FrontendBase
   {
     global $REX;
 
+    self::$rewrite = $REX['MOD_REWRITE'];
     self::$prefix = $REX['TABLE_PREFIX'];
     self::$sql = rex_sql::getInstance();
 
