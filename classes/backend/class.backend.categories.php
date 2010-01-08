@@ -231,17 +231,17 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
   public static function visualize()
   {
-    $state = parent::$sql->setQuery(
+    $visualization = parent::$sql->setQuery(
       sprintf("SELECT * FROM %s WHERE ( %s = '%d' )",
         parent::$prefix . "488_categories", "category_id", parent::$entry_id
       )
     );
     
-    $state = parent::$sql->getValue('status');
-    $state = ($state == 1) ? 0 : 1;
+    $visualization = parent::$sql->getValue('status');
+    $visualization = ($visualization == 1) ? 0 : 1;
 
     parent::$sql->table = parent::$prefix . '488_categories';
-    parent::$sql->setValue('status', $state);
+    parent::$sql->setValue('status', $visualization);
     parent::$sql->wherevar = "WHERE ( category_id = '" . parent::$entry_id . "' )";
 
     if(parent::$sql->update())
@@ -249,7 +249,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
       $category = rex_register_extension_point('REX488_CAT_STATUS', parent::$sql, array(
         'id'          => parent::$entry_id,
         'category_id' => parent::$entry_id,
-        'status'      => $state
+        'status'      => $visualization
       ));
 
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=4');
