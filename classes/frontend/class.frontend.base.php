@@ -23,6 +23,7 @@ class _rex488_FrontendBase
   protected static $post_id;
 
   protected static $rewrite;
+  protected static $include_path = '';
   protected static $prefix = 'rex_';
   protected static $sql;
 
@@ -66,6 +67,7 @@ class _rex488_FrontendBase
     global $REX;
 
     self::$rewrite = $REX['MOD_REWRITE'];
+    self::$include_path = $REX['INCLUDE_PATH'];
     self::$prefix = $REX['TABLE_PREFIX'];
     self::$sql = rex_sql::getInstance();
 
@@ -73,11 +75,19 @@ class _rex488_FrontendBase
     self::$url = str_replace('%20', '+', self::$url);
     self::$url = str_replace(' ', '+', self::$url);
 
-    require $REX['INCLUDE_PATH'] . '/generated/files/_rex488_categories.inc.php';
-    self::$category_path = $REX['ADDON']['rexblog']['categories'];
+    if(file_exists(self::$include_path . '/generated/files/_rex488_categories.inc.php')) {
+      require self::$include_path . '/generated/files/_rex488_categories.inc.php';
+        self::$category_path = $REX['ADDON']['rexblog']['categories'];
+    } else {
+      self::$category_path = array();
+    }
 
-    require $REX['INCLUDE_PATH'] . '/generated/files/_rex488_post.pathlist.inc.php';
-    self::$post_pathlist = $REX['ADDON']['rexblog']['post']['pathlist'];
+    if(file_exists(self::$include_path . '/generated/files/_rex488_post.pathlist.inc.php')) {
+      require self::$include_path . '/generated/files/_rex488_post.pathlist.inc.php';
+        self::$post_pathlist = $REX['ADDON']['rexblog']['post']['pathlist'];
+    } else {
+      self::$post_pathlist = array();
+    }
   }
 
   /**
@@ -87,11 +97,8 @@ class _rex488_FrontendBase
    * @return
    * @throws
    */
-
-  public function __clone()
-  {
-
-  }
+  
+  public function __clone() {}
 
   /**
    * set category id
@@ -114,8 +121,8 @@ class _rex488_FrontendBase
         self::$category_id = $value['id'];
         self::set_is_category(true);
 
-        if(file_exists($REX['INCLUDE_PATH'] . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php'))
-          require $REX['INCLUDE_PATH'] . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php';
+        if(file_exists(self::$include_path . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php'))
+          require self::$include_path . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php';
 
         if(!isset($REX['ADDON']['rexblog']['post'][self::$category_id]))
         {
@@ -151,8 +158,10 @@ class _rex488_FrontendBase
           self::$post_id = $value['id'];
           self::set_is_post(true);
 
-          require $REX['INCLUDE_PATH'] . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php';
-          self::$post_path = $REX['ADDON']['rexblog']['post'][self::$category_id];
+          if(file_exists(self::$include_path . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php')) {
+            require self::$include_path . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php';
+              self::$post_path = $REX['ADDON']['rexblog']['post'][self::$category_id];
+          }
         }
       }
     }

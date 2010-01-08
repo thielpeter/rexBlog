@@ -116,8 +116,8 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
           'keywords'    => rex_request('keywords', 'string'),
           'description' => rex_request('description', 'string'),
           'priority'    => 1000000 + $category_id,
-          'status'      => 0)
-        );
+          'status'      => 0
+        ));
 
         header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=1');
           exit();
@@ -136,8 +136,8 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
           'category_id' => self::$entry_id,
           'title'       => rex_request('title', 'string'),
           'keywords'    => rex_request('keywords', 'string'),
-          'description' => rex_request('description', 'string'))
-        );
+          'description' => rex_request('description', 'string')
+        ));
 
         if(isset($_REQUEST['update'])) {
           header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&func=edit&id=' . self::$entry_id . '&parent=' . parent::$parent_id  . '&info=2');
@@ -175,6 +175,10 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
       parent::$sql->update();
     }
 
+    $category = rex_register_extension_point('REX488_CAT_PRIORITY', parent::$sql, array(
+      'categories' => $categories
+    ));
+
     exit();
   }
 
@@ -209,8 +213,8 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
     {
       $category = rex_register_extension_point('REX488_CAT_DELETED', parent::$sql, array(
         'id'          => self::$entry_id,
-        'category_id' => self::$entry_id)
-      );
+        'category_id' => self::$entry_id
+      ));
 
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=3');
         exit();
@@ -250,8 +254,8 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
       $category = rex_register_extension_point('REX488_CAT_STATUS', parent::$sql, array(
         'id'          => self::$entry_id,
         'category_id' => self::$entry_id,
-        'status'      => $state)
-      );
+        'status'      => $state
+      ));
 
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=4');
         exit();

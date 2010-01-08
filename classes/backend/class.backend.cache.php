@@ -54,6 +54,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
       $category_title             = $value['title'];
       $category_keywords          = $value['keywords'];
       $category_description       = $value['description'];
+      $category_priority          = $value['priority'];
       $category_status            = $value['status'];
 
       ///////////////////////////////////////////////////////////////////////////
@@ -108,6 +109,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
       $content .= "'title' => '" . $category_title . "', ";
       $content .= "'keywords' => '" . $category_keywords . "', ";
       $content .= "'description' => '" . $category_description . "', ";
+      $content .= "'priority' => '" . $category_priority . "', ";
       $content .= "'status' => '" . $category_status . "', ";
       $content .= "'url' => '" . $category_url . "'";
       $content .= "), ";
