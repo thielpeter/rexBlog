@@ -52,8 +52,10 @@ function _rex488_autoload($params)
     '_rex488_BackendException'          => 'backend/class.backend.exception.php',
     '_rex488_BackendErrorHandling'      => 'backend/class.backend.errorhandling.php',
     '_rex488_BackendCategoryInterface'  => 'backend/interface/interface.backend.categories.php',
+    '_rex488_BackendArticleInterface'   => 'backend/interface/interface.backend.articles.php',
     '_rex488_BackendPost'               => 'backend/class.backend.post.php',
     '_rex488_BackendCategories'         => 'backend/class.backend.categories.php',
+    '_rex488_BackendArticles'           => 'backend/class.backend.articles.php',
     '_rex488_FrontendBase'              => 'frontend/class.frontend.base.php',
     '_rex488_FrontendDesignator'        => 'frontend/class.frontend.designator.php',
     '_rex488_FrontendCategories'        => 'frontend/class.frontend.categories.php',
@@ -105,7 +107,8 @@ if($REX['REDAXO'] && rex_request('page', 'string') == 'rexblog')
   // Subpages definieren
 
   $REX['ADDON']['rexblog']['SUBPAGES'] = array(
-          array('categories', 'Kategorien', '', array('clang' => $REX['CUR_CLANG']))
+    array('categories', 'Kategorien', '', array('clang' => $REX['CUR_CLANG'])),
+    array('articles', 'Artikel', '', array('clang' => $REX['CUR_CLANG']))
   );
 
   // Stylesheets und Javascript einbinden

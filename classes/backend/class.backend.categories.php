@@ -39,6 +39,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
     if(isset($id))
     {
       parent::$entry_id = $id;
+      
       $result = parent::$sql->getArray(
         sprintf("SELECT * FROM %s WHERE ( %s = '%d' ) ORDER BY priority ASC",
           parent::$prefix . "488_categories", "category_id", parent::$entry_id
@@ -103,6 +104,8 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
       parent::$sql->setValue('description', rex_request('description', 'string'));
       parent::$sql->setValue('priority', 1000000 + $category_id);
       parent::$sql->setValue('status', 0);
+      parent::$sql->setValue('create_user', parent::$user);
+      parent::$sql->setValue('create_date', time());
       parent::$sql->wherevar = "WHERE ( id = '" . $category_id . "' )";
 
       if(parent::$sql->update())
@@ -127,6 +130,8 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
       parent::$sql->setValue('title', rex_request('title', 'string'));
       parent::$sql->setValue('keywords', rex_request('keywords', 'string'));
       parent::$sql->setValue('description', rex_request('description', 'string'));
+      parent::$sql->setValue('update_user', parent::$user);
+      parent::$sql->setValue('update_date', time());
       parent::$sql->wherevar = "WHERE ( category_id = '" . parent::$entry_id . "' )";
 
       if(parent::$sql->update())

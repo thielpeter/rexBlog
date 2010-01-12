@@ -23,6 +23,9 @@ if(!rex_request('output', 'boolean'))
 
 switch($subpage)
 {
+  case 'articles':
+    require _rex488_PATH . 'pages/articles.inc.php';
+    break;
   case 'categories':
     require _rex488_PATH . 'pages/categories.inc.php';
     break;

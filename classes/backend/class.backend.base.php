@@ -25,6 +25,7 @@ class _rex488_BackendBase
 
   protected static $entry_id = 0;
   protected static $parent_id = 0;
+  protected static $user = '';
   protected static $sql;
   protected static $prefix = 'rex_';
   protected static $subpage = '';
@@ -62,8 +63,9 @@ class _rex488_BackendBase
     global $REX;
 
     self::$sql            = rex_sql::getInstance();
-    self::$sql->debugsql  = 0;
+    self::$sql->debugsql  = 1;
     self::$prefix         = $REX['TABLE_PREFIX'];
+    self::$user           = $REX['USER']->getValue('name');
     self::$entry_id       = rex_request('id', 'int');
     self::$parent_id      = rex_request('parent', 'int');
     self::$subpage        = rex_request('subpage', 'string');

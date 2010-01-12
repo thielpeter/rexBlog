@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ *
+ * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
+ * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
+ * folgenden Web-Adressen eingesehen werden.
+ *
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://de.wikipedia.org/wiki/MIT-Lizenz
+ */
+
+?>
+<div class="rex-addon-output-v2">
+
+  <div class="rex-message rex-validate-message">
+    <div class="rex-warning">
+      <p><span>Es wurden Fehler bei der Eingabe festgestellt.</span></p>
+    </div>
+  </div>
+
+  <div id="rex-addon-editmode" class="rex-form">
+    <form action="index.php?page=rexblog&subpage=articles" method="post" id="rex-form-articles">
+      <input type="hidden" name="page" value="rexblog" />
+      <input type="hidden" name="subpage" value="articles" />
+      <input type="hidden" name="id" value="<?php echo rex_request('id', 'int'); ?>" />
+      <input type="hidden" name="func" value="write" />
+      <input type="hidden" name="mode" value="update" />
+      <fieldset>
+        <legend><span>Artikel bearbeiten</span></legend>
+        <div class="rex-form-wrapper">
+
+          <!-- article title -->
+          <div class="rex-form-row">
+            <p class="rex-form-text">
+              <label for="title">Titel</label>
+              <input id="title" name="title" type="text" class="rex-form-text" value="<?php echo $article['title']; ?>" />
+            </p>
+          </div>
+          <!-- /article title -->
+
+          <!-- article content -->
+          <div class="rex-form-row">
+            <p class="rex-form-textarea">
+              <label for="article_post">Beitrag</label>
+              <textarea id="article_post" name="article_post" class="rex-form-textarea" rows="5"><?php echo $article['article_post']; ?></textarea>
+            </p>
+          </div>
+          <!-- /article content -->
+
+          <!-- form actions -->
+          <div class="rex-form-row">
+            <p class="rex-form-col-a rex-form-submit rex-form-submit-2">
+              <input type="submit" name="submit" class="rex-form-submit submit" value="Speichern" />
+              <input type="submit" name="update" class="rex-form-submit rex-form-submit-2 update" value="Übernehmen" />
+              <input type="reset" name="reset" class="rex-form-submit rex-form-submit-2 reset" value="Zurücksetzen" />
+              <input type="submit" name="cancel" class="rex-form-submit rex-form-submit-2 cancel" value="Abbrechen" />
+            </p>
+          </div>
+          <!-- /form actions -->
+
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>

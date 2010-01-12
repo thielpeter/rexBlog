@@ -54,3 +54,8 @@ input.error
 {
   display:none;
 }
+
+.rex-table
+{
+  line-height:120%;
+}

@@ -44,7 +44,23 @@ abstract class _rex488_BackendErrorHandling extends _rex488_BackendBase
           3 => 'Die Kategorie konnte nicht gelöscht werden, da sie noch Unterkategorien enthält.',
           4 => 'Der Status der Kategorie konnte nicht geändert werden.'
         )
+      ),
+      'articles' => array(
+        'info' => array(
+          1 => 'Der Artikel wurde erfolgreich angelegt.',
+          2 => 'Der Artikel wurde erfolgreich gespeichert.',
+          3 => 'Der Artikel wurde erfolgreich gelöscht.',
+          4 => 'Der Status des Artikels wurde erfolgreich geändert.',
+          5 => 'Die Eingabe wurde erfolgreich abgebrochen.'
+        ),
+        'warning' => array(
+          1 => 'Der Artikel konnte nicht angelegt werden. Es fehlen Pflichtangaben.',
+          2 => 'Der Artikel konnte nicht gespeichert werden. Es fehlen Pflichtangaben.',
+          3 => '',
+          4 => 'Der Status des Artikels konnte nicht geändert werden.'
+        )
       )
+
     );
 
     // define which mode should be used
