@@ -28,8 +28,10 @@ rex_register_extension('REX488_CAT_PRIORITY', '_rex488_write_category_cache');
 rex_register_extension('REX488_CAT_UPDATED', '_rex488_write_category_cache');
 rex_register_extension('REX488_CAT_DELETED', '_rex488_write_category_cache');
 rex_register_extension('REX488_CAT_STATUS', '_rex488_write_category_cache');
+rex_register_extension('ALL_GENERATED', '_rex488_write_category_cache');
 
 function _rex488_write_category_cache() {
+  _rex488_BackendBase::get_instance();
   _rex488_BackendCache::write_category_cache();
 }
 
