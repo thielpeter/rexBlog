@@ -53,4 +53,40 @@ function _rex488_write_article_cache() {
   _rex488_BackendCache::write_article_pathlist();
 }
 
+/**
+ * _rex488_push_user_page
+ *
+ * pushed eine subpage eines addons anhand der
+ * übergebenen variable den reiter in die
+ * hauptstruktur der addon navigation
+ *
+ * @param string $custom_permission custom permission to push
+ * @param string $custom_tile custom title
+ */
+
+function _rex488_push_user_page($custom_permission, $custom_title)
+{
+  global $REX;
+
+  preg_match('/(.*)\[(.*)\]/', $custom_permission, $custom_split);
+
+  $pages = array();
+
+  foreach($REX['USER']->pages as $k => $v)
+  {
+    $pages[$k] = $v;
+  }
+
+  unset($pages[$custom_split[1]]);
+
+  $pages[$custom_split[1] . '&subpage=' . $custom_split[2]] = array(
+    0 => $custom_title,
+    1 => 1,
+    2 => 1,
+    3 => ''
+  );
+
+  $REX['USER']->pages = $pages;
+}
+
 ?>

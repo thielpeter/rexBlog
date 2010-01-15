@@ -64,7 +64,7 @@ class _rex488_BackendBase
     global $REX;
 
     self::$sql            = rex_sql::getInstance();
-    self::$sql->debugsql  = 1;
+    self::$sql->debugsql  = 0;
     self::$prefix         = $REX['TABLE_PREFIX'];
     self::$user           = $REX['USER']->getValue('name');
     self::$include_path   = $REX['INCLUDE_PATH'];
