@@ -164,7 +164,7 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
 
   public static function get_category_post_count($category_id)
   {
-    parent::$sql->setQuery("SELECT * FROM " . parent::$prefix . "488_rexblog_postings WHERE ( FIND_IN_SET( " . $category_id . ", REPLACE(cat, '|+|', ',') ) ) ");
+    parent::$sql->setQuery("SELECT * FROM " . parent::$prefix . "488_articles WHERE (FIND_IN_SET(" . $category_id . ", REPLACE(categories, ',', ',')))");
     return parent::$sql->getRows();
   }
 }

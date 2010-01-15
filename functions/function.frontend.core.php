@@ -229,6 +229,24 @@ function _rex488_the_post_date($date_format = 'd.m.Y')
 }
 
 /**
+ * _rex488_the_post_user
+ *
+ * erzeugt den ersteller des beitragstextes. einstellungen und
+ * formatierungen an der ausgabe können direkt in der separaten
+ * post.inc.php datei im template verzeichnis gemacht werden.
+ *
+ * @throws
+ * @global
+ * @param
+ * @return
+ */
+
+function _rex488_the_post_user()
+{
+  return _rex488_FrontendPost::_rex488_the_post_user();
+}
+
+/**
  * _rex488_the_title
  *
  * erzeugt den beitragstitel basierend auf dem aktuellen state. einstellungen

@@ -22,6 +22,18 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
   protected static $entry_id = 0;
   protected static $next = 0;
 
+  /**
+   * write
+   *
+   * liest artikel aus der datenbank aus. als parameter
+   * kann eine bestimmte id eines artikels angegeben
+   * werden so dass nur dieser ausgelesen wird.
+   *
+   * @param int $id id eines bestimmten artikels
+   * @return array mixed single or multiarray of articles
+   * @throws
+   */
+
   public static function read($id = null)
   {
     if(isset($id))
@@ -56,6 +68,18 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
     }
   }
 
+  /**
+   * write
+   *
+   * schreibt oder aktualisiert einen artikel
+   * der datenbank. die funktion entscheidet
+   * anhand des übergebenen mode parameters.
+   *
+   * @param
+   * @return
+   * @throws
+   */
+
   public static function write()
   {
     self::$mode = rex_request('mode', 'string');
@@ -63,6 +87,77 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
     if(isset($_REQUEST['cancel'])) {
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&info=5');
         exit();
+    }
+
+    // insert mode
+
+    if(self::$mode == 'insert')
+    {
+      parent::$sql->table = parent::$prefix . '488_articles';
+      parent::$sql->setValue('title', rex_request('title', 'string'));
+      parent::$sql->setValue('article_post', rex_request('article_post', 'string'));
+      parent::$sql->setValue('status', 0);
+      parent::$sql->setValue('create_user', parent::$user);
+      parent::$sql->setValue('create_date', time());
+
+      /**
+       * if the insert was successfull, we want
+       * to connect an extension point to it.
+       *
+       * @param
+       * @return
+       * @throws
+       */
+
+      if(parent::$sql->insert())
+      {
+        $article = rex_register_extension_point('REX488_ART_ADDED', parent::$sql, array(
+          'title'         => rex_request('title', 'string'),
+          'article_post'  => rex_request('article_post', 'string')
+        ));
+
+        header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=1');
+          exit();
+      }
+    }
+      // update mode
+
+      else if(self::$mode == 'update')
+    {
+      parent::$sql->table = parent::$prefix . '488_articles';
+      parent::$sql->setValue('title', rex_request('title', 'string'));
+      parent::$sql->setValue('article_post', rex_request('article_post', 'string'));
+      parent::$sql->setValue('update_user', parent::$user);
+      parent::$sql->setValue('update_date', time());
+      parent::$sql->wherevar = "WHERE ( id = '" . parent::$entry_id . "' )";
+
+      /**
+       * if the update was successfull, we want
+       * to connect an extension point to it.
+       *
+       * @param
+       * @return
+       * @throws
+       */
+
+      if(parent::$sql->update())
+      {
+        $category = rex_register_extension_point('REX488_ART_UPDATED', parent::$sql, array(
+          'id'            => parent::$entry_id,
+          'title'         => rex_request('title', 'string'),
+          'article_post'  => rex_request('article_post', 'string')
+        ));
+
+        // redirect to proper page
+
+        if(isset($_REQUEST['update'])) {
+          header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&func=edit&id=' . parent::$entry_id . '&parent=' . parent::$parent_id  . '&info=2');
+        } else {
+          header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=2');
+        }
+
+        exit();
+      }
     }
   }
 
@@ -79,13 +174,13 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
   public static function delete()
   {
-    parent::$sql->table = parent::$prefix . '488_article';
+    parent::$sql->table = parent::$prefix . '488_articles';
     parent::$sql->wherevar = "WHERE ( id = '" . parent::$entry_id . "' ) ";
 
     if(parent::$sql->delete())
     {
       $article = rex_register_extension_point('REX488_ART_DELETED', parent::$sql, array(
-        'id'          => parent::$entry_id
+        'id' => parent::$entry_id
       ));
 
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&info=3');
@@ -122,8 +217,8 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
     if(parent::$sql->update())
     {
       $category = rex_register_extension_point('REX488_ART_STATUS', parent::$sql, array(
-        'id'          => parent::$entry_id,
-        'status'      => $visualization
+        'id'      => parent::$entry_id,
+        'status'  => $visualization
       ));
 
       header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&info=4');

@@ -17,6 +17,7 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
   private static $the_url;
   private static $the_post;
   private static $the_post_date;
+  private static $the_post_user;
   private static $the_excerpt;
   private static $the_pathlist;
 
@@ -41,9 +42,9 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
           {
             self::$the_title      = $value['title'];
             self::$the_url        = self::prepare_url($value['url'][$category_key]);
-            self::$the_post       = $value['post'];
-            self::$the_excerpt    = $value['excerpt'];
-            self::$the_post_date  = $value['date'];
+            self::$the_post       = $value['article_post'];
+            self::$the_post_date  = $value['create_date'];
+            self::$the_post_user  = $value['create_user'];
 
             include _rex488_PATH . 'templates/frontend/template.post.phtml';
           }
@@ -67,8 +68,9 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
 
         self::$the_title      = $value['title'];
         self::$the_url        = self::prepare_url($value['url'][$current_category_id]);
-        self::$the_post       = $value['post'];
-        self::$the_post_date  = $value['date'];
+        self::$the_post       = $value['article_post'];
+        self::$the_post_date  = $value['create_date'];
+        self::$the_post_user  = $value['create_user'];
 
         include _rex488_PATH . 'templates/frontend/template.post.phtml';
       }
@@ -92,10 +94,15 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
 
   public static function _rex488_the_post_date($date_format = 'd.m.Y')
   {
-    $the_date = strtotime(self::$the_post_date);
-    $the_date = date($date_format, $the_date);
+    //$the_date = strtotime(self::$the_post_date);
+    $the_date = date($date_format, self::$the_post_date);
 
     return $the_date;
+  }
+
+  public static function _rex488_the_post_user()
+  {
+    return self::$the_post_user;
   }
 
   public static function _rex488_the_excerpt($type, $length, $clean)

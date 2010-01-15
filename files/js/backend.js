@@ -85,4 +85,46 @@ jQuery(document).ready(function()
       })
     }
   });
+
+  ///////////////////////////////////////////////////////////////
+  // articles form validation
+
+  var validator = jQuery("#rex-form-articles").validate(
+  {
+    rules: {
+      title: {
+        required: true,
+        minlength: 3
+      }
+    },
+    messages: {
+      title: {
+        required: "Die Bezeichnung des Artikels darf nicht leer sein.",
+        minlength: jQuery.format("Die Bezeichnung des Artikels muss mindestens {0} Zeichen lang sein.")
+      }
+    },
+    highlight: function(element, errorClass)
+    {
+      jQuery(element).addClass(errorClass);
+      jQuery(element.form).find("label[for=" + element.id + "]").addClass('label-error');
+      jQuery(element.form).find("label[for=" + element.id + "]").parent().parent().addClass(errorClass);
+      jQuery('.rex-validate-message').css('display', 'block');
+    },
+    unhighlight: function(element, errorClass)
+    {
+      jQuery(element).removeClass(errorClass);
+      jQuery(element.form).find("label[for=" + element.id + "]").removeClass('label-error');
+      jQuery(element.form).find("label[for=" + element.id + "]").parent().parent().removeClass(errorClass);
+      jQuery('.rex-validate-message').css('display', 'none');
+    }
+  });
+
+  jQuery('.reset').click(function()
+  {
+    validator.resetForm();
+    jQuery('.rex-validate-message').css('display', 'none');
+    jQuery('#rex-form-articles').find('*').removeClass('error');
+    jQuery('#rex-form-articles').find('*').removeClass('label-error');
+  });
+
 });

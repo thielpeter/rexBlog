@@ -14,11 +14,12 @@
 abstract class _rex488_BackendCache extends _rex488_BackendBase
 {
   private static $category_url;
+  private static $category_path;
 
   /**
    * write_category_cache
    *
-   * initializes needed class objects
+   * function to write category cache
    *
    * @param
    * @return
@@ -124,6 +125,202 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
     // write the cache file into redaxos generated folder
 
     rex_put_file_contents($REX['INCLUDE_PATH'] . '/generated/files/_rex488_categories.inc.php', $content);
+  }
+
+  /**
+   * write_article_cache
+   *
+   * function to write article cache
+   *
+   * @param
+   * @return
+   * @throws
+   */
+
+  public static function write_article_cache()
+  {
+    if(file_exists(parent::$include_path . '/generated/files/_rex488_categories.inc.php')) {
+      require parent::$include_path . '/generated/files/_rex488_categories.inc.php';
+        self::$category_path = $REX['ADDON']['rexblog']['categories'];
+    }
+    
+    $categories = self::$sql->getArray("SELECT id FROM " . self::$prefix . "488_categories");
+
+    // loop through all categories and create corresponding postfiles
+
+    foreach($categories as $key => $category)
+    {
+      // fetch posts corresponding to their categorie id
+
+      $post_array = self::$sql->getArray("SELECT * FROM " . self::$prefix . "488_articles WHERE (FIND_IN_SET(" . $category['id'] . ", REPLACE(categories, ',', ',')))");
+
+      // create header for cache file
+
+      $content = "<?php\n\n";
+      $content .= "\$REX['ADDON']['rexblog']['post'][" . $category['id'] . "] = array (\n";
+
+      // loop through post_array
+
+      foreach($post_array as $post_key => $post_value)
+      {
+	// preassign post variables
+
+	$post_id	  = $post_value['id'];
+        $post_categories  = explode(',', addslashes($post_value['categories']));
+	$post_title	  = addslashes($post_value['title']);
+	$post_article	  = addslashes($post_value['article_post']);
+	$create_date	  = addslashes($post_value['create_date']);
+	$create_user	  = addslashes($post_value['create_user']);
+
+	// format post url
+
+	$post_url = self::$category_path[$category['id']]['url'];
+	$post_url = substr($post_url, 0, (strrpos($post_url, '/') + 1));
+	$post_url = $post_url . self::prepare_url($title) . '.html';
+
+	// create post content for file
+
+	$content .= $post_id . " => ";
+	$content .= "array (\n";
+	$content .= "	'id' => " . $post_id . ",\n";
+
+	// create post categories content for file
+
+	$content .= "	'categories' => array(\n";
+
+	foreach($post_categories as $post_category_key => $post_category_value)
+	{
+	  $content .= "		" . $post_category_key . " => " . $post_category_value . ",\n";
+	}
+
+	// create post content for file
+
+	$content .= "	),\n";
+	$content .= "	'title' => '" . $post_title . "',\n";
+	$content .= "	'article_post' => '" . $post_article . "',\n";
+	$content .= "	'create_date' => '" . $create_date . "',\n";
+	$content .= "	'create_user' => '" . $create_user . "',\n";
+
+	// create post url content for file
+
+	$content .= "	'url' => array(\n";
+
+	foreach($post_categories as $post_category_url_key => $post_category_url_value)
+	{
+	  $post_category_url = self::$category_path[$post_category_url_value]['url'];
+	  $post_category_url = substr($post_category_url, 0, strrpos($post_category_url, '/') + 1);
+	  $post_category_url = $post_category_url . self::prepare_url($post_title) . '.html';
+
+	  $content .= "		" . $post_category_url_key . " => '" . $post_category_url . "',\n";
+	}
+
+	$content .= ")),\n";
+      }
+
+      // create footer for cache file
+
+      $content .= ")\n";
+      $content .= "\n?>";
+
+      // assign path for cache file
+
+      $file = parent::$include_path . '/generated/files/_rex488_post.' . $category['id'] . '.inc.php';
+
+      // write cache file
+
+      rex_put_file_contents($file, $content);
+    }
+  }
+
+  /**
+   * write_article_pathlist
+   *
+   * function to write article cache
+   *
+   * @param
+   * @return
+   * @throws
+   */
+
+  public static function write_article_pathlist()
+  {
+    if(file_exists(parent::$include_path . '/generated/files/_rex488_categories.inc.php')) {
+      require parent::$include_path . '/generated/files/_rex488_categories.inc.php';
+        self::$category_path = $REX['ADDON']['rexblog']['categories'];
+    }
+
+      // fetch posts corresponding to their categorie id
+
+      $post_array = self::$sql->getArray("SELECT * FROM " . self::$prefix . "488_articles ORDER BY id ASC");
+
+      // create header for cache file
+
+      $content = "<?php\n\n";
+      $content .= "\$REX['ADDON']['rexblog']['post']['pathlist'] = array (\n";
+
+      // loop through post_array
+
+      foreach($post_array as $post_key => $post_value)
+      {
+	// preassign post variables
+
+	$post_id	  = $post_value['id'];
+        $post_categories  = explode(',', addslashes($post_value['categories']));
+	$post_title	  = addslashes($post_value['title']);
+
+	// format post url
+
+	$post_url = self::$category_path[$category['id']]['url'];
+	$post_url = substr($post_url, 0, (strrpos($post_url, '/') + 1));
+	$post_url = $post_url . self::prepare_url($title) . '.html';
+
+	// create post content for file
+
+	$content .= $post_id . " => ";
+	$content .= "array (\n";
+	$content .= "	'id' => " . $post_id . ",\n";
+
+	// create post categories content for file
+
+	$content .= "	'categories' => array(\n";
+
+	foreach($post_categories as $post_category_key => $post_category_value)
+	{
+	  $content .= "		" . $post_category_key . " => " . $post_category_value . ",\n";
+	}
+
+	// create post content for file
+
+	$content .= "	),\n";
+
+	// create post url content for file
+
+	$content .= "	'url' => array(\n";
+
+	foreach($post_categories as $post_category_url_key => $post_category_url_value)
+	{
+	  $post_category_url = self::$category_path[$post_category_url_value]['url'];
+	  $post_category_url = substr($post_category_url, 0, strrpos($post_category_url, '/') + 1);
+	  $post_category_url = $post_category_url . self::prepare_url($post_title) . '.html';
+
+	  $content .= "		" . $post_category_url_key . " => '" . $post_category_url . "',\n";
+	}
+
+	$content .= ")),\n";
+      }
+
+      // create footer for cache file
+
+      $content .= ")\n";
+      $content .= "\n?>";
+
+      // assign path for cache file
+
+      $file = parent::$include_path . '/generated/files/_rex488_post.pathlist.inc.php';
+
+      // write cache file
+
+      rex_put_file_contents($file, $content);
   }
 
   /**
