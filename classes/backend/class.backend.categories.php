@@ -76,7 +76,6 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
    * @param string $mode insert or update
    * @return
    * @throws
-   *
    */
 
   public static function write()
@@ -88,8 +87,24 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
         exit();
     }
 
+    ///////////////////////////////////////////////////////////////////////////
+    // define post vars
+
+    $category_title         = rex_request('title', 'string');
+    $category_keywords      = rex_request('keywords', 'string');
+    $category_description   = rex_request('description', 'string');
+
+    if($category_title == "") {
+      header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&func=add&parent=' . parent::$parent_id  . '&warning=1&var=' . $_REQUEST);
+        return false;
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // switch the mode
+
     if(self::$mode == 'insert')
     {
+
       parent::$sql->table = parent::$prefix . '488_categories';
       parent::$sql->setValue('parent_id', parent::$parent_id);
       parent::$sql->insert();
@@ -162,7 +177,6 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
    * @param array $priorities array der sortierreihenfolge
    * @return
    * @throws
-   *
    */
 
   public static function sort()
@@ -196,7 +210,6 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
    * @param
    * @return
    * @throws
-   *
    */
 
   public static function delete()
@@ -231,7 +244,6 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
    * @param
    * @return
    * @throws
-   *
    */
 
   public static function visualize()

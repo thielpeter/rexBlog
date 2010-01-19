@@ -43,7 +43,19 @@
           <div class="rex-form-row">
             <p class="rex-form-textarea">
               <label for="article_post">Beitrag</label>
-              <textarea id="article_post" name="article_post" class="rex-form-textarea" rows="5"></textarea>
+              <?php
+
+              $CKEditor = new CKEditor();
+
+              $config['width']              = '475';
+              $config['height']             = '150';
+              $config['uiColor']            = '#DFE9E9';
+              $config['resize_enabled']     = false;
+              $config['toolbarCanCollapse'] = false;
+              
+              $CKEditor->editor("article_post", $article['article_post'], $config, $events);
+
+              ?>
             </p>
           </div>
           <!-- /article content -->

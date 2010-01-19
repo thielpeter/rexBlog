@@ -13,7 +13,8 @@ jQuery(document).ready(function()
 {
   ///////////////////////////////////////////////////////////////
   // categories form validation
- 
+
+ /*
   var category_validator = jQuery("#rex-form-categories").validate(
   {
     rules: {
@@ -51,7 +52,7 @@ jQuery(document).ready(function()
     jQuery('#rex-form-categories').find('*').removeClass('error');
     jQuery('#rex-form-categories').find('*').removeClass('label-error');
   });
-
+  */
 
   ///////////////////////////////////////////////////////////////
   // categories sorting
@@ -109,22 +110,33 @@ jQuery(document).ready(function()
         required: "Der Beitrag des Artikels darf nicht leer sein."
       }
     },
+    errorPlacement: function(error, element){
+      //error.text().appendTo();
+      //element.parent().append('<div class="rex-form-row">' + error.text() + '</div>');
+      error.appendTo(element.parent().parent());
+      //alert(error.text());
+    },
     highlight: function(element, errorClass)
     {
       jQuery(element).addClass(errorClass);
-      jQuery(element.form).find("label[for=" + element.id + "]").addClass('label-error');
-      jQuery(element.form).find("label[for=" + element.id + "]").parent().parent().addClass(errorClass);
+      jQuery(element).parent().find("label").addClass('label-error');
+      jQuery(element).parent().parent().addClass(errorClass);
       jQuery('.rex-validate-message').css('display', 'block');
     },
     unhighlight: function(element, errorClass)
     {
       jQuery(element).removeClass(errorClass);
-      jQuery(element.form).find("label[for=" + element.id + "]").removeClass('label-error');
-      jQuery(element.form).find("label[for=" + element.id + "]").parent().parent().removeClass(errorClass);
+      jQuery(element).parent().find("label").removeClass('label-error');
+      jQuery(element).parent().parent().removeClass(errorClass);
       jQuery('.rex-validate-message').css('display', 'none');
     }
   });
 
+  jQuery('.submit').click(function(){
+    for(instance in CKEDITOR.instances)
+      CKEDITOR.instances[instance].updateElement();
+  });
+  
   jQuery('.reset').click(function()
   {
     article_validator.resetForm();
