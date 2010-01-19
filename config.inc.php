@@ -47,24 +47,27 @@ $REX['PERM'][] = "rexblog[]";
 function _rex488_autoload($params)
 {
   static $classes = array(
-    '_rex488_BackendBase'               => 'backend/class.backend.base.php',
-    '_rex488_BackendCache'              => 'backend/class.backend.cache.php',
-    '_rex488_BackendException'          => 'backend/class.backend.exception.php',
-    '_rex488_BackendErrorHandling'      => 'backend/class.backend.errorhandling.php',
-    '_rex488_BackendCategoryInterface'  => 'backend/interface/interface.backend.categories.php',
-    '_rex488_BackendArticleInterface'   => 'backend/interface/interface.backend.articles.php',
-    '_rex488_BackendPost'               => 'backend/class.backend.post.php',
-    '_rex488_BackendCategories'         => 'backend/class.backend.categories.php',
-    '_rex488_BackendArticles'           => 'backend/class.backend.articles.php',
-    '_rex488_FrontendBase'              => 'frontend/class.frontend.base.php',
-    '_rex488_FrontendDesignator'        => 'frontend/class.frontend.designator.php',
-    '_rex488_FrontendCategories'        => 'frontend/class.frontend.categories.php',
-    '_rex488_FrontendCategory'          => 'frontend/class.frontend.category.php',
-    '_rex488_FrontendMetadata'          => 'frontend/class.frontend.metadata.php',
-    '_rex488_FrontendMetadataCategory'  => 'frontend/class.frontend.metadata.category.php',
-    '_rex488_FrontendMetadataPost'      => 'frontend/class.frontend.metadata.post.php',
-    '_rex488_FrontendPost'              => 'frontend/class.frontend.post.php',
-    '_rex488_FrontendPagination'        => 'frontend/class.frontend.pagination.php',
+    '_rex488_BackendBase'               => 'classes/backend/class.backend.base.php',
+    '_rex488_BackendCache'              => 'classes/backend/class.backend.cache.php',
+    '_rex488_BackendException'          => 'classes/backend/class.backend.exception.php',
+    '_rex488_BackendErrorHandling'      => 'classes/backend/class.backend.errorhandling.php',
+    '_rex488_BackendCategoryInterface'  => 'classes/backend/interface/interface.backend.categories.php',
+    '_rex488_BackendArticleInterface'   => 'classes/backend/interface/interface.backend.articles.php',
+    '_rex488_BackendPost'               => 'classes/backend/class.backend.post.php',
+    '_rex488_BackendCategories'         => 'classes/backend/class.backend.categories.php',
+    '_rex488_BackendArticles'           => 'classes/backend/class.backend.articles.php',
+    
+    '_rex488_FrontendBase'              => 'classes/frontend/class.frontend.base.php',
+    '_rex488_FrontendDesignator'        => 'classes/frontend/class.frontend.designator.php',
+    '_rex488_FrontendCategories'        => 'classes/frontend/class.frontend.categories.php',
+    '_rex488_FrontendCategory'          => 'classes/frontend/class.frontend.category.php',
+    '_rex488_FrontendMetadata'          => 'classes/frontend/class.frontend.metadata.php',
+    '_rex488_FrontendMetadataCategory'  => 'classes/frontend/class.frontend.metadata.category.php',
+    '_rex488_FrontendMetadataPost'      => 'classes/frontend/class.frontend.metadata.post.php',
+    '_rex488_FrontendPost'              => 'classes/frontend/class.frontend.post.php',
+    '_rex488_FrontendPagination'        => 'classes/frontend/class.frontend.pagination.php',
+
+    'CKEditor'                          => 'external/ckeditor/ckeditor_php5.php'
   );
 
   $classname = $params['subject'];
@@ -73,7 +76,7 @@ function _rex488_autoload($params)
   {
     // Angeforderte Klassen einbinden
 
-    require_once dirname(__FILE__) . '/classes/' . $classes[$classname];
+    require_once dirname(__FILE__) . '/' . $classes[$classname];
 
     // Liefert true zurück nachdem die Klasse erfolgreich eingebunden wurde
 

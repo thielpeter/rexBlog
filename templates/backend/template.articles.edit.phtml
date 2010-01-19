@@ -44,7 +44,10 @@
           <div class="rex-form-row">
             <p class="rex-form-textarea">
               <label for="article_post">Beitrag</label>
-              <textarea id="article_post" name="article_post" class="rex-form-textarea" rows="5"><?php echo $article['article_post']; ?></textarea>
+          <?php
+          $CKEditor = new CKEditor();
+          $CKEditor->editor("article_post", $article['article_post']);
+          ?>
             </p>
           </div>
           <!-- /article content -->

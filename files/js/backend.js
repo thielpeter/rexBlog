@@ -14,7 +14,7 @@ jQuery(document).ready(function()
   ///////////////////////////////////////////////////////////////
   // categories form validation
  
-  var validator = jQuery("#rex-form-categories").validate(
+  var category_validator = jQuery("#rex-form-categories").validate(
   {
     rules: {
       title: {
@@ -46,7 +46,7 @@ jQuery(document).ready(function()
 
   jQuery('.reset').click(function()
   {
-    validator.resetForm();
+    category_validator.resetForm();
     jQuery('.rex-validate-message').css('display', 'none');
     jQuery('#rex-form-categories').find('*').removeClass('error');
     jQuery('#rex-form-categories').find('*').removeClass('label-error');
@@ -89,18 +89,24 @@ jQuery(document).ready(function()
   ///////////////////////////////////////////////////////////////
   // articles form validation
 
-  var validator = jQuery("#rex-form-articles").validate(
+  var article_validator = jQuery("#rex-form-articles").validate(
   {
     rules: {
       title: {
         required: true,
         minlength: 3
+      },
+      article_post: {
+        required: true
       }
     },
     messages: {
       title: {
         required: "Die Bezeichnung des Artikels darf nicht leer sein.",
         minlength: jQuery.format("Die Bezeichnung des Artikels muss mindestens {0} Zeichen lang sein.")
+      },
+      article_post: {
+        required: "Der Beitrag des Artikels darf nicht leer sein."
       }
     },
     highlight: function(element, errorClass)
@@ -121,7 +127,7 @@ jQuery(document).ready(function()
 
   jQuery('.reset').click(function()
   {
-    validator.resetForm();
+    article_validator.resetForm();
     jQuery('.rex-validate-message').css('display', 'none');
     jQuery('#rex-form-articles').find('*').removeClass('error');
     jQuery('#rex-form-articles').find('*').removeClass('label-error');
