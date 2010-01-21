@@ -88,18 +88,6 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
     }
 
     ///////////////////////////////////////////////////////////////////////////
-    // define post vars
-
-    $category_title         = rex_request('title', 'string');
-    $category_keywords      = rex_request('keywords', 'string');
-    $category_description   = rex_request('description', 'string');
-
-    if($category_title == "") {
-      header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&func=add&parent=' . parent::$parent_id  . '&warning=1&var=' . $_REQUEST);
-        return false;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
     // switch the mode
 
     if(self::$mode == 'insert')

@@ -66,8 +66,6 @@ function _rex488_autoload($params)
     '_rex488_FrontendMetadataPost'      => 'classes/frontend/class.frontend.metadata.post.php',
     '_rex488_FrontendPost'              => 'classes/frontend/class.frontend.post.php',
     '_rex488_FrontendPagination'        => 'classes/frontend/class.frontend.pagination.php',
-
-    'CKEditor'                          => 'external/ckeditor/ckeditor_php5.php'
   );
 
   $classname = $params['subject'];
@@ -113,6 +111,27 @@ if($REX['REDAXO'])
     array('categories', 'Kategorien', '', array('clang' => $REX['CUR_CLANG'])),
     array('articles', 'Artikel', '', array('clang' => $REX['CUR_CLANG']))
   );
+
+  // content plugin directory auslesen
+
+  $plugin_direcoty = dir(dirname(__FILE__) . '/classes/plugins');
+
+  while (false !== ($classfile = $plugin_direcoty->read()))
+  {
+    if($classfile == '.' || $classfile == '..' ) continue;
+    require_once dirname(__FILE__) . '/classes/plugins/' . $classfile;
+
+    $classname = str_replace('plugin.', '', $classfile);
+    $classname = str_replace('.php', '', $classname);
+
+    $plugin_id = "return _rex488_content_plugin_" . $classname . '::read_id();';
+    $plugin_name = "return _rex488_content_plugin_" . $classname . '::read_name();';
+    
+    $REX['ADDON']['rexblog']['plugins'][eval($plugin_id)] = eval($plugin_name);
+    
+  }
+
+  $plugin_direcoty->close();
 
   // Stylesheets und Javascript einbinden
 

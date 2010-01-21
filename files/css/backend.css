@@ -36,6 +36,26 @@ label.label-error
   font-weight:900;
 }
 
+label span._rex488_remove_element
+{
+  background:transparent url(../img/delete.gif) center center no-repeat;
+  display:block !important;
+  float:right;
+  width:16px;
+  height:16px;
+  cursor:pointer;
+}
+
+label span._rex488_move_element
+{
+  background:transparent url(../img/priority.gif) center center no-repeat;
+  display:block !important;
+  float:right;
+  width:16px;
+  height:16px;
+  cursor:move;
+}
+
 label.error
 {
   margin-left:150px;
@@ -50,6 +70,11 @@ input.error
   border:1px solid #cbcbcb;
 }
 
+div.rex-form-row
+{
+  background-color:#EFF9F9;
+}
+
 .rex-validate-message
 {
   display:none;
@@ -58,4 +83,11 @@ input.error
 .rex-table
 {
   line-height:120%;
+}
+
+select.rex-form-select
+{
+  width:462px !important;
+  border:1px solid #999999;
+  padding:1px;
 }

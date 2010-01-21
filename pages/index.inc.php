@@ -21,7 +21,7 @@ if(!rex_request('output', 'boolean'))
 
 // Subpages auswerten
 
-switch($subpage)
+switch(rex_request('subpage', 'string'))
 {
   case 'articles':
     require _rex488_PATH . 'pages/articles.inc.php';

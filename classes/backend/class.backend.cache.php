@@ -168,7 +168,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 	$post_id	  = $post_value['id'];
         $post_categories  = explode(',', addslashes($post_value['categories']));
 	$post_title	  = addslashes($post_value['title']);
-	$post_article	  = addslashes($post_value['article_post']);
+	$post_article	  = $post_value['article_post'];
 	$create_date	  = addslashes($post_value['create_date']);
 	$create_user	  = addslashes($post_value['create_user']);
 

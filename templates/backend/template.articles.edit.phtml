@@ -40,18 +40,25 @@
           </div>
           <!-- /article title -->
 
-          <!-- article content -->
+          <!-- article title -->
           <div class="rex-form-row">
-            <p class="rex-form-textarea">
-              <label for="article_post">Beitrag</label>
-              <?php
-              $CKEditor = new CKEditor();
-              $CKEditor->editor("article_post", $article['article_post']);
-              ?>
+            <p class="rex-form-select">
+              <label for="title">Content Plugin</label>
+              <select id="content_plugins" class="rex-form-select">
+                <?php
+                  $content_plugins = _rex488_read_content_plugins();
+                  foreach($content_plugins as $id => $name) {
+                    echo '<option value="' . $id . '" name="content_plugin_type">' . $name . '</option>';
+                  }
+                ?>
+              </select>
+              <input type="button" id="content_plugin_selector" class="rex-form-submit rex-form-submit-2" value="Plugin laden" />
             </p>
           </div>
-          <!-- /article content -->
-
+          <!-- /article title -->
+          <?php
+          _rex488_BackendArticles::load($article['id']);
+          ?>
           <!-- form actions -->
           <div class="rex-form-row">
             <p class="rex-form-col-a rex-form-submit rex-form-submit-2">

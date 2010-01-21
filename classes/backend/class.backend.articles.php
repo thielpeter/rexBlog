@@ -21,6 +21,7 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
   protected static $mode = 'insert';
   protected static $entry_id = 0;
   protected static $next = 0;
+  protected static $article_content = '';
 
   /**
    * write
@@ -89,13 +90,18 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
         exit();
     }
 
+    $article_content = $_POST['_rex488_element'];
+    $article_content = serialize($article_content);
+
     // insert mode
 
     if(self::$mode == 'insert')
     {
+
       parent::$sql->table = parent::$prefix . '488_articles';
       parent::$sql->setValue('title', rex_request('title', 'string'));
-      parent::$sql->setValue('article_post', rex_request('article_post', 'string'));
+      parent::$sql->setValue('categories', '1,5');
+      parent::$sql->setValue('article_post', $article_content);
       parent::$sql->setValue('status', 0);
       parent::$sql->setValue('create_user', parent::$user);
       parent::$sql->setValue('create_date', time());
@@ -113,7 +119,7 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
       {
         $article = rex_register_extension_point('REX488_ART_ADDED', parent::$sql, array(
           'title'         => rex_request('title', 'string'),
-          'article_post'  => rex_request('article_post', 'string')
+          'article_post'  => self::$article_content
         ));
 
         header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=1');
@@ -126,7 +132,7 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
     {
       parent::$sql->table = parent::$prefix . '488_articles';
       parent::$sql->setValue('title', rex_request('title', 'string'));
-      parent::$sql->setValue('article_post', rex_request('article_post', 'string'));
+      parent::$sql->setValue('article_post', $article_content);
       parent::$sql->setValue('update_user', parent::$user);
       parent::$sql->setValue('update_date', time());
       parent::$sql->wherevar = "WHERE ( id = '" . parent::$entry_id . "' )";
@@ -145,7 +151,7 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
         $category = rex_register_extension_point('REX488_ART_UPDATED', parent::$sql, array(
           'id'            => parent::$entry_id,
           'title'         => rex_request('title', 'string'),
-          'article_post'  => rex_request('article_post', 'string')
+          'article_post'  => self::$article_content
         ));
 
         // redirect to proper page
@@ -225,5 +231,31 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
         exit();
     }
   }
+
+  /**
+   * load
+   *
+   * load article content from database
+   *
+   * @param
+   * @return
+   * @throws
+   *
+   */
+
+  public static function load($id)
+  {
+    $result = parent::$sql->setQuery("SELECT id, article_post FROM " . parent::$prefix . "488_articles WHERE ( id = '" . $id . "' )");
+    $result = parent::$sql->getValue('article_post');
+    $result = unserialize($result);
+    
+    foreach($result as $k => $v) {
+      foreach($v as $k2 => $v2) {
+        $content_plugin_class = "echo _rex488_content_plugin_" . $k2 . "::getElement(" . $k . ", '" . $v2 . "');";
+          eval($content_plugin_class);
+      }
+    }
+  }
+
 }
 ?>

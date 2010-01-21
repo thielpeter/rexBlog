@@ -76,6 +76,27 @@ switch(rex_request('func', 'string'))
   break;
 
   /**
+   * inkludiert das add template für das
+   * hinzufügen eines artikels.
+   */
+
+  case 'plugin':
+    $content_plugin_class = "echo _rex488_content_plugin_" . rex_request('element', 'string') . "::getElement(" . rex_request('index', 'int') . ", '');";
+      eval($content_plugin_class);
+        exit();
+  break;
+
+  /**
+   * inkludiert das add template für das
+   * hinzufügen eines artikels.
+   */
+
+  case 'load':
+    _rex488_BackendArticles::load(rex_request('id', 'int'));
+        exit();
+  break;
+
+  /**
    * als standard wird das list template
    * für die auflistung der artikel inkludiert.
    */

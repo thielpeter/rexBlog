@@ -18,15 +18,17 @@ function _rex488_add_pageheader()
   $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.tablednd.js"></script>' . "\n";
   $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.metadata.js"></script>' . "\n";
   $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.validate.pack.js"></script>' . "\n";
-  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/external/ckeditor/ckeditor.js"></script>' . "\n";
+  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.ui.core.js"></script>' . "\n";
+  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.ui.sortable.js"></script>' . "\n";
   $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/backend.js"></script>' . "\n";
+  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/external/ckeditor/ckeditor.js"></script>' . "\n";
 
   return $page_header;
 }
 
 // global extension points
 
-rex_register_extension('ALL_GENERATED', '_rex488_write_category_cache');
+rex_register_extension('ALL_GENERATED', '_rex488_write_cache_all');
 
 // category extension points
 
@@ -52,6 +54,18 @@ function _rex488_write_article_cache() {
   _rex488_BackendBase::get_instance();
   _rex488_BackendCache::write_article_cache();
   _rex488_BackendCache::write_article_pathlist();
+}
+
+function _rex488_write_cache_all() {
+  _rex488_BackendBase::get_instance();
+  _rex488_BackendCache::write_category_cache();
+  _rex488_BackendCache::write_article_cache();
+  _rex488_BackendCache::write_article_pathlist();
+}
+
+function _rex488_read_content_plugins() {
+  global $REX;
+  return $REX['ADDON']['rexblog']['plugins'];
 }
 
 /**

@@ -65,10 +65,19 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
         foreach($value['categories'] as $category_key => $category_value) {
           if($category_value == parent::$category_id) $current_category_id = $category_key;
         }
+        
+        $article_content = $value['article_post'];
+        $article_content = unserialize($article_content);
+
+        foreach($article_content as $content) {
+          foreach($content as $inhalt) {
+            $article_content_output .= $inhalt . "\n";
+          }
+        }
 
         self::$the_title      = $value['title'];
         self::$the_url        = self::prepare_url($value['url'][$current_category_id]);
-        self::$the_post       = $value['article_post'];
+        self::$the_post       = $article_content_output;
         self::$the_post_date  = $value['create_date'];
         self::$the_post_user  = $value['create_user'];
 

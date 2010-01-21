@@ -14,7 +14,6 @@ jQuery(document).ready(function()
   ///////////////////////////////////////////////////////////////
   // categories form validation
 
- /*
   var category_validator = jQuery("#rex-form-categories").validate(
   {
     rules: {
@@ -52,7 +51,6 @@ jQuery(document).ready(function()
     jQuery('#rex-form-categories').find('*').removeClass('error');
     jQuery('#rex-form-categories').find('*').removeClass('label-error');
   });
-  */
 
   ///////////////////////////////////////////////////////////////
   // categories sorting
@@ -96,25 +94,16 @@ jQuery(document).ready(function()
       title: {
         required: true,
         minlength: 3
-      },
-      article_post: {
-        required: true
       }
     },
     messages: {
       title: {
         required: "Die Bezeichnung des Artikels darf nicht leer sein.",
         minlength: jQuery.format("Die Bezeichnung des Artikels muss mindestens {0} Zeichen lang sein.")
-      },
-      article_post: {
-        required: "Der Beitrag des Artikels darf nicht leer sein."
       }
     },
     errorPlacement: function(error, element){
-      //error.text().appendTo();
-      //element.parent().append('<div class="rex-form-row">' + error.text() + '</div>');
       error.appendTo(element.parent().parent());
-      //alert(error.text());
     },
     highlight: function(element, errorClass)
     {
@@ -136,7 +125,12 @@ jQuery(document).ready(function()
     for(instance in CKEDITOR.instances)
       CKEDITOR.instances[instance].updateElement();
   });
-  
+
+  jQuery('.update').click(function(){
+    for(instance in CKEDITOR.instances)
+      CKEDITOR.instances[instance].updateElement();
+  });
+
   jQuery('.reset').click(function()
   {
     article_validator.resetForm();
@@ -145,4 +139,73 @@ jQuery(document).ready(function()
     jQuery('#rex-form-articles').find('*').removeClass('label-error');
   });
 
+  jQuery('#content_plugin_selector').click(function(){
+    var element_selector = jQuery('#content_plugins :selected').val();
+    _rex488_addContentElement(element_selector, this);
+    return false;
+  })
+
+  jQuery('span._rex488_remove_element').live('click', function()
+  {
+    if(confirm('Contentplugin sicher löschen?'))
+      jQuery(this).parents('div.rex-form-row').remove();
+  })
+
+  jQuery('div.rex-form-wrapper').sortable(
+  {
+    handle: 'span._rex488_move_element',
+    axis: 'y',
+    forcePlaceholderSize: true,
+    items: 'div.rex-form-sortable',
+    helper: 'clone',
+    revert: true
+  });
+
+  article_plugin_index = jQuery('div.rex-form-sortable').size();
+
 });
+
+function _rex488_addContentElement(element, node)
+{
+   article_plugin_index++;
+
+   jQuery.post("index.php?page=rexblog&subpage=articles", {
+     output: "false",
+     func: "plugin",
+     element: element,
+     index: article_plugin_index
+   },
+   function(data)
+   {
+    _rex488_readContentElement(element, article_plugin_index, node, data);
+   });
+}
+
+function _rex488_readContentElement(element, article_plugin_index, node, data)
+{
+  jQuery(node).parents('div.rex-form-wrapper').find('div.rex-form-row:last-child').before(data);
+
+  /*
+  jQuery("#_rex488_element_" + article_plugin_index).rules("add", {
+    required: true,
+    minlength: 3,
+    messages: {
+      required: "Der Inhalt dieses Feldes darf nicht leer sein.",
+      minlength: jQuery.format("Der Inhalt dieses Feldes muss mindestens {0} Zeichen lang sein.")
+    }
+  });
+  */
+}
+
+function _rex488_loadContentElements(id)
+{
+   jQuery.post("index.php?page=rexblog&subpage=articles", {
+     output: "false",
+     func: "load",
+     id: id
+   },
+   function(data)
+   {
+    console.log(data);
+   });
+}
