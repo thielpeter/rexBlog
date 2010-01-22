@@ -22,8 +22,9 @@ class _rex488_content_plugin_textareafield
 
     $element .= '<div class="rex-form-row rex-form-sortable">';
     $element .= '<p class="rex-form-textarea">';
-    $element .= '<label for="_rex488_element_' . $index . '">Textarea<span class="_rex488_remove_element"></span><span class="_rex488_move_element"></span></label>';
+    $element .= '<label for="_rex488_element_' . $index . '">' . self::NAME . '</label>';
     $element .= '<textarea id="_rex488_element_' . $index . '" name="_rex488_element[' . $index . '][' . self::ID . ']" class="rex-form-textarea" rows="5">' . $value . '</textarea>';
+    $element .= '<div class="_rex488_control_panel"><span class="_rex488_move_element">Element verschieben</span><span class="_rex488_remove_element">Element löschen</span></div>';
     $element .= '</p>';
     $element .= '</div>';
 

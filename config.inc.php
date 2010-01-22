@@ -139,7 +139,8 @@ if($REX['REDAXO'])
 
   // Backend Funktionen inkludieren
 
-  rex_register_extension('PAGE_HEADER', '_rex488_add_pageheader');
+  if(rex_request('page', 'string') == 'rexblog')
+    rex_register_extension('PAGE_HEADER', '_rex488_add_pageheader');
 
 }
   else

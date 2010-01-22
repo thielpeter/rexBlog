@@ -155,10 +155,16 @@ jQuery(document).ready(function()
   {
     handle: 'span._rex488_move_element',
     axis: 'y',
-    forcePlaceholderSize: true,
     items: 'div.rex-form-sortable',
-    helper: 'clone',
-    revert: true
+    revert: true,
+    start: function (event, ui) {
+      //id = jQuery(ui.item).find('label').attr('for');
+      tinyMCE.execCommand('mceRemoveControl', false, '_rex488_element_1');
+    },
+    stop: function(event, ui) {
+      tinyMCE.execCommand('mceAddControl', false, '_rex488_element_1');
+    }
+
   });
 
   article_plugin_index = jQuery('div.rex-form-sortable').size();

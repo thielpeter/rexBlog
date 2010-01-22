@@ -36,24 +36,40 @@ label.label-error
   font-weight:900;
 }
 
-label span._rex488_remove_element
+._rex488_control_panel
 {
-  background:transparent url(../img/delete.gif) center center no-repeat;
-  display:block !important;
-  float:right;
-  width:16px;
-  height:16px;
-  cursor:pointer;
+  background-color:#DFE9E9;
+  padding:6px 5px;
+  width:451px;
+  float:left;
+  clear:both;
+  border:1px solid #cbcbcb;
+  margin:5px 0 0 154px;
+  -moz-border-radius:3px;
 }
 
-label span._rex488_move_element
+span._rex488_move_element
 {
-  background:transparent url(../img/priority.gif) center center no-repeat;
-  display:block !important;
-  float:right;
-  width:16px;
+  background:transparent url(../img/move.png) left center no-repeat;
+  line-height:16px;
   height:16px;
+  padding-left:21px;
   cursor:move;
+  display:block;
+  float:left;
+  margin:0 5px 0 0;
+}
+
+span._rex488_remove_element
+{
+  background:transparent url(../img/cross.png) left center no-repeat;
+  line-height:16px;
+  height:16px;
+  padding-left:21px;
+  cursor:pointer;
+  float:left;
+  margin:0 5px 0 0;
+  display:block;
 }
 
 label.error

@@ -22,8 +22,9 @@ abstract class _rex488_content_plugin_textfield
 
     $element .= '<div class="rex-form-row rex-form-sortable">';
     $element .= '<p class="rex-form-text">';
-    $element .= '<label for="_rex488_element_' . $index . '">Textfeld<span class="_rex488_remove_element"></span><span class="_rex488_move_element"></span></label>';
+    $element .= '<label for="_rex488_element_' . $index . '">' . self::NAME . '</label>';
     $element .= '<input id="_rex488_element_' . $index . '" name="_rex488_element[' . $index . '][' . self::ID . ']" type="text" class="rex-form-text" value="' . $value . '" />';
+    $element .= '<div class="_rex488_control_panel"><span class="_rex488_move_element">Element verschieben</span><span class="_rex488_remove_element">Element löschen</span></div>';
     $element .= '</p>';
     $element .= '</div>';
 

@@ -22,8 +22,9 @@ class _rex488_content_plugin_ckeditor
 
     echo '<div class="rex-form-row rex-form-sortable">';
     echo '<p class="rex-form-textarea">';
-    echo '<label for="_rex488_element_' . $index . '">CKEditor<span class="_rex488_remove_element"></span><span class="_rex488_move_element"></span></label>';
+    echo '<label for="_rex488_element_' . $index . '">' . self::NAME . '</label>';
     echo '<textarea id="_rex488_element_' . $index . '" name="_rex488_element[' . $index . '][' . self::ID . ']" class="rex-form-textarea" rows="5">' . $value . '</textarea>';
+    echo '<div class="_rex488_control_panel"><span class="_rex488_move_element">Element verschieben</span><span class="_rex488_remove_element">Element löschen</span></div>';
     echo '</p>';
     echo '</div>';
 
