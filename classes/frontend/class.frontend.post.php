@@ -69,9 +69,15 @@ abstract class _rex488_FrontendPost extends _rex488_FrontendBase
         $article_content = $value['article_post'];
         $article_content = unserialize($article_content);
 
-        foreach($article_content as $content) {
-          foreach($content as $inhalt) {
-            $article_content_output .= $inhalt . "\n";
+        $article_settings = $value['article_settings'];
+        $article_settings = unserialize($article_settings);
+        
+        foreach($article_content as $index => $array) {
+          foreach($array as $type => $content) {
+            ob_start();
+            include _rex488_PATH . 'classes/plugins/templates/template.textareafield.phtml';
+            $article_content_output .= ob_get_contents();
+            ob_end_clean();
           }
         }
 

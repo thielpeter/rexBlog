@@ -81,7 +81,7 @@ switch(rex_request('func', 'string'))
    */
 
   case 'plugin':
-    $content_plugin_class = "echo _rex488_content_plugin_" . rex_request('element', 'string') . "::getElement(" . rex_request('index', 'int') . ", '');";
+    $content_plugin_class = "echo _rex488_content_plugin_" . rex_request('element', 'string') . "::getElement(" . rex_request('index', 'int') . ", '', '');";
       eval($content_plugin_class);
         exit();
   break;

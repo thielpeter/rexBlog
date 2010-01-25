@@ -14,17 +14,39 @@
 class _rex488_content_plugin_textareafield
 {
   const ID = 'textareafield';
-  const NAME = 'textareafield';
+  const NAME = '01.02 - Einfache Textarea';
 
-  public static function getElement($index, $value)
+  public static function getElement($index, $value, $settings)
   {
     $element = '';
 
-    $element .= '<div class="rex-form-row rex-form-sortable">';
-    $element .= '<p class="rex-form-textarea">';
-    $element .= '<label for="_rex488_element_' . $index . '">' . self::NAME . '</label>';
-    $element .= '<textarea id="_rex488_element_' . $index . '" name="_rex488_element[' . $index . '][' . self::ID . ']" class="rex-form-textarea" rows="5">' . $value . '</textarea>';
-    $element .= '<div class="_rex488_control_panel"><span class="_rex488_move_element">Element verschieben</span><span class="_rex488_remove_element">Element löschen</span></div>';
+    $element .= '<div class="rex488-form-row rex488-form-sortable">';
+    $element .= '
+      <div class="rex-content-editmode-module-name">
+      <h3 class="rex-hl4">' . self::NAME . $set . '</h3>
+        <div class="rex-navi-slice">
+          <ul>
+            <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.Settings(this); return false;" class="rex-tx3">Einstellungen<span>' . self::NAME . '</span></a></li>
+            <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.DeleteSlice(this); return false;" class="rex-tx2">Löschen<span>' . self::NAME . '</span></a></li>
+            <li><a href="#" onclick="Rexblog.Article.MoveSliceUp(this); return false;" title="Nach oben verschieben" class="rex-slice-move-up"><span>' . self::NAME . '</span></a></li>
+            <li><a href="#" onclick="Rexblog.Article.MoveSliceDown(this); return false;"title="Nach unten verschieben" class="rex-slice-move-down"><span>' . self::NAME . '</span></a></li>
+          </ul>
+        </div>
+      </div>';
+
+    $excerpt  = ($settings['excerpt'] == 'on') ? ' checked="checked"' : '';
+    $wrap     = ($settings['wrap'] == 'on') ? ' checked="checked"' : '';
+
+    $element .= '<p class="rex488-form-checkbox">';
+    $element .= '<input name="_rex488_settings[' . $index . '][index]" type="hidden" value="' . $index . '" />';
+    $element .= '<input name="_rex488_settings[' . $index . '][excerpt]" type="checkbox"' . $excerpt . ' class="rex488-form-checkbox" />';
+    $element .= '<label class="rex488-form-checkbox">Plugin als Einleitung</label>';
+    $element .= '<input name="_rex488_settings[' . $index . '][wrap]" type="checkbox"' . $wrap . ' class="rex488-form-checkbox" />';
+    $element .= '<label class="rex488-form-checkbox">Absatzformatierung hinzufügen</label>';
+    $element .= '</p>';
+
+    $element .= '<p class="rex488-form-textarea">';
+    $element .= '<textarea id="_rex488_element_' . $index . '" name="_rex488_element[' . $index . '][' . self::ID . ']" class="rex488-form-textarea" rows="5">' . $value . '</textarea>';
     $element .= '</p>';
     $element .= '</div>';
 

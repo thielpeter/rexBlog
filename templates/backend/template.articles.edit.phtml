@@ -12,61 +12,119 @@
  */
 
 ?>
+<div class="rex-toolbar">
+  <div class="rex-toolbar-content">
+    <a href="#" rel="metadata" onclick="Rexblog.Article.ToggleExtraSettings(this, event);">Metadaten</a>&nbsp;|&nbsp;
+    <a href="#" rel="trackbacks" onclick="Rexblog.Article.ToggleExtraSettings(this, event);">Trackbacks</a>&nbsp;|&nbsp;
+    <a href="#">Schlagwörter</a>&nbsp;|&nbsp;
+    <a href="#">Einstellungen</a>
+  </div>
+</div>
+
 <div class="rex-addon-output-v2">
 
-  <div class="rex-message rex-validate-message">
+  <div class="rex-message rex488-validate-message">
     <div class="rex-warning">
-      <p><span>Es wurden Fehler bei der Eingabe festgestellt.</span></p>
+      <p><span>Bitte geben Sie mindestens eine Schlagzeile ein.</span></p>
     </div>
   </div>
 
-  <div id="rex-addon-editmode" class="rex-form">
-    <form action="index.php?page=rexblog&subpage=articles" method="post" id="rex-form-articles">
-      <input type="hidden" name="page" value="rexblog" />
-      <input type="hidden" name="subpage" value="articles" />
-      <input type="hidden" name="id" value="<?php echo rex_request('id', 'int'); ?>" />
-      <input type="hidden" name="func" value="write" />
-      <input type="hidden" name="mode" value="update" />
-      <input type="hidden" name="output" value="false" />
-      <fieldset>
-        <legend><span>Artikel bearbeiten</span></legend>
+  <div class="rex-form">
+
+    <form action="index.php?page=rexblog&subpage=articles" method="post" id="rex488-form-articles">
+      <fieldset class="rex-form-col-1">
+
+        <input type="hidden" name="page" value="rexblog" />
+        <input type="hidden" name="subpage" value="articles" />
+        <input type="hidden" name="id" value="<?php echo rex_request('id', 'int'); ?>" />
+        <input type="hidden" name="func" value="write" />
+        <input type="hidden" name="mode" value="update" />
+
         <div class="rex-form-wrapper">
 
+          <div class="rex488_metadata rex488_extra_settings">
+
+            <div class="rex-content-editmode-module-name">
+              <h3 class="rex-hl4">Permanent Link</h3>
+            </div>
+            <div class="rex488-form-row">
+              <p class="rex488-form-text">
+                <input id="_rex488_permanent_link_readonly" name="_rex488_permanent_link_readonly" type="text" readonly="readonly" class="rex488-form-text" value="<?php echo $article['article_permlink']; ?>.html" />
+                <input id="_rex488_permanent_link" name="_rex488_permanent_link" type="text" class="rex488-form-text" value="<?php echo $article['article_permlink']; ?>" />
+              </p>
+            </div>
+
+            <div class="rex-content-editmode-module-name">
+              <h3 class="rex-hl4">Suchbegriffe</h3>
+            </div>
+            <div class="rex488-form-row">
+              <p class="rex488-form-textarea">
+                <textarea id="_rex488_metadata_keywords" name="_rex488_metadata_keywords" class="rex488-form-textarea" rows="5"><?php echo $article['keywords']; ?></textarea>
+              </p>
+            </div>
+
+            <div class="rex-content-editmode-module-name">
+              <h3 class="rex-hl4">Beschreibung</h3>
+            </div>
+            <div class="rex488-form-row">
+              <p class="rex488-form-textarea">
+                <textarea id="_rex488_metadata_description" name="_rex488_metadata_description" class="rex488-form-textarea" rows="5"><?php echo $article['description']; ?></textarea>
+              </p>
+            </div>
+
+          </div>
+
+          <div class="rex488_trackbacks rex488_extra_settings">
+
+            <div class="rex-content-editmode-module-name">
+              <h3 class="rex-hl4">Trackbacks</h3>
+            </div>
+            <div class="rex488-form-row">
+              <p class="rex488-form-textarea">
+                <textarea id="_rex488_trackbacks" name="_rex488_trackbacks" class="rex488-form-textarea" rows="5"></textarea>
+              </p>
+            </div>
+
+          </div>
+
           <!-- article title -->
-          <div class="rex-form-row">
-            <p class="rex-form-text">
-              <label for="title">Titel</label>
-              <input id="title" name="title" type="text" class="rex-form-text" value="<?php echo $article['title']; ?>" />
+          <div class="rex-content-editmode-module-name">
+            <h3 class="rex-hl4">Schlagzeile</h3>
+          </div>
+          <div class="rex488-form-row">
+            <p class="rex488-form-text">
+              <input id="title" name="title" type="text" class="rex488-form-text" value="<?php echo $article['title']; ?>" />
             </p>
           </div>
           <!-- /article title -->
 
-          <!-- article title -->
-          <div class="rex-form-row">
-            <p class="rex-form-select">
-              <label for="title">Content Plugin</label>
-              <select id="content_plugins" class="rex-form-select">
+          <!-- plugin selector -->
+          <div class="rex488-form-row rex488-form-plugin-select">
+            <p class="rex-form-col-a rex488-form-select">
+              <select name="content_plugins" size="1" class="rex488-form-select" onchange="Rexblog.Article.AddSlice(this); return false;" id="content_plugins">
+                <option value="">----------------------------  Plugin hinzufügen</option>
                 <?php
-                  $content_plugins = _rex488_read_content_plugins();
-                  foreach($content_plugins as $id => $name) {
-                    echo '<option value="' . $id . '" name="content_plugin_type">' . $name . '</option>';
-                  }
+                $content_plugins = _rex488_read_content_plugins();
+                foreach($content_plugins as $id => $name)
+                {
+                  echo '<option value="' . $id . '" name="content_plugin_type">' . $name . '</option>';
+                }
                 ?>
               </select>
-              <input type="button" id="content_plugin_selector" class="rex-form-submit rex-form-submit-2" value="Plugin laden" />
             </p>
           </div>
-          <!-- /article title -->
+          <!-- /plugin selector -->
+
           <?php
           _rex488_BackendArticles::load($article['id']);
           ?>
+
           <!-- form actions -->
-          <div class="rex-form-row">
-            <p class="rex-form-col-a rex-form-submit rex-form-submit-2">
-              <input type="submit" name="submit" class="rex-form-submit submit" value="Speichern" />
-              <input type="submit" name="update" class="rex-form-submit rex-form-submit-2 update" value="Übernehmen" />
-              <input type="reset" name="reset" class="rex-form-submit rex-form-submit-2 reset" value="Zurücksetzen" />
-              <input type="submit" name="cancel" class="rex-form-submit rex-form-submit-2 cancel" value="Abbrechen" />
+          <div class="rex488-form-row rex488-form-submit">
+            <p class="rex488-form-submit">
+              <input type="submit" name="submit" class="rex-form-submit submit" value="Beitrag speichern" />
+              <input type="submit" name="update" class="rex-form-submit update" value="Beitrag übernehmen" />
+              <input type="submit" name="cancel" class="rex-form-submit cancel" value="Abbrechen" />
             </p>
           </div>
           <!-- /form actions -->

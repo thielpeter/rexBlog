@@ -92,22 +92,44 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
     $article_content = rex_request('_rex488_element', 'array');
 
+    $content_index = 1;
+
     foreach($article_content as $key => $value) {
       foreach($value as $index => $content) {
         $content = str_replace("'", "\"", $content);
-          $prepared_article[$key] = array($index => stripslashes($content));
+          $prepared_article[$content_index] = array($index => stripslashes($content));
+            $content_index++;
       }
     }
 
-    $article_content = serialize($prepared_article);
-    
+    $article_settings = rex_request('_rex488_settings', 'array');
+
+    $settings_index = 1;
+
+    foreach($article_settings as $key => $value) {
+      foreach($value as $k2 => $v2) {
+        $prepared_settings[$settings_index][$k2] = stripslashes($v2);
+      }
+      $settings_index++;
+    }
+
+    $article_content  = serialize($prepared_article);
+    $article_settings = serialize($prepared_settings);
+
+    $permanent_link   = rex_request('_rex488_permanent_link', 'string') == "" ? rex_request('title', 'string') : rex_request('_rex488_permanent_link', 'string');
+    $permanent_link   = strtolower(rex_parse_article_name($permanent_link));
+
     if(self::$mode == 'insert')
     {
 
       parent::$sql->table = parent::$prefix . '488_articles';
       parent::$sql->setValue('title', rex_request('title', 'string'));
       parent::$sql->setValue('categories', '1,5');
+      parent::$sql->setValue('keywords' ,rex_request('_rex488_metadata_keywords', 'string'));
+      parent::$sql->setValue('description' ,rex_request('_rex488_metadata_description', 'string'));
       parent::$sql->setValue('article_post', mysql_real_escape_string($article_content));
+      parent::$sql->setValue('article_permlink', $permanent_link);
+      parent::$sql->setValue('article_settings', $article_settings);
       parent::$sql->setValue('status', 0);
       parent::$sql->setValue('create_user', parent::$user);
       parent::$sql->setValue('create_date', time());
@@ -138,7 +160,11 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
     {
       parent::$sql->table = parent::$prefix . '488_articles';
       parent::$sql->setValue('title', rex_request('title', 'string'));
+      parent::$sql->setValue('keywords' ,rex_request('_rex488_metadata_keywords', 'string'));
+      parent::$sql->setValue('description' ,rex_request('_rex488_metadata_description', 'string'));
       parent::$sql->setValue('article_post', mysql_real_escape_string($article_content));
+      parent::$sql->setValue('article_permlink', $permanent_link);
+      parent::$sql->setValue('article_settings', $article_settings);
       parent::$sql->setValue('update_user', parent::$user);
       parent::$sql->setValue('update_date', time());
       parent::$sql->wherevar = "WHERE ( id = '" . parent::$entry_id . "' )";
@@ -251,18 +277,20 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
   public static function load($id)
   {
-    $result = parent::$sql->setQuery("SELECT article_post FROM " . parent::$prefix . "488_articles WHERE ( id = '" . $id . "' )");
-    $result = parent::$sql->getValue('article_post');
-
-    $result = unserialize($result);
+    parent::$sql->setQuery("SELECT article_post, article_settings FROM " . parent::$prefix . "488_articles WHERE ( id = '" . $id . "' )");
     
-    foreach($result as $key => $value) {
-      foreach($value as $index => $content) {
-        $content_plugin_class = "echo _rex488_content_plugin_" . $index . "::getElement(" . $key . ", '" . $content . "');";
-          eval($content_plugin_class);
+    $article_post     = parent::$sql->getValue('article_post');
+    $article_settings = parent::$sql->getValue('article_settings');
+    $article_post     = unserialize($article_post);
+    $article_settings = unserialize($article_settings);
+
+    if(!is_array($article_post)) return;
+
+    foreach($article_post as $key => $value) {
+      foreach($value as $plugin => $content) {
+        eval("echo _rex488_content_plugin_" . $plugin . "::getElement(" . $key . ", '" . $content . "', \$article_settings[\$key]);");
       }
     }
   }
-
 }
 ?>

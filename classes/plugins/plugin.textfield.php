@@ -14,17 +14,36 @@
 abstract class _rex488_content_plugin_textfield
 {
   const ID = 'textfield';
-  const NAME = 'textfield';
+  const NAME = '01.01 - Einfaches Textfeld';
 
-  public static function getElement($index, $value)
+  public static function getElement($index, $value, $settings)
   {
     $element = '';
 
-    $element .= '<div class="rex-form-row rex-form-sortable">';
-    $element .= '<p class="rex-form-text">';
-    $element .= '<label for="_rex488_element_' . $index . '">' . self::NAME . '</label>';
-    $element .= '<input id="_rex488_element_' . $index . '" name="_rex488_element[' . $index . '][' . self::ID . ']" type="text" class="rex-form-text" value="' . $value . '" />';
-    $element .= '<div class="_rex488_control_panel"><span class="_rex488_move_element">Element verschieben</span><span class="_rex488_remove_element">Element löschen</span></div>';
+    $element .= '<div class="rex488-form-row rex488-form-sortable">';
+    $element .= '
+      <div class="rex-content-editmode-module-name">
+      <h3 class="rex-hl4">' . self::NAME . '</h3>
+        <div class="rex-navi-slice">
+          <ul>
+            <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.Settings(this); return false;" class="rex-tx3">Einstellungen<span>' . self::NAME . '</span></a></li>
+            <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.DeleteSlice(this); return false;" class="rex-tx2">Löschen<span>' . self::NAME . '</span></a></li>
+            <li><a href="#" onclick="Rexblog.Article.MoveSliceUp(this); return false;" title="Nach oben verschieben" class="rex-slice-move-up"><span>' . self::NAME . '</span></a></li>
+            <li><a href="#" onclick="Rexblog.Article.MoveSliceDown(this); return false;"title="Nach unten verschieben" class="rex-slice-move-down"><span>' . self::NAME . '</span></a></li>
+          </ul>
+        </div>
+      </div>';
+    
+    $checked = ($settings['excerpt'] == 'on') ? ' checked="checked"' : '';
+
+    $element .= '<p class="rex488-form-checkbox">';
+    $element .= '<label class="rex488-form-checkbox">Plugin als Einleitung</label>';
+    $element .= '<input name="_rex488_settings[' . $index . '][index]" type="hidden" value="' . $index . '" />';
+    $element .= '<input name="_rex488_settings[' . $index . '][excerpt]" type="checkbox"' . $checked . ' class="rex488-form-checkbox" />';
+    $element .= '</p>';
+
+    $element .= '<p class="rex488-form-text">';
+    $element .= '<input id="_rex488_element_' . $index . '" name="_rex488_element[' . $index . '][' . self::ID . ']" type="text" class="rex488-form-text" value="' . $value . '" />';
     $element .= '</p>';
     $element .= '</div>';
 

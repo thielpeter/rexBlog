@@ -168,15 +168,13 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 	$post_id	  = $post_value['id'];
         $post_categories  = explode(',', addslashes($post_value['categories']));
 	$post_title	  = addslashes($post_value['title']);
+	$post_keywords    = addslashes($post_value['keywords']);
+	$post_description = addslashes($post_value['description']);
 	$post_article	  = $post_value['article_post'];
+	$post_settings	  = $post_value['article_settings'];
+	$post_permlink	  = $post_value['article_permlink'];
 	$create_date	  = addslashes($post_value['create_date']);
 	$create_user	  = addslashes($post_value['create_user']);
-
-	// format post url
-
-	$post_url = self::$category_path[$category['id']]['url'];
-	$post_url = substr($post_url, 0, (strrpos($post_url, '/') + 1));
-	$post_url = $post_url . self::prepare_url($title) . '.html';
 
 	// create post content for file
 
@@ -197,7 +195,11 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 
 	$content .= "	),\n";
 	$content .= "	'title' => '" . $post_title . "',\n";
+	$content .= "	'keywords' => '" . $post_keywords . "',\n";
+	$content .= "	'description' => '" . $post_description . "',\n";
 	$content .= "	'article_post' => '" . $post_article . "',\n";
+	$content .= "	'article_settings' => '" . $post_settings . "',\n";
+	$content .= "	'article_permlink' => '" . $post_permlink . "',\n";
 	$content .= "	'create_date' => '" . $create_date . "',\n";
 	$content .= "	'create_user' => '" . $create_user . "',\n";
 
@@ -209,7 +211,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 	{
 	  $post_category_url = self::$category_path[$post_category_url_value]['url'];
 	  $post_category_url = substr($post_category_url, 0, strrpos($post_category_url, '/') + 1);
-	  $post_category_url = $post_category_url . self::prepare_url($post_title) . '.html';
+	  $post_category_url = $post_category_url . self::prepare_url($post_permlink) . '.html';
 
 	  $content .= "		" . $post_category_url_key . " => '" . $post_category_url . "',\n";
 	}
@@ -267,12 +269,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 	$post_id	  = $post_value['id'];
         $post_categories  = explode(',', addslashes($post_value['categories']));
 	$post_title	  = addslashes($post_value['title']);
-
-	// format post url
-
-	$post_url = self::$category_path[$category['id']]['url'];
-	$post_url = substr($post_url, 0, (strrpos($post_url, '/') + 1));
-	$post_url = $post_url . self::prepare_url($title) . '.html';
+	$post_permlink	  = $post_value['article_permlink'];
 
 	// create post content for file
 
@@ -301,7 +298,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 	{
 	  $post_category_url = self::$category_path[$post_category_url_value]['url'];
 	  $post_category_url = substr($post_category_url, 0, strrpos($post_category_url, '/') + 1);
-	  $post_category_url = $post_category_url . self::prepare_url($post_title) . '.html';
+	  $post_category_url = $post_category_url . self::prepare_url($post_permlink) . '.html';
 
 	  $content .= "		" . $post_category_url_key . " => '" . $post_category_url . "',\n";
 	}

@@ -118,7 +118,7 @@ if($REX['REDAXO'])
 
   while (false !== ($classfile = $plugin_direcoty->read()))
   {
-    if($classfile == '.' || $classfile == '..' ) continue;
+    if($classfile == '.' || $classfile == '..' || $classfile == 'templates') continue;
     require_once dirname(__FILE__) . '/classes/plugins/' . $classfile;
 
     $classname = str_replace('plugin.', '', $classfile);

@@ -20,64 +20,9 @@
   background-color:#DFE9E9;
 }
 
-div.rex-form-wrapper
-{
-  border-top:1px solid #FFF;
-}
-
 div.error
 {
-  background-color:#fae9e5;
-}
-
-label.label-error
-{
-  color:#EA1144;
-  font-weight:900;
-}
-
-._rex488_control_panel
-{
-  background-color:#DFE9E9;
-  padding:6px 5px;
-  width:451px;
-  float:left;
-  clear:both;
-  border:1px solid #cbcbcb;
-  margin:5px 0 0 154px;
-  -moz-border-radius:3px;
-}
-
-span._rex488_move_element
-{
-  background:transparent url(../img/move.png) left center no-repeat;
-  line-height:16px;
-  height:16px;
-  padding-left:21px;
-  cursor:move;
-  display:block;
-  float:left;
-  margin:0 5px 0 0;
-}
-
-span._rex488_remove_element
-{
-  background:transparent url(../img/cross.png) left center no-repeat;
-  line-height:16px;
-  height:16px;
-  padding-left:21px;
-  cursor:pointer;
-  float:left;
-  margin:0 5px 0 0;
-  display:block;
-}
-
-label.error
-{
-  margin-left:150px;
-  width:400px !important;
-  color:#EA1144;
-  font-weight:900;
+  background-color:#fae9e5 !important;
 }
 
 input.error
@@ -86,24 +31,142 @@ input.error
   border:1px solid #cbcbcb;
 }
 
-div.rex-form-row
-{
-  background-color:#EFF9F9;
-}
+/** REX488-FORM-ELEMENTS
+*/
 
-.rex-validate-message
+div.rex488-validate-message
 {
   display:none;
 }
 
-.rex-table
+div.rex488-form-row
 {
-  line-height:120%;
+  width:100%;
+  padding:0;
+  background-color:#DFE9E9;
+  border-top:1px solid #fff;
+  border-bottom:1px solid #cbcbcb;
+  display:block;
+  float:left;
 }
 
-select.rex-form-select
+div.rex488_extra_settings div.rex488-form-row
 {
-  width:462px !important;
-  border:1px solid #999999;
-  padding:1px;
+  background-color:#F9FDE9;
+}
+
+div.rex-form-wrapper
+{
+  background-color:#F9FDE9 !important;
+}
+
+div.rex488_extra_settings div.rex-content-editmode-module-name
+{
+  background-color:#F4FECF;
+}
+
+div.rex488-form-submit
+{
+  padding:10px 0;
+  border-bottom:none !important;
+}
+
+p.rex488-form-submit
+{
+  padding:0 10px;
+}
+
+p.rex488-form-text
+{
+  width:100%;
+  padding:0;
+  float:left;
+}
+
+input.rex488-form-text
+{
+  width:96.3%;
+  margin:1.5%;
+  padding:2px;
+  float:left;
+}
+
+p.rex488-form-textarea
+{
+  width:100%;
+  padding:0;
+  float:left;
+}
+
+textarea.rex488-form-textarea
+{
+  width:96.3%;
+  margin:1.5%;
+  padding:2px;
+  float:left;
+}
+
+textarea.rex488-form-tinymce
+{
+  width:1px !important;
+  height:1px !important;
+  padding:0 !important;
+  float:left !important;
+  overflow:hidden !important;
+  display:none !important;
+}
+
+p.rex488-form-select
+{
+  background-color:#CCD7DD;
+  width:100%;
+  padding:0;
+  float:left;
+}
+
+select.rex488-form-select
+{
+  width:97%;
+  margin:1.5%;
+  padding:2px;
+  float:left;
+}
+
+p.rex488-form-checkbox
+{
+  background-color:#EFF9F9;
+  width:100%;
+  padding:10px 0;
+  float:left;
+  display:none;
+}
+
+span.mceEditor
+{
+  width:97%;
+  padding:1.5%;
+  left:-1px;
+  float:left;
+  display:block;
+  margin:0 0 0 1px;
+}
+
+div.rex488_metadata,
+div.rex488_trackbacks
+{
+  float:left;
+  width:100%;
+  display:none;
+}
+
+label.rex488-form-checkbox
+{
+  margin:1px 0 0 5px;
+  float:left;
+}
+
+input.rex488-form-checkbox
+{
+  margin:1px 0 0 10px;
+  float:left;
 }
