@@ -34,12 +34,13 @@ class _rex488_content_plugin_tinymce
         </div>
       </div>';
 
-    $checked = ($settings['excerpt'] == 'on') ? ' checked="checked"' : '';
+    $excerpt  = ($settings['excerpt'] == 'on') ? ' checked="checked"' : '';
 
     echo '<p class="rex488-form-checkbox">';
-    echo '<label class="rex488-form-checkbox">Plugin als Einleitung</label>';
     echo '<input name="_rex488_settings[' . $index . '][index]" type="hidden" value="' . $index . '" />';
-    echo '<input name="_rex488_settings[' . $index . '][excerpt]" type="checkbox"' . $checked . ' class="rex488-form-checkbox" />';
+    echo '<input name="_rex488_settings[' . $index . '][type]" type="hidden" value="' . self::ID . '" />';
+    echo '<input name="_rex488_settings[' . $index . '][excerpt]" type="checkbox"' . $excerpt . ' class="rex488-form-checkbox" />';
+    echo '<label class="rex488-form-checkbox">Plugin als Einleitung</label>';
     echo '</p>';
 
     echo '<p class="rex488-form-textarea">';

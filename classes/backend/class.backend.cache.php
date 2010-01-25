@@ -157,7 +157,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
       // create header for cache file
 
       $content = "<?php\n\n";
-      $content .= "\$REX['ADDON']['rexblog']['post'][" . $category['id'] . "] = array (\n";
+      $content .= "\$REX['ADDON']['rexblog']['article'][" . $category['id'] . "] = array (\n";
 
       // loop through post_array
 
@@ -226,7 +226,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 
       // assign path for cache file
 
-      $file = parent::$include_path . '/generated/files/_rex488_post.' . $category['id'] . '.inc.php';
+      $file = parent::$include_path . '/generated/files/_rex488_article.' . $category['id'] . '.inc.php';
 
       // write cache file
 
@@ -258,7 +258,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
       // create header for cache file
 
       $content = "<?php\n\n";
-      $content .= "\$REX['ADDON']['rexblog']['post']['pathlist'] = array (\n";
+      $content .= "\$REX['ADDON']['rexblog']['article']['pathlist'] = array (\n";
 
       // loop through post_array
 
@@ -313,7 +313,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 
       // assign path for cache file
 
-      $file = parent::$include_path . '/generated/files/_rex488_post.pathlist.inc.php';
+      $file = parent::$include_path . '/generated/files/_rex488_article.pathlist.inc.php';
 
       // write cache file
 

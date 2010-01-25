@@ -14,14 +14,11 @@
 function _rex488_add_pageheader()
 {
   $page_header = "\n";
-  $page_header .= '<link rel="stylesheet" type="text/css" href="include/addons/rexblog/files/css/backend.css" />' . "\n";
+  $page_header .= '<link rel="stylesheet" type="text/css" href="include/addons/rexblog/files/css/' . rex_request('subpage', 'string') . '.css" />' . "\n";
   $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.tablednd.js"></script>' . "\n";
-  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.metadata.js"></script>' . "\n";
   $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.validate.pack.js"></script>' . "\n";
-  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.ui.core.js"></script>' . "\n";
-  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.ui.sortable.js"></script>' . "\n";
   $page_header .= '<script type="text/javascript" src="include/addons/rexblog/external/tiny_mce/tiny_mce.js"></script>' . "\n";
-  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/backend.js"></script>' . "\n";
+  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/' . rex_request('subpage', 'string') . '.js"></script>' . "\n";
 
   return $page_header;
 }

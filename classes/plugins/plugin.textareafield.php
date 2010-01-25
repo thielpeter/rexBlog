@@ -23,7 +23,7 @@ class _rex488_content_plugin_textareafield
     $element .= '<div class="rex488-form-row rex488-form-sortable">';
     $element .= '
       <div class="rex-content-editmode-module-name">
-      <h3 class="rex-hl4">' . self::NAME . $set . '</h3>
+      <h3 class="rex-hl4">' . self::NAME . '</h3>
         <div class="rex-navi-slice">
           <ul>
             <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.Settings(this); return false;" class="rex-tx3">Einstellungen<span>' . self::NAME . '</span></a></li>
@@ -39,6 +39,7 @@ class _rex488_content_plugin_textareafield
 
     $element .= '<p class="rex488-form-checkbox">';
     $element .= '<input name="_rex488_settings[' . $index . '][index]" type="hidden" value="' . $index . '" />';
+    $element .= '<input name="_rex488_settings[' . $index . '][type]" type="hidden" value="' . self::ID . '" />';
     $element .= '<input name="_rex488_settings[' . $index . '][excerpt]" type="checkbox"' . $excerpt . ' class="rex488-form-checkbox" />';
     $element .= '<label class="rex488-form-checkbox">Plugin als Einleitung</label>';
     $element .= '<input name="_rex488_settings[' . $index . '][wrap]" type="checkbox"' . $wrap . ' class="rex488-form-checkbox" />';

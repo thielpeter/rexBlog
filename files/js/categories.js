@@ -6,35 +6,29 @@
 jQuery(document).ready(function()
 {
   ///////////////////////////////////////////////////////////////
-  // categories form validation
+  // category form validation
 
-  var category_validator = jQuery("#rex-form-categories").validate(
+  jQuery.validator.messages.required = "";
+
+  jQuery("#rex488-form-categories").validate(
   {
-    rules: {
-      title: {
-        required: true,
-        minlength: 3
+    rules : {
+      title : {
+        required : true
       }
     },
-    messages: {
-      title: {
-        required: "Die Bezeichnung der Kategorie darf nicht leer sein.",
-        minlength: jQuery.format("Die Bezeichnung der Kategorie muss mindestens {0} Zeichen lang sein.")
-      }
-    },
-    highlight: function(element, errorClass)
+    errorPlacement : function(error, element)
     {
-      jQuery(element).addClass(errorClass);
-      jQuery(element.form).find("label[for=" + element.id + "]").addClass('label-error');
-      jQuery(element.form).find("label[for=" + element.id + "]").parent().parent().addClass(errorClass);
-      jQuery('.rex-validate-message').css('display', 'block');
     },
-    unhighlight: function(element, errorClass)
+    highlight : function(element, errorClass)
     {
-      jQuery(element).removeClass(errorClass);
-      jQuery(element.form).find("label[for=" + element.id + "]").removeClass('label-error');
-      jQuery(element.form).find("label[for=" + element.id + "]").parent().parent().removeClass(errorClass);
-      jQuery('.rex-validate-message').css('display', 'none');
+      jQuery(element).parents('div.rex-form-row').addClass(errorClass);
+        jQuery('div.rex488-validate-message').css('display', 'block');
+    },
+    unhighlight : function(element, errorClass)
+    {
+      jQuery(element).parents('div.rex-form-row').removeClass(errorClass);
+        jQuery('div.rex488-validate-message').css('display', 'none');
     }
   });
 
@@ -43,21 +37,22 @@ jQuery(document).ready(function()
 
   jQuery("#rex-categories").tableDnD(
   {
-    onDragClass: "drag",
-    dragHandle: "handle",
+    onDragClass : "drag",
+    dragHandle  : "handle",
     onDrop: function(table, row)
     {
-      var rows = table.tBodies[0].rows;
+      var rows       = table.tBodies[0].rows;
       var categories = "";
-      var category = "";
+      var category   = "";
 
       for (var i = 0; i < rows.length; i++) {
-        category = rows[i].id;
-        category = category.replace('rex-category-', '');
-        categories += category + "~";
+        category   = rows[i].id;
+        category   = category.replace('rex-category-', '');
+        categories = categories + category + "~";
       }
 
       jQuery("#rex-categories").addClass('processing');
+
       jQuery.post('index.php?page=rexblog&subpage=categories', {
         output: "false",
         func: "sort",

@@ -14,14 +14,14 @@
 ?>
 <div class="rex-addon-output-v2">
 
-  <div class="rex-message rex-validate-message">
+  <div class="rex-message rex488-validate-message">
     <div class="rex-warning">
       <p><span>Es wurden Fehler bei der Eingabe festgestellt.</span></p>
     </div>
   </div>
 
   <div id="rex-addon-editmode" class="rex-form">
-    <form action="index.php?page=rexblog&subpage=categories" method="post" id="rex-form-categories">
+    <form action="index.php?page=rexblog&subpage=categories" method="post" id="rex488-form-categories">
       <input type="hidden" name="page" value="rexblog" />
       <input type="hidden" name="subpage" value="categories" />
       <input type="hidden" name="parent" value="<?php echo rex_request('parent', 'int'); ?>" />
@@ -64,7 +64,6 @@
             <p class="rex-form-col-a rex-form-submit rex-form-submit-2">
               <input type="submit" name="submit" class="rex-form-submit submit" value="Speichern" />
               <input type="submit" name="update" class="rex-form-submit rex-form-submit-2 update" value="Übernehmen" />
-              <input type="reset" name="reset" class="rex-form-submit rex-form-submit-2 reset" value="Zurücksetzen" />
               <input type="submit" name="cancel" class="rex-form-submit rex-form-submit-2 cancel" value="Abbrechen" />
             </p>
           </div>

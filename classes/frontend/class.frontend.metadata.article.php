@@ -11,11 +11,11 @@
  * http://de.wikipedia.org/wiki/MIT-Lizenz
  */
 
-abstract class _rex488_FrontendMetadataPost extends _rex488_FrontendMetadata
+abstract class _rex488_FrontendMetadataArticle extends _rex488_FrontendMetadata
 {
-  private static $post_title;
-  private static $post_keywords;
-  private static $post_description;
+  private static $article_title;
+  private static $article_keywords;
+  private static $article_description;
 
   /**
    * post keywords
@@ -24,18 +24,18 @@ abstract class _rex488_FrontendMetadataPost extends _rex488_FrontendMetadata
    * falls der aktuelle beitrag keine meta keywords enthält,
    * werden die meta keywords durch den startartikel des blogs erzeugt.
    *
-   * @return string $post_title meta titel des beitrags
+   * @return string $article_title meta titel des beitrags
    */
 
-  public static function get_post_title($prepend, $spacer)
+  public static function get_article_title($prepend, $spacer)
   {
-    self::$post_title = parent::$post_path[parent::$post_id]['title'];
+    self::$article_title = parent::$article_path[parent::$article_id]['title'];
 
     if($prepend === true) {
-      self::$post_title = parent::get_blog_title() . $spacer . self::$post_title;
+      self::$article_title = parent::get_blog_title() . $spacer . self::$article_title;
     }
 
-    return self::$post_title;
+    return self::$article_title;
   }
 
   /**
@@ -45,18 +45,18 @@ abstract class _rex488_FrontendMetadataPost extends _rex488_FrontendMetadata
    * falls der aktuelle beitrag keine meta keywords enthält,
    * werden die meta keywords durch den startartikel des blogs erzeugt.
    *
-   * @return string $post_keywords beitrag meta keywords
+   * @return string $article_keywords beitrag meta keywords
    */
 
-  public static function get_post_keywords()
+  public static function get_article_keywords()
   {
-    self::$post_keywords = parent::$post_path[parent::$post_id]['keywords'];
+    self::$article_keywords = parent::$article_path[parent::$article_id]['keywords'];
 
-    if(empty(self::$post_keywords)) {
-      self::$post_keywords = parent::get_blog_keywords();
+    if(empty(self::$article_keywords)) {
+      self::$article_keywords = parent::get_blog_keywords();
     }
 
-    return self::$post_keywords;
+    return self::$article_keywords;
   }
 
   /**
@@ -66,18 +66,18 @@ abstract class _rex488_FrontendMetadataPost extends _rex488_FrontendMetadata
    * falls der aktuelle beitrag keine meta description enthält,
    * wird die meta description durch den startartikel des blogs erzeugt.
    *
-   * @return string $post_description beitrag meta description
+   * @return string $article_description beitrag meta description
    */
 
-  public static function get_post_description()
+  public static function get_article_description()
   {
-    self::$post_description = parent::$post_path[parent::$post_id]['description'];
+    self::$article_description = parent::$article_path[parent::$article_id]['description'];
 
-    if(empty(self::$post_description)) {
-      self::$post_description = parent::get_blog_description();
+    if(empty(self::$article_description)) {
+      self::$article_description = parent::get_blog_description();
     }
 
-    return self::$post_description;
+    return self::$article_description;
   }
 }
 ?>

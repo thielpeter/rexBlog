@@ -13,9 +13,9 @@
 
 abstract class _rex488_FrontendDesignator
 {
-	public static $next_button = 'Nächste Seite';
-	public static $prev_button = 'Vorherige Seite';
-	public static $category_no_post = 'In dieser Kategorie sind keine Beiträge vorhanden.';
+	public static $next_button         = 'Nächste Seite';
+	public static $prev_button         = 'Vorherige Seite';
+	public static $category_no_article = 'In dieser Kategorie sind keine Beiträge vorhanden.';
 	
 	public static function next_button() {
 		return self::$next_button;
@@ -25,8 +25,8 @@ abstract class _rex488_FrontendDesignator
 		return self::$prev_button;
 	}
 	
-	public static function category_no_post() {
-		return self::$category_no_post;
+	public static function category_no_article() {
+		return self::$category_no_article;
 	}
 }
 

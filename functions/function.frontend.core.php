@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
  * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
@@ -63,9 +63,9 @@ function _rex488_the_categories($opener = false, $show_post_count = false)
 
 function _rex488_the_meta_title($prepend = false, $spacer = ' | ')
 {
-  if(_rex488_is_post())
+  if(_rex488_is_article())
   {
-    return _rex488_FrontendMetadataPost::get_post_title($prepend, $spacer);
+    return _rex488_FrontendMetadataArticle::get_article_title($prepend, $spacer);
   }
   else if(_rex488_is_category())
   {
@@ -90,9 +90,9 @@ function _rex488_the_meta_title($prepend = false, $spacer = ' | ')
 
 function _rex488_the_meta_keywords()
 {
-  if(_rex488_is_post())
+  if(_rex488_is_article())
   {
-    return _rex488_FrontendMetadataPost::get_post_keywords();
+    return _rex488_FrontendMetadataArticle::get_article_keywords();
   }
   else if(_rex488_is_category())
   {
@@ -117,9 +117,9 @@ function _rex488_the_meta_keywords()
 
 function _rex488_the_meta_description()
 {
-  if(_rex488_is_post())
+  if(_rex488_is_article())
   {
-    return _rex488_FrontendMetadataPost::get_post_description();
+    return _rex488_FrontendMetadataArticle::get_article_description();
   }
   else if(_rex488_is_category())
   {
@@ -146,13 +146,13 @@ function _rex488_the_meta_description()
 
 function _rex488_the_content($pagination = 4)
 {
-  if(_rex488_is_post())
+  if(_rex488_is_article())
   {
-    return _rex488_FrontendPost::get_post_details();
+    return _rex488_FrontendArticle::get_article_details();
   }
   else if(_rex488_is_category())
   {
-    return _rex488_FrontendPost::get_post_overview($pagination);
+    return _rex488_FrontendArticle::get_article_overview($pagination);
   }
 }
 
@@ -175,11 +175,11 @@ function _rex488_the_pagination()
 }
 
 /**
- * _rex488_the_post
+ * _rex488_the_article
  *
  * erzeugt den beitragstext basierend auf dem aktuellen state. einstellungen
  * und formatierungen an der ausgabe k�nnen direkt in der separaten
- * post.inc.php datei im template verzeichnis gemacht werden.
+ * article.inc.php datei im template verzeichnis gemacht werden.
  *
  * @throws
  * @global
@@ -187,9 +187,9 @@ function _rex488_the_pagination()
  * @return
  */
 
-function _rex488_the_post()
+function _rex488_the_article_post()
 {
-  return _rex488_FrontendPost::_rex488_the_post();
+  return _rex488_FrontendArticle::_rex488_the_article_post();
 }
 
 /**
@@ -205,9 +205,9 @@ function _rex488_the_post()
  * @return
  */
 
-function _rex488_the_excerpt($type = 'post', $length = 0, $clean = '')
+function _rex488_the_article_excerpt()
 {
-  return _rex488_FrontendPost::_rex488_the_excerpt($type, $length, $clean);
+  return _rex488_FrontendArticle::_rex488_the_article_excerpt();
 }
 
 /**
@@ -223,9 +223,9 @@ function _rex488_the_excerpt($type = 'post', $length = 0, $clean = '')
  * @return
  */
 
-function _rex488_the_post_date($date_format = 'd.m.Y')
+function _rex488_the_article_date($date_format = 'd.m.Y')
 {
-  return _rex488_FrontendPost::_rex488_the_post_date($date_format);
+  return _rex488_FrontendArticle::_rex488_the_article_date($date_format);
 }
 
 /**
@@ -241,9 +241,9 @@ function _rex488_the_post_date($date_format = 'd.m.Y')
  * @return
  */
 
-function _rex488_the_post_user()
+function _rex488_the_article_user()
 {
-  return _rex488_FrontendPost::_rex488_the_post_user();
+  return _rex488_FrontendArticle::_rex488_the_article_user();
 }
 
 /**
@@ -259,9 +259,9 @@ function _rex488_the_post_user()
  * @return
  */
 
-function _rex488_the_title()
+function _rex488_the_article_title()
 {
-  return _rex488_FrontendPost::_rex488_the_title();
+  return _rex488_FrontendArticle::_rex488_the_article_title();
 }
 
 /**
@@ -277,9 +277,9 @@ function _rex488_the_title()
  * @return
  */
 
-function _rex488_the_url()
+function _rex488_the_article_permlink()
 {
-  return _rex488_FrontendPost::_rex488_the_url();
+  return _rex488_FrontendArticle::_rex488_the_article_permlink();
 }
 
 /**
@@ -311,9 +311,9 @@ function _rex488_is_category()
  * @return
  */
 
-function _rex488_is_post()
+function _rex488_is_article()
 {
-  return _rex488_FrontendBase::$is_post;
+  return _rex488_FrontendBase::$is_article;
 }
 
 ?>

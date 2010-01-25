@@ -34,12 +34,13 @@ abstract class _rex488_content_plugin_textfield
         </div>
       </div>';
     
-    $checked = ($settings['excerpt'] == 'on') ? ' checked="checked"' : '';
+    $excerpt  = ($settings['excerpt'] == 'on') ? ' checked="checked"' : '';
 
     $element .= '<p class="rex488-form-checkbox">';
-    $element .= '<label class="rex488-form-checkbox">Plugin als Einleitung</label>';
     $element .= '<input name="_rex488_settings[' . $index . '][index]" type="hidden" value="' . $index . '" />';
-    $element .= '<input name="_rex488_settings[' . $index . '][excerpt]" type="checkbox"' . $checked . ' class="rex488-form-checkbox" />';
+    $element .= '<input name="_rex488_settings[' . $index . '][type]" type="hidden" value="' . self::ID . '" />';
+    $element .= '<input name="_rex488_settings[' . $index . '][excerpt]" type="checkbox"' . $excerpt . ' class="rex488-form-checkbox" />';
+    $element .= '<label class="rex488-form-checkbox">Plugin als Einleitung</label>';
     $element .= '</p>';
 
     $element .= '<p class="rex488-form-text">';

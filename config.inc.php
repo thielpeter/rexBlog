@@ -53,7 +53,6 @@ function _rex488_autoload($params)
     '_rex488_BackendErrorHandling'      => 'classes/backend/class.backend.errorhandling.php',
     '_rex488_BackendCategoryInterface'  => 'classes/backend/interface/interface.backend.categories.php',
     '_rex488_BackendArticleInterface'   => 'classes/backend/interface/interface.backend.articles.php',
-    '_rex488_BackendPost'               => 'classes/backend/class.backend.post.php',
     '_rex488_BackendCategories'         => 'classes/backend/class.backend.categories.php',
     '_rex488_BackendArticles'           => 'classes/backend/class.backend.articles.php',
     
@@ -63,8 +62,8 @@ function _rex488_autoload($params)
     '_rex488_FrontendCategory'          => 'classes/frontend/class.frontend.category.php',
     '_rex488_FrontendMetadata'          => 'classes/frontend/class.frontend.metadata.php',
     '_rex488_FrontendMetadataCategory'  => 'classes/frontend/class.frontend.metadata.category.php',
-    '_rex488_FrontendMetadataPost'      => 'classes/frontend/class.frontend.metadata.post.php',
-    '_rex488_FrontendPost'              => 'classes/frontend/class.frontend.post.php',
+    '_rex488_FrontendMetadataArticle'   => 'classes/frontend/class.frontend.metadata.article.php',
+    '_rex488_FrontendArticle'           => 'classes/frontend/class.frontend.article.php',
     '_rex488_FrontendPagination'        => 'classes/frontend/class.frontend.pagination.php',
   );
 

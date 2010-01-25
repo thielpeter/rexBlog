@@ -1,25 +1,3 @@
-#rex-categories td.handle
-{
-  background:transparent url(../img/priority.gif) center center no-repeat;
-  cursor:pointer;
-}
-
-#rex-categories.processing td.handle
-{
-  background:transparent url(../img/ajax.gif) center center no-repeat;
-  cursor:wait;
-}
-
-#rex-categories.processing
-{
-  cursor:wait;
-}
-
-#rex-categories tr.drag td
-{
-  background-color:#DFE9E9;
-}
-
 div.error
 {
   background-color:#fae9e5 !important;
@@ -30,9 +8,6 @@ input.error
   background-color:#fff;
   border:1px solid #cbcbcb;
 }
-
-/** REX488-FORM-ELEMENTS
-*/
 
 div.rex488-validate-message
 {

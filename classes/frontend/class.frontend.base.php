@@ -17,10 +17,10 @@ class _rex488_FrontendBase
 
   protected static $url;
   protected static $category_path;
-  protected static $post_path;
-  protected static $post_pathlist;
+  protected static $article_path;
+  protected static $article_pathlist;
   protected static $category_id = 0;
-  protected static $post_id;
+  protected static $article_id;
 
   protected static $rewrite;
   protected static $include_path = '';
@@ -32,7 +32,7 @@ class _rex488_FrontendBase
   protected static $the_page_max;
 
   public static $is_category = false;
-  public static $is_post = false;
+  public static $is_article = false;
 
   /**
    * singleton
@@ -82,11 +82,11 @@ class _rex488_FrontendBase
       self::$category_path = array();
     }
 
-    if(file_exists(self::$include_path . '/generated/files/_rex488_post.pathlist.inc.php')) {
-      require self::$include_path . '/generated/files/_rex488_post.pathlist.inc.php';
-        self::$post_pathlist = $REX['ADDON']['rexblog']['post']['pathlist'];
+    if(file_exists(self::$include_path . '/generated/files/_rex488_article.pathlist.inc.php')) {
+      require self::$include_path . '/generated/files/_rex488_article.pathlist.inc.php';
+        self::$article_pathlist = $REX['ADDON']['rexblog']['article']['pathlist'];
     } else {
-      self::$post_pathlist = array();
+      self::$article_pathlist = array();
     }
   }
 
@@ -121,46 +121,46 @@ class _rex488_FrontendBase
         self::$category_id = $value['id'];
         self::set_is_category(true);
 
-        if(file_exists(self::$include_path . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php'))
-          require self::$include_path . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php';
+        if(file_exists(self::$include_path . '/generated/files/_rex488_article.' . self::$category_id . '.inc.php'))
+          require self::$include_path . '/generated/files/_rex488_article.' . self::$category_id . '.inc.php';
 
-        if(!isset($REX['ADDON']['rexblog']['post'][self::$category_id]))
+        if(!isset($REX['ADDON']['rexblog']['article'][self::$category_id]))
         {
-          $REX['ADDON']['rexblog']['post'][self::$category_id] = array();
+          $REX['ADDON']['rexblog']['article'][self::$category_id] = array();
         }
 
-        self::$post_path = $REX['ADDON']['rexblog']['post'][self::$category_id];
+        self::$article_path = $REX['ADDON']['rexblog']['article'][self::$category_id];
       }
     }
   }
 
   /**
-   * set post id
+   * set article id
    *
-   * sets the current post id
+   * sets the current article id
    *
    * @param
    * @return
    * @throws
    */
 
-  public static function set_post_id()
+  public static function set_article_id()
   {
     global $REX;
 
-    foreach(self::$post_pathlist as $key => $value)
+    foreach(self::$article_pathlist as $key => $value)
     {
       foreach($value['url'] as $url_key => $url_value)
       {
         if($url_value == self::$url)
         {
           self::$category_id = $value['categories'][$url_key];
-          self::$post_id = $value['id'];
-          self::set_is_post(true);
+          self::$article_id = $value['id'];
+          self::set_is_article(true);
 
-          if(file_exists(self::$include_path . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php')) {
-            require self::$include_path . '/generated/files/_rex488_post.' . self::$category_id . '.inc.php';
-              self::$post_path = $REX['ADDON']['rexblog']['post'][self::$category_id];
+          if(file_exists(self::$include_path . '/generated/files/_rex488_article.' . self::$category_id . '.inc.php')) {
+            require self::$include_path . '/generated/files/_rex488_article.' . self::$category_id . '.inc.php';
+              self::$article_path = $REX['ADDON']['rexblog']['article'][self::$category_id];
           }
         }
       }
@@ -183,18 +183,18 @@ class _rex488_FrontendBase
   }
 
   /**
-   * set post state
+   * set article state
    *
-   * sets the current post state
+   * sets the current article state
    *
    * @param
    * @return
    * @throws
    */
 
-  public static function set_is_post($state = false)
+  public static function set_is_article($state = false)
   {
-    self::$is_post = $state;
+    self::$is_article = $state;
   }
 
   /**
@@ -213,18 +213,18 @@ class _rex488_FrontendBase
   }
 
   /**
-   * get post id
+   * get article id
    *
-   * returns the post category id
+   * returns the article category id
    *
    * @param
    * @return
    * @throws
    */
 
-  static public function get_post_id()
+  static public function get_article_id()
   {
-    return self::$post_id;
+    return self::$article_id;
   }
 
   /**
@@ -240,7 +240,7 @@ class _rex488_FrontendBase
   public static function set_base()
   {
     self::set_category_id();
-    self::set_post_id();
+    self::set_article_id();
   }
 
   /**

@@ -11,10 +11,10 @@
  * http://de.wikipedia.org/wiki/MIT-Lizenz
  */
   
-$textareafield = $the_plugin_settings['wrap'] == "on" ? '<p>' . $the_plugin_content[$the_plugin_settings['type']] . '</p>' : $the_plugin_content[$the_plugin_settings['type']];
+$tinymce = $the_plugin_content[$the_plugin_settings['type']];
 
 ?>
 
-<div class="textareafield_container">
-  <?php echo $textareafield; ?>
+<div class="tinymce_container">
+  <?php echo $tinymce; ?>
 </div>
