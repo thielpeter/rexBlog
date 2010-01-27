@@ -14,10 +14,10 @@
 ?>
 <div class="rex-toolbar">
   <div class="rex-toolbar-content">
-    <a href="#" rel="metadata" onclick="Rexblog.Article.ToggleExtraSettings(this, event);">Metadaten</a>&nbsp;|&nbsp;
+    <a href="#" rel="data" onclick="Rexblog.Article.ToggleExtraSettings(this, event);">Metadaten</a>&nbsp;|&nbsp;
     <a href="#" rel="trackbacks" onclick="Rexblog.Article.ToggleExtraSettings(this, event);">Trackbacks</a>&nbsp;|&nbsp;
-    <a href="#">Schlagwörter</a>&nbsp;|&nbsp;
-    <a href="#">Einstellungen</a>
+    <a href="#" rel="tags" onclick="Rexblog.Article.ToggleExtraSettings(this, event);">Schlagwörter </a>&nbsp;|&nbsp;
+    <a href="#" rel="settings" onclick="Rexblog.Article.ToggleExtraSettings(this, event);">Einstellungen</a>
   </div>
 </div>
 
@@ -25,7 +25,7 @@
 
   <div class="rex-message rex488-validate-message">
     <div class="rex-warning">
-      <p><span>Bitte geben Sie mindestens eine Schlagzeile ein.</span></p>
+      <p><span>Der Artikel konnte nicht gespeichert werden. Es fehlen Pflichtangaben.</span></p>
     </div>
   </div>
 
@@ -42,7 +42,7 @@
 
         <div class="rex-form-wrapper">
 
-          <div class="rex488_metadata rex488_extra_settings">
+          <div class="rex488_meta_data rex488_extra_settings">
 
             <div class="rex-content-editmode-module-name">
               <h3 class="rex-hl4">Permanent Link</h3>
@@ -59,7 +59,7 @@
             </div>
             <div class="rex488-form-row">
               <p class="rex488-form-textarea">
-                <textarea id="_rex488_metadata_keywords" name="_rex488_metadata_keywords" class="rex488-form-textarea" rows="5"><?php echo $article['keywords']; ?></textarea>
+                <textarea id="_rex488_metadata_keywords" name="_rex488_metadata_keywords" class="rex488-form-textarea" rows="5" cols="10"><?php echo $article['keywords']; ?></textarea>
               </p>
             </div>
 
@@ -68,20 +68,59 @@
             </div>
             <div class="rex488-form-row">
               <p class="rex488-form-textarea">
-                <textarea id="_rex488_metadata_description" name="_rex488_metadata_description" class="rex488-form-textarea" rows="5"><?php echo $article['description']; ?></textarea>
+                <textarea id="_rex488_metadata_description" name="_rex488_metadata_description" class="rex488-form-textarea" rows="5" cols="10"><?php echo $article['description']; ?></textarea>
               </p>
             </div>
 
           </div>
 
-          <div class="rex488_trackbacks rex488_extra_settings">
+          <div class="rex488_meta_trackbacks rex488_extra_settings">
 
             <div class="rex-content-editmode-module-name">
               <h3 class="rex-hl4">Trackbacks</h3>
             </div>
             <div class="rex488-form-row">
               <p class="rex488-form-textarea">
-                <textarea id="_rex488_trackbacks" name="_rex488_trackbacks" class="rex488-form-textarea" rows="5"></textarea>
+                <textarea id="rex488_meta_trackbacks" name="rex488_meta_trackbacks" class="rex488-form-textarea" rows="5" cols="10"><?php echo $article['article_trackbacks']; ?></textarea>
+                <span class="rex488-form-notice">Trackbacks müssen durch Leerzeichen getrennt werden.</span>
+              </p>
+            </div>
+
+          </div>
+
+          <div class="rex488_meta_tags rex488_extra_settings">
+
+            <div class="rex-content-editmode-module-name">
+              <h3 class="rex-hl4">Schlagwörter</h3>
+            </div>
+            <div class="rex488-form-row">
+              <p class="rex488-form-textarea">
+                <textarea id="rex488_meta_tags" name="rex488_meta_tags" class="rex488-form-textarea" rows="5" cols="10"><?php echo $article['article_tags']; ?></textarea>
+                <span class="rex488-form-notice">Schlagwörter müssen durch Leerzeichen getrennt werden.</span>
+              </p>
+            </div>
+
+          </div>
+
+          <div class="rex488_meta_settings rex488_extra_settings">
+
+            <div class="rex-content-editmode-module-name">
+              <h3 class="rex-hl4">Einstellungen</h3>
+            </div>
+            <div class="rex488-form-row">
+              <p class="rex488-form-select">
+                <label class="rex488-form-label rex488-form-first">Kommentare zulassen</label>
+                <select name="" size="1" class="rex488-form-select">
+                  <option value="">----------------------------  Einstellung</option>
+                  <option value="">Kommentare zulassen</option>
+                  <option value="">Kommentare nicht zulassen</option>
+               </select>
+                <label class="rex488-form-label">Trackbacks zulassen</label>
+                <select name="" size="1" class="rex488-form-select">
+                  <option value="">----------------------------  Einstellung</option>
+                  <option value="">Trackbacks zulassen</option>
+                  <option value="">Trackbacks nicht zulassen</option>
+                </select>
               </p>
             </div>
 
@@ -98,17 +137,44 @@
           </div>
           <!-- /article title -->
 
+          <!-- category selector -->
+          <div class="rex-content-editmode-module-name">
+            <h3 class="rex-hl4">Kategorien</h3>
+          </div>
+          <div class="rex488-form-row">
+            <p class="rex-form-col-a rex488-form-select">
+              <select name="rex488_article_categories[]" multiple="multiple" size="10" class="rex488-form-select" id="rex488_article_categories">
+                <?php
+                
+                $categories_tree     = _rex488_BackendCategories::read_category_tree();
+                $categories_selected = explode(',', $article['categories']);
+
+                foreach($categories_tree as $category_id => $title)
+                {
+                  $selected = in_array($category_id, $categories_selected) ? ' selected="selected"' : '';
+                  echo '<option value="' . $category_id . '"' . $selected .' name="category_id">' . $title . '</option>';
+                }
+
+                ?>
+             </select>
+            </p>
+          </div>
+          <!-- /category selector -->
+
           <!-- plugin selector -->
           <div class="rex488-form-row rex488-form-plugin-select">
-            <p class="rex-form-col-a rex488-form-select">
-              <select name="content_plugins" size="1" class="rex488-form-select" onchange="Rexblog.Article.AddSlice(this); return false;" id="content_plugins">
+            <p class="rex-form-col-a rex488-form-select rex488-form-plugin-select">
+              <select name="_rex488_content_plugins" size="1" class="rex488-form-select" onchange="Rexblog.Article.AddSlice(this); return false;" id="_rex488_content_plugins">
                 <option value="">----------------------------  Plugin hinzufügen</option>
                 <?php
+
                 $content_plugins = _rex488_read_content_plugins();
+
                 foreach($content_plugins as $id => $name)
                 {
                   echo '<option value="' . $id . '" name="content_plugin_type">' . $name . '</option>';
                 }
+
                 ?>
               </select>
             </p>
@@ -116,14 +182,16 @@
           <!-- /plugin selector -->
 
           <?php
+
           _rex488_BackendArticles::load($article['id']);
+          
           ?>
 
           <!-- form actions -->
           <div class="rex488-form-row rex488-form-submit">
             <p class="rex488-form-submit">
-              <input type="submit" name="submit" class="rex-form-submit submit" value="Beitrag speichern" />
-              <input type="submit" name="update" class="rex-form-submit update" value="Beitrag übernehmen" />
+              <input type="submit" name="submit" class="rex-form-submit submit" value="Speichern" />
+              <input type="submit" name="update" class="rex-form-submit update" value="Übernehmen" />
               <input type="submit" name="cancel" class="rex-form-submit cancel" value="Abbrechen" />
             </p>
           </div>

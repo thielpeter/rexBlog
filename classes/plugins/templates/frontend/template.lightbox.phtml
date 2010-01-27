@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ *
+ * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
+ * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
+ * folgenden Web-Adressen eingesehen werden.
+ *
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://de.wikipedia.org/wiki/MIT-Lizenz
+ */
+  
+$lightbox = explode(',', $the_plugin_content[$the_plugin_settings['type']])
+
+?>
+
+<div class="clearfix"></div>
+<div class="lightbox">
+  <?php
+
+  foreach($lightbox as $item) {
+    echo '<a href="files/' . $item . '" rel="prettyPhoto[gallery' . $index . ']"><img src="index.php?rex_resize=140a__' . $item . '" /></a>';
+  }
+
+  ?>
+</div>
+<div class="clearfix"></div>

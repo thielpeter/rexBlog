@@ -22,6 +22,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
   protected static $mode = 'insert';
   protected static $entry_id = 0;
   protected static $breadcrumb = array();
+  protected static $categories = array();
 
   /**
    * read
@@ -36,7 +37,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
   public static function read($id = null)
   {
-    if(isset($id))
+    if(isset($id) && is_int($id))
     {
       parent::$entry_id = $id;
       
@@ -293,6 +294,25 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
     self::$breadcrumb = array_reverse(self::$breadcrumb);
 
     return self::$breadcrumb;
+  }
+
+  public static function read_category_tree($id = null, $spacer = "")
+  {
+    if($id == null) $id = 0;
+
+    $categories = parent::$sql->getArray("SELECT title, category_id, parent_id FROM " . parent::$prefix . "488_categories WHERE ( parent_id = '" . $id . "' ) ");
+
+    if($id > 0)
+      $spacer = $spacer . "&nbsp;&nbsp;&nbsp;";
+
+    foreach($categories as $key => $value) {
+      self::$categories[$value['category_id']] = $spacer . $value['title'];
+        self::read_category_tree($value['category_id'], $spacer);
+    }
+    
+    $spacer = "";
+
+    return self::$categories;
   }
 }
 ?>

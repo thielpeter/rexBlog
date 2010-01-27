@@ -44,7 +44,7 @@ class _rex488_content_plugin_tinymce
     echo '</p>';
 
     echo '<p class="rex488-form-textarea">';
-    echo '<textarea id="_rex488_element_' . $index . '" name="_rex488_element[' . $index . '][' . self::ID . ']" class="rex488-form-textarea rex488-form-tinymce" rows="5">' . $value . '</textarea>';
+    echo '<textarea id="_rex488_element_' . $index . '" name="_rex488_element[' . $index . '][' . self::ID . ']" class="rex488-form-textarea rex488-form-tinymce" rows="5" cols="10">' . $value . '</textarea>';
     echo '</p>';
     echo '</div>';
 

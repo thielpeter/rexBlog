@@ -21,6 +21,9 @@ jQuery(document).ready(function()
     rules : {
       title : {
         required : true
+      },
+      "rex488_article_categories[]" : {
+        required : true
       }
     },
     errorPlacement : function(error, element)
@@ -72,7 +75,7 @@ Rexblog =
     // permanent link handling
 
     permanent_link.css('display', 'none');
-    permanent_link_readonly.css('color', '#CCCCCC');
+    permanent_link_readonly.css('color', '#999');
     
     permanent_link_readonly.bind('focus', function() {
       permanent_link_readonly.css('display', 'none');
@@ -166,7 +169,7 @@ Rexblog.Article =
     event.preventDefault();
 
     var selector  = jQuery(element).attr('rel');
-    var item      = jQuery('div.rex488_' + selector);
+    var item      = jQuery('div.rex488_meta_' + selector);
 
     if(item.is(':visible')) {
       item.animate({opacity: 0, height: 'toggle'}, {duration: 500});
@@ -182,6 +185,8 @@ Rexblog.Article =
     } else {
       item.animate({opacity: 1, height: 'toggle'}, {duration: 500});
     }
+
+    return false;
   },
   
   /////////////////////////////////////////////////////////////
@@ -189,8 +194,8 @@ Rexblog.Article =
 
   AddSlice : function(element)
   {
-    var plugin  = jQuery(element + ':selected').val();
-
+    var plugin  = jQuery(element).val();
+    
     if(plugin == "") return false;
 
     Rexblog.RaisPluginIndex();

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
  * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
@@ -83,10 +83,9 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
    *
    * erzeugt die children einer kategorie.
    *
-   * @throws
-   * @global
    * @param
    * @return
+   * @throws
    */
 
   private static function get_children($id = 0, $opener = false, $show_post_count = false)
@@ -126,13 +125,12 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
   /**
    * get_parents
    *
-   * erzeugt ein array f�r eine kategorie
-   * mit ihren dazugeh�rigen parents
+   * erzeugt ein array für eine kategorie
+   * mit ihren dazugehörigen parents
    *
-   * @throws
-   * @global	$REX
    * @param
    * @return
+   * @throws
    */
 
   private static function get_parents($id)
@@ -154,17 +152,16 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
   /**
    * get_category_post_count
    *
-   * liefert die anzahl der beitr�ge der aktuellen kategorie zur�ck
+   * returns article count for the current category
    *
-   * @throws
-   * @global	$REX
    * @param
-   * @return	$post_count	int	anzahl der beitr�ge
+   * @return
+   * @throws
    */
 
   public static function get_category_post_count($category_id)
   {
-    parent::$sql->setQuery("SELECT * FROM " . parent::$prefix . "488_articles WHERE (FIND_IN_SET(" . $category_id . ", REPLACE(categories, ',', ',')))");
+    parent::$sql->setQuery("SELECT * FROM " . parent::$prefix . "488_articles WHERE ( FIND_IN_SET(" . $category_id . ", REPLACE(categories, ',', ',')) AND status = '1' )");
     return parent::$sql->getRows();
   }
 }

@@ -1,7 +1,7 @@
 <?php
 
-/*
- * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+/**
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  * 
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der 
  * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
@@ -9,7 +9,7 @@
  * 
  * http://www.opensource.org/licenses/mit-license.php
  * http://de.wikipedia.org/wiki/MIT-Lizenz 
-*/
+ */
 
 abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
 {
@@ -41,11 +41,11 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
           if($category_value == parent::$category_id)
           {
             self::$the_article_title    = $value['title'];
-            self::$the_article_permlink = self::prepare_url($value['url'][$category_key]);
-            self::$the_article_post     = unserialize($value['article_post']);
             self::$the_article_date     = $value['create_date'];
             self::$the_article_user     = $value['create_user'];
-            self::$the_article_settings = unserialize($value['article_settings']);
+            self::$the_article_post     = unserialize(stripslashes($value['article_post']));
+            self::$the_article_settings = unserialize(stripslashes($value['article_settings']));
+            self::$the_article_permlink = self::prepare_url($value['url'][$category_key]);
 
             include _rex488_PATH . 'templates/frontend/template.article.phtml';
           }
@@ -69,11 +69,11 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
         }
 
         self::$the_article_title    = $value['title'];
-        self::$the_article_permlink = self::prepare_url($value['url'][$current_category_id]);
-        self::$the_article_post     = unserialize($value['article_post']);
         self::$the_article_date     = $value['create_date'];
         self::$the_article_user     = $value['create_user'];
-        self::$the_article_settings = unserialize($value['article_settings']);
+        self::$the_article_post     = unserialize(stripslashes($value['article_post']));
+        self::$the_article_settings = unserialize(stripslashes($value['article_settings']));
+        self::$the_article_permlink = self::prepare_url($value['url'][$current_category_id]);
 
         include _rex488_PATH . 'templates/frontend/template.article.phtml';
       }
@@ -100,8 +100,8 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
     foreach($the_article_settings as $index => $the_plugin_settings)
     {
       $the_plugin_content = $the_article_content[$index];
-      eval("include _rex488_PATH . 'classes/plugins/templates/template." . $the_plugin_settings['type'] . ".phtml';");
-      $the_article_buffer = ob_get_contents();
+        eval("include _rex488_PATH . 'classes/plugins/templates/frontend/template." . $the_plugin_settings['type'] . ".phtml';");
+          $the_article_buffer = ob_get_contents();
     }
 
     ob_end_clean();
@@ -133,7 +133,7 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
       foreach($the_article_settings as $index => $the_plugin_settings) {
         if($the_plugin_settings['excerpt'] == 'on') {
           $the_plugin_content = $the_article_content[$index];
-            eval("include _rex488_PATH . 'classes/plugins/templates/template." . $the_plugin_settings['type'] . ".phtml';");
+            eval("include _rex488_PATH . 'classes/plugins/templates/frontend/template." . $the_plugin_settings['type'] . ".phtml';");
               $the_excerpt_buffer = ob_get_contents();
         }
       }
@@ -147,7 +147,7 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
 
       foreach($the_article_settings as $index => $the_plugin_settings) {
         $the_plugin_content = $the_article_content[$index];
-          eval("include _rex488_PATH . 'classes/plugins/templates/template." . $the_plugin_settings['type'] . ".phtml';");
+          eval("include _rex488_PATH . 'classes/plugins/templates/frontend/template." . $the_plugin_settings['type'] . ".phtml';");
             $the_article_buffer = ob_get_contents();
       }
 

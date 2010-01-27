@@ -25,6 +25,17 @@ div.rex488-form-row
   float:left;
 }
 
+div.rex488-form-row
+{
+  width:100%;
+  padding:0;
+  background-color:#DFE9E9;
+  border-top:1px solid #fff;
+  border-bottom:1px solid #cbcbcb;
+  display:block;
+  float:left;
+}
+
 div.rex488_extra_settings div.rex488-form-row
 {
   background-color:#F9FDE9;
@@ -58,6 +69,27 @@ p.rex488-form-text
   float:left;
 }
 
+label.rex488-form-label
+{
+  padding:0 0 0 10px;
+  float:left;
+  clear:both;
+}
+
+span.rex488-form-notice
+{
+  margin:-3px 0 10px 10px;
+  padding:0 0 0 2px;
+  color:#999;
+  float:left;
+  clear:both;
+}
+
+label.rex488-form-first
+{
+  padding-top:10px;
+}
+
 input.rex488-form-text
 {
   width:96.3%;
@@ -81,6 +113,11 @@ textarea.rex488-form-textarea
   float:left;
 }
 
+div.rex488_extra_settings textarea.rex488-form-textarea
+{
+  height:75px;
+}
+
 textarea.rex488-form-tinymce
 {
   width:1px !important;
@@ -93,13 +130,41 @@ textarea.rex488-form-tinymce
 
 p.rex488-form-select
 {
-  background-color:#CCD7DD;
   width:100%;
   padding:0;
   float:left;
 }
 
+p.rex488-form-plugin-select
+{
+  background-color:#CCD7DD;
+}
+
+p.rex488-form-plugin-select select.rex488-form-select
+{
+  width:99%;
+  margin:5px 0.5%;
+  padding:2px;
+  float:left;
+}
+
 select.rex488-form-select
+{
+  width:97%;
+  margin:1.5%;
+  padding:2px;
+  float:left;
+}
+
+div.rex488_extra_settings p.rex488-form-select
+{
+  background-color:#F9FDE9;
+  width:100%;
+  padding:0;
+  float:left;
+}
+
+div.rex488_extra_settings select.rex488-form-select
 {
   width:97%;
   margin:1.5%;
@@ -126,8 +191,10 @@ span.mceEditor
   margin:0 0 0 1px;
 }
 
-div.rex488_metadata,
-div.rex488_trackbacks
+div.rex488_meta_data,
+div.rex488_meta_trackbacks,
+div.rex488_meta_tags,
+div.rex488_meta_settings
 {
   float:left;
   width:100%;
@@ -144,4 +211,29 @@ input.rex488-form-checkbox
 {
   margin:1px 0 0 10px;
   float:left;
+}
+
+div.rex488-widget
+{
+  margin:10px 0 10px 10px !important;
+  float:left !important;
+  width:95.75% !important;
+}
+
+p.rex488-widget-field
+{
+  width:93% !important;
+  float:left !important;
+}
+
+p.rex488-widget-icons
+{
+  padding:10px 0 0 5px !important;
+  float:left !important;
+}
+
+select.rex488-widget-select
+{
+  width:100%;
+  float:left !important;
 }

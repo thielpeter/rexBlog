@@ -1,7 +1,7 @@
 <?php
 
-/*
- * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+/**
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
  * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
@@ -9,7 +9,7 @@
  *
  * http://www.opensource.org/licenses/mit-license.php
  * http://de.wikipedia.org/wiki/MIT-Lizenz
-*/
+ */
 
 abstract class _rex488_BackendCache extends _rex488_BackendBase
 {
@@ -28,7 +28,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 
   public static function write_category_cache()
   {
-    $result = parent::$sql->getArray("SELECT * FROM " . parent::$prefix . "488_categories ORDER BY priority ASC");
+    $result = parent::$sql->getArray("SELECT * FROM " . parent::$prefix . "488_categories WHERE ( status = '1' ) ORDER BY priority ASC");
 
     ///////////////////////////////////////////////////////////////////////////
     // prepare cache file header for categories
@@ -91,7 +91,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
       ///////////////////////////////////////////////////////////////////////////
       // query database for potential childrens
 
-      parent::$sql->setQuery("SELECT * FROM " . parent::$prefix . "488_categories WHERE parent_id = " . $category_id . "");
+      parent::$sql->setQuery("SELECT * FROM " . parent::$prefix . "488_categories WHERE ( parent_id = " . $category_id . " AND status = '1' )");
 
       ///////////////////////////////////////////////////////////////////////////
       // if the category has children assign var
@@ -144,7 +144,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
         self::$category_path = $REX['ADDON']['rexblog']['categories'];
     }
     
-    $categories = self::$sql->getArray("SELECT id FROM " . self::$prefix . "488_categories");
+    $categories = self::$sql->getArray("SELECT id FROM " . self::$prefix . "488_categories WHERE ( status = '1' ) ");
 
     // loop through all categories and create corresponding postfiles
 
@@ -152,7 +152,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
     {
       // fetch posts corresponding to their categorie id
 
-      $post_array = self::$sql->getArray("SELECT * FROM " . self::$prefix . "488_articles WHERE (FIND_IN_SET(" . $category['id'] . ", REPLACE(categories, ',', ',')))");
+      $post_array = self::$sql->getArray("SELECT * FROM " . self::$prefix . "488_articles WHERE ( FIND_IN_SET(" . $category['id'] . ", REPLACE(categories, ',', ',')) AND status = '1' )");
 
       // create header for cache file
 
@@ -170,9 +170,9 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 	$post_title	  = addslashes($post_value['title']);
 	$post_keywords    = addslashes($post_value['keywords']);
 	$post_description = addslashes($post_value['description']);
-	$post_article	  = $post_value['article_post'];
-	$post_settings	  = $post_value['article_settings'];
-	$post_permlink	  = $post_value['article_permlink'];
+	$post_article	  = addslashes($post_value['article_post']);
+	$post_settings	  = addslashes($post_value['article_settings']);
+	$post_permlink	  = addslashes($post_value['article_permlink']);
 	$create_date	  = addslashes($post_value['create_date']);
 	$create_user	  = addslashes($post_value['create_user']);
 
@@ -253,7 +253,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
 
       // fetch posts corresponding to their categorie id
 
-      $post_array = self::$sql->getArray("SELECT * FROM " . self::$prefix . "488_articles ORDER BY id ASC");
+      $post_array = self::$sql->getArray("SELECT * FROM " . self::$prefix . "488_articles WHERE ( status = '1' ) ORDER BY id ASC");
 
       // create header for cache file
 
@@ -352,6 +352,7 @@ abstract class _rex488_BackendCache extends _rex488_BackendBase
     $result = parent::$sql->getArray("
       SELECT * FROM " . parent::$prefix . "488_categories
       WHERE category_id = " . $parent . "
+      AND status = '1'
       ORDER BY priority ASC
     ");
 

@@ -1,0 +1,27 @@
+<div class="rex488-form-row rex488-form-sortable">
+
+  <div class="rex-content-editmode-module-name">
+    <h3 class="rex-hl4"><?php echo self::NAME; ?></h3>
+    <div class="rex-navi-slice">
+      <ul>
+        <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.Settings(this); return false;" class="rex-tx3">Einstellungen<span><?php echo self::NAME; ?></span></a></li>
+        <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.DeleteSlice(this); return false;" class="rex-tx2">Löschen<span><?php echo self::NAME; ?></span></a></li>
+        <li><a href="#" onclick="Rexblog.Article.MoveSliceUp(this); return false;" title="Nach oben verschieben" class="rex-slice-move-up"><span><?php echo self::NAME; ?></span></a></li>
+        <li><a href="#" onclick="Rexblog.Article.MoveSliceDown(this); return false;"title="Nach unten verschieben" class="rex-slice-move-down"><span><?php echo self::NAME; ?></span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="rex488-form-checkbox">
+    <input name="_rex488_settings[<?php echo $index; ?>][type]" type="hidden" value="<?php echo self::ID; ?>" />
+    <input name="_rex488_settings[<?php echo $index; ?>][excerpt]" type="checkbox" <?php echo $settings['excerpt']; ?> class="rex488-form-checkbox" />
+    <label class="rex488-form-checkbox">Plugin als Einleitung</label>
+    <input name="_rex488_settings[<?php echo $index; ?>][wrap]" type="checkbox" <?php echo $settings['wrap']; ?> class="rex488-form-checkbox" />
+    <label class="rex488-form-checkbox">Absatzformatierung hinzufügen</label>
+  </p>
+
+  <p class="rex488-form-textarea">
+    <textarea id="_rex488_element_<?php echo $index; ?>[]" name="_rex488_element[<?php echo $index; ?>][<?php echo self::ID; ?>][fieldname]" class="rex488-form-textarea" rows="5" cols="10"><?php echo $value['fieldname']; ?></textarea>
+  </p>
+
+</div>
