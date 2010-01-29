@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
  * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
@@ -117,7 +117,7 @@ if($REX['REDAXO'])
 
   while (false !== ($classfile = $plugin_direcoty->read()))
   {
-    if($classfile == '.' || $classfile == '..' || $classfile == 'templates') continue;
+    if($classfile == '.' || $classfile == '..' || $classfile == 'templates' || $classfile == 'files') continue;
     require_once dirname(__FILE__) . '/classes/plugins/' . $classfile;
 
     $classname = str_replace('plugin.', '', $classfile);

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
  * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
@@ -72,7 +72,8 @@ switch(rex_request('func', 'string'))
 
   case 'edit':
     $article = _rex488_BackendArticles::read(rex_request('id', 'int'));
-      include _rex488_PATH . 'templates/backend/template.articles.edit.phtml';
+      $article_meta_settings = _rex488_BackendArticles::load_article_settings(rex_request('id', 'int'));
+        include _rex488_PATH . 'templates/backend/template.articles.edit.phtml';
   break;
 
   /**
@@ -81,18 +82,8 @@ switch(rex_request('func', 'string'))
    */
 
   case 'plugin':
-    $content_plugin_class = "echo _rex488_content_plugin_" . rex_request('element', 'string') . "::getElement(" . rex_request('index', 'int') . ", '', '');";
+    $content_plugin_class = "echo _rex488_content_plugin_" . rex_request('element', 'string') . "::read_element(" . rex_request('index', 'int') . ", '', '');";
       eval($content_plugin_class);
-        exit();
-  break;
-
-  /**
-   * inkludiert das add template für das
-   * hinzufügen eines artikels.
-   */
-
-  case 'load':
-    _rex488_BackendArticles::load(rex_request('id', 'int'));
         exit();
   break;
 

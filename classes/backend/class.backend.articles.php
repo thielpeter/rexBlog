@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
  * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
@@ -105,20 +106,18 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
     $article_content = serialize($article_content);
 
     ///////////////////////////////////////////////////////////////////////////
-    // prepare article settings
+    // prepare article plugin settings
 
-    $article_settings = rex_request('_rex488_settings', 'array');
-    $article_settings = self::stripslashes_deep($article_settings);
+    $article_plugin_settings = rex_request('_rex488_plugin_settings', 'array');
+    $article_plugin_settings = self::stripslashes_deep($article_plugin_settings);
+    $article_plugin_settings = array_values($article_plugin_settings);
+    $article_plugin_settings = serialize($article_plugin_settings);
 
-    $article_settings = array_values($article_settings);
+    ///////////////////////////////////////////////////////////////////////////
+    // prepare article meta settings
 
-    //print '<pre>';
-    //print_r($article_settings);
-    //print '</pre>';
-
-    $article_settings = serialize($article_settings);
-
-    //exit();
+    $article_meta_settings = rex_request('_rex488_meta_settings', 'array');
+    $article_meta_settings = serialize($article_meta_settings);
 
     ///////////////////////////////////////////////////////////////////////////
     // prepare article permlink settings
@@ -137,7 +136,8 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
       parent::$sql->setValue('article_tags', mysql_real_escape_string(rex_request('rex488_meta_tags', 'string')));
       parent::$sql->setValue('article_trackbacks', mysql_real_escape_string(rex_request('rex488_meta_trackbacks', 'string')));
       parent::$sql->setValue('article_permlink', $permanent_link);
-      parent::$sql->setValue('article_settings', $article_settings);
+      parent::$sql->setValue('article_meta_settings', $article_meta_settings);
+      parent::$sql->setValue('article_plugin_settings', $article_plugin_settings);
       parent::$sql->setValue('status', 0);
       parent::$sql->setValue('create_user', parent::$user);
       parent::$sql->setValue('create_date', time());
@@ -175,7 +175,8 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
       parent::$sql->setValue('article_tags', mysql_real_escape_string(rex_request('rex488_meta_tags', 'string')));
       parent::$sql->setValue('article_trackbacks', mysql_real_escape_string(rex_request('rex488_meta_trackbacks', 'string')));
       parent::$sql->setValue('article_permlink', $permanent_link);
-      parent::$sql->setValue('article_settings', $article_settings);
+      parent::$sql->setValue('article_meta_settings', $article_meta_settings);
+      parent::$sql->setValue('article_plugin_settings', $article_plugin_settings);
       parent::$sql->setValue('update_user', parent::$user);
       parent::$sql->setValue('update_date', time());
       parent::$sql->wherevar = "WHERE ( id = '" . parent::$entry_id . "' )";
@@ -294,20 +295,41 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
   public static function load($id)
   {
-    parent::$sql->setQuery("SELECT article_post, article_settings FROM " . parent::$prefix . "488_articles WHERE ( id = '" . $id . "' )");
+    parent::$sql->setQuery("SELECT article_post, article_plugin_settings FROM " . parent::$prefix . "488_articles WHERE ( id = '" . $id . "' )");
     
-    $article_post     = parent::$sql->getValue('article_post');
-    $article_settings = parent::$sql->getValue('article_settings');
-    $article_post     = unserialize($article_post);
-    $article_settings = unserialize($article_settings);
+    $article_post            = parent::$sql->getValue('article_post');
+    $article_plugin_settings = parent::$sql->getValue('article_plugin_settings');
+    $article_post            = unserialize($article_post);
+    $article_plugin_settings = unserialize($article_plugin_settings);
 
     if(!is_array($article_post)) return;
 
     foreach($article_post as $key => $value) {
       foreach($value as $plugin => $content) {
-        eval("echo _rex488_content_plugin_" . $plugin . "::getElement(" . $key . ", \$content, \$article_settings[\$key]);");
+        eval("echo _rex488_content_plugin_" . $plugin . "::read_element(" . $key . ", \$content, \$article_plugin_settings[\$key]);");
       }
     }
+  }
+
+  /**
+   * load_article_settings
+   *
+   * load article meta settings
+   *
+   * @param
+   * @return
+   * @throws
+   *
+   */
+
+  public static function load_article_settings($id)
+  {
+    parent::$sql->setQuery("SELECT article_meta_settings FROM " . parent::$prefix . "488_articles WHERE ( id = '" . $id . "' )");
+
+    $article_meta_settings = parent::$sql->getValue('article_meta_settings');
+    $article_meta_settings = unserialize($article_meta_settings);
+
+    return $article_meta_settings;
   }
 }
 ?>

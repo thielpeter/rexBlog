@@ -16,12 +16,10 @@
     <input name="_rex488_plugin_settings[<?php echo $index; ?>][type]" type="hidden" value="<?php echo self::ID; ?>" />
     <input name="_rex488_plugin_settings[<?php echo $index; ?>][excerpt]" type="checkbox" <?php echo $article_plugin_settings['excerpt']; ?> class="rex488-form-checkbox" />
     <label class="rex488-form-checkbox">Plugin als Einleitung</label>
-    <input name="_rex488_plugin_settings[<?php echo $index; ?>][wrap]" type="checkbox" <?php echo $article_plugin_settings['wrap']; ?> class="rex488-form-checkbox" />
-    <label class="rex488-form-checkbox">Absatzformatierung hinzufügen</label>
   </p>
 
-  <p class="rex488-form-textarea">
-    <textarea id="_rex488_element_<?php echo $index; ?>[]" name="_rex488_element[<?php echo $index; ?>][<?php echo self::ID; ?>][fieldvalue_1]" class="rex488-form-textarea" rows="5" cols="10"><?php echo $value['fieldvalue_1']; ?></textarea>
+  <p class="rex488-form-text">
+    <input id="_rex488_element_<?php echo $index; ?>[]" name="_rex488_element[<?php echo $index; ?>][<?php echo self::ID; ?>][fieldvalue_1]" type="text" class="rex488-form-text" value="<?php echo $value['fieldvalue_1']; ?>" />
   </p>
 
 </div>

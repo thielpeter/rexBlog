@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
  * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
@@ -110,16 +110,16 @@
             <div class="rex488-form-row">
               <p class="rex488-form-select">
                 <label class="rex488-form-label rex488-form-first">Kommentare zulassen</label>
-                <select name="" size="1" class="rex488-form-select">
+                <select name="_rex488_meta_settings[comments]" size="1" class="rex488-form-select">
                   <option value="">----------------------------  Einstellung</option>
-                  <option value="">Kommentare zulassen</option>
-                  <option value="">Kommentare nicht zulassen</option>
+                  <option value="1"<?php if($article_meta_settings['comments'] == '1') echo ' selected="selected"'; ?>>Kommentare zulassen</option>
+                  <option value="0"<?php if($article_meta_settings['comments'] == '0') echo ' selected="selected"'; ?>>Kommentare nicht zulassen</option>
                </select>
                 <label class="rex488-form-label">Trackbacks zulassen</label>
-                <select name="" size="1" class="rex488-form-select">
+                <select name="_rex488_meta_settings[trackbacks]" size="1" class="rex488-form-select">
                   <option value="">----------------------------  Einstellung</option>
-                  <option value="">Trackbacks zulassen</option>
-                  <option value="">Trackbacks nicht zulassen</option>
+                  <option value="1"<?php if($article_meta_settings['trackbacks'] == '1') echo ' selected="selected"'; ?>>Trackbacks zulassen</option>
+                  <option value="0"<?php if($article_meta_settings['trackbacks'] == '0') echo ' selected="selected"'; ?>>Trackbacks nicht zulassen</option>
                 </select>
               </p>
             </div>

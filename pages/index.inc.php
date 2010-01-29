@@ -1,7 +1,7 @@
 <?php
 
-/*
- * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+/**
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
  * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
@@ -9,7 +9,7 @@
  *
  * http://www.opensource.org/licenses/mit-license.php
  * http://de.wikipedia.org/wiki/MIT-Lizenz
-*/
+ */
 
 if(!rex_request('output', 'boolean'))
   require $REX['INCLUDE_PATH'] . '/layout/top.php';

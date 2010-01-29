@@ -175,6 +175,24 @@ function _rex488_the_pagination()
 }
 
 /**
+ * _rex488_the_article_settings
+ *
+ * erzeugt den beitragstext basierend auf dem aktuellen state. einstellungen
+ * und formatierungen an der ausgabe k�nnen direkt in der separaten
+ * article.inc.php datei im template verzeichnis gemacht werden.
+ *
+ * @throws
+ * @global
+ * @param
+ * @return
+ */
+
+function _rex488_the_article_settings()
+{
+  return _rex488_FrontendArticle::_rex488_the_article_settings();
+}
+
+/**
  * _rex488_the_article
  *
  * erzeugt den beitragstext basierend auf dem aktuellen state. einstellungen

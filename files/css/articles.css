@@ -213,27 +213,84 @@ input.rex488-form-checkbox
   float:left;
 }
 
-div.rex488-widget
+p.rex488-form-icon
 {
-  margin:10px 0 10px 10px !important;
-  float:left !important;
-  width:95.75% !important;
+  padding:10px 5px;
+  margin:-12px 0 10px 11px;
+  float:left;
+  background-color:#F0F0EE;
+  width:95.5%;
+  border:1px solid #CCC;
+  border-top:none;
 }
 
-p.rex488-widget-field
+p.rex488-form-icon a
 {
-  width:93% !important;
-  float:left !important;
+  margin:0 5px 0 0 !important;
+  display:block;
+  float:left;
+  height:16px;
+  line-height:16px;
 }
 
-p.rex488-widget-icons
+p.rex488-form-icon a span
 {
-  padding:10px 0 0 5px !important;
-  float:left !important;
+  padding:0 0 0 21px;
+  float:left;
 }
 
-select.rex488-widget-select
+a.rex488-mediapool
+{
+  background:transparent url('/redaxo/include/addons/rexblog/classes/plugins/files/mediapool.png') top left no-repeat;
+}
+
+a.rex488-mediapool-add
+{
+  background:transparent url('/redaxo/include/addons/rexblog/classes/plugins/files/mediapool_add.png') top left no-repeat;
+}
+
+a.rex488-mediapool-delete
+{
+  background:transparent url('/redaxo/include/addons/rexblog/classes/plugins/files/mediapool_delete.png') top left no-repeat;
+}
+
+a.rex488-mediapool-top
+{
+  background:transparent url('/redaxo/include/addons/rexblog/classes/plugins/files/mediapool_top.png') top left no-repeat;
+}
+
+a.rex488-mediapool-up
+{
+  background:transparent url('/redaxo/include/addons/rexblog/classes/plugins/files/mediapool_up.png') top left no-repeat;
+}
+
+a.rex488-mediapool-down
+{
+  background:transparent url('/redaxo/include/addons/rexblog/classes/plugins/files/mediapool_down.png') top left no-repeat;
+}
+
+a.rex488-mediapool-bottom
+{
+  background:transparent url('/redaxo/include/addons/rexblog/classes/plugins/files/mediapool_bottom.png') top left no-repeat;
+}
+
+p.rex488-form-icon a img
+{
+  display:inline !important;
+}
+
+p.rex488-form-widget-select
 {
   width:100%;
-  float:left !important;
+  padding:0;
+  float:left;
+}
+
+select.rex488-form-widget-select
+{
+  width:97%;
+  margin:1.5%;
+  padding:2px;
+  float:left;
+  border:1px solid #CCC;
 }

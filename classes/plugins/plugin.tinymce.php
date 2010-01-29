@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Copyright (c) 2009, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
  *
  * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
  * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
@@ -13,56 +13,14 @@
 
 class _rex488_content_plugin_tinymce
 {
-  const ID = 'tinymce';
+  const ID   = 'tinymce';
   const NAME = '01.03 - Tinymce Editor';
 
-  public static function getElement($index, $value, $settings)
+  public static function read_element($index, $value, $article_plugin_settings)
   {
-    ob_start();
+    $article_plugin_settings['excerpt'] = ($article_plugin_settings['excerpt'] == 'on') ? ' checked="checked"' : '';
 
-    echo '<div class="rex488-form-row rex488-form-sortable">';
-    echo '
-      <div class="rex-content-editmode-module-name">
-      <h3 class="rex-hl4">' . self::NAME . '</h3>
-        <div class="rex-navi-slice">
-          <ul>
-            <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.Settings(this); return false;" class="rex-tx3">Einstellungen<span>' . self::NAME . '</span></a></li>
-            <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.DeleteSlice(this); return false;" class="rex-tx2">Löschen<span>' . self::NAME . '</span></a></li>
-            <li><a href="#" onclick="Rexblog.Article.MoveSliceUp(this); return false;" title="Nach oben verschieben" class="rex-slice-move-up"><span>' . self::NAME . '</span></a></li>
-            <li><a href="#" onclick="Rexblog.Article.MoveSliceDown(this); return false;"title="Nach unten verschieben" class="rex-slice-move-down"><span>' . self::NAME . '</span></a></li>
-          </ul>
-        </div>
-      </div>';
-
-    $excerpt  = ($settings['excerpt'] == 'on') ? ' checked="checked"' : '';
-
-    echo '<p class="rex488-form-checkbox">';
-    echo '<input name="_rex488_settings[' . $index . '][index]" type="hidden" value="' . $index . '" />';
-    echo '<input name="_rex488_settings[' . $index . '][type]" type="hidden" value="' . self::ID . '" />';
-    echo '<input name="_rex488_settings[' . $index . '][excerpt]" type="checkbox"' . $excerpt . ' class="rex488-form-checkbox" />';
-    echo '<label class="rex488-form-checkbox">Plugin als Einleitung</label>';
-    echo '</p>';
-
-    echo '<p class="rex488-form-textarea">';
-    echo '<textarea id="_rex488_element_' . $index . '" name="_rex488_element[' . $index . '][' . self::ID . ']" class="rex488-form-textarea rex488-form-tinymce" rows="5" cols="10">' . $value . '</textarea>';
-    echo '</p>';
-    echo '</div>';
-
-    echo '<script type="text/javascript">
-    tinyMCE.init({
-      mode    : "none",
-      theme   : "simple",
-      width   : "100%",
-      height  : "250px"
-    });
-    tinyMCE.execCommand("mceAddControl", false, "_rex488_element_' . $index . '");
-    </script>';
-
-    $element = ob_get_contents();
-
-    ob_end_clean();
-
-    return $element;
+    eval("include _rex488_PATH . 'classes/plugins/templates/backend/template." . self::ID . ".phtml';");
   }
 
   public static function read_id()

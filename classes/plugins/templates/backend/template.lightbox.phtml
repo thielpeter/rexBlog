@@ -1,0 +1,51 @@
+<div class="rex488-form-row rex488-form-sortable">
+
+  <div class="rex-content-editmode-module-name">
+    <h3 class="rex-hl4"><?php echo self::NAME; ?></h3>
+    <div class="rex-navi-slice">
+      <ul>
+        <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.Settings(this); return false;" class="rex-tx3">Einstellungen<span><?php echo self::NAME; ?></span></a></li>
+        <li class="rex-navi-first"><a href="#" onclick="Rexblog.Article.DeleteSlice(this); return false;" class="rex-tx2">Löschen<span><?php echo self::NAME; ?></span></a></li>
+        <li><a href="#" onclick="Rexblog.Article.MoveSliceUp(this); return false;" title="Nach oben verschieben" class="rex-slice-move-up"><span><?php echo self::NAME; ?></span></a></li>
+        <li><a href="#" onclick="Rexblog.Article.MoveSliceDown(this); return false;"title="Nach unten verschieben" class="rex-slice-move-down"><span><?php echo self::NAME; ?></span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <p class="rex488-form-checkbox">
+    <input name="_rex488_plugin_settings[<?php echo $index; ?>][type]" type="hidden" value="<?php echo self::ID; ?>" />
+    <input name="_rex488_plugin_settings[<?php echo $index; ?>][excerpt]" type="checkbox" <?php echo $article_plugin_settings['excerpt']; ?> class="rex488-form-checkbox" />
+    <label class="rex488-form-checkbox">Plugin als Einleitung</label>
+  </p>
+
+  <p class="rex488-form-widget-select">
+    <input type="hidden" name="_rex488_element[<?php echo $index; ?>][<?php echo self::ID; ?>][fieldvalue_1]" id="REX_MEDIALIST_<?php echo $index; ?>" value="<?php echo $value['fieldvalue_1']; ?>" />
+    <select id="REX_MEDIALIST_SELECT_<?php echo $index; ?>" name="MEDIALIST_SELECT[<?php echo $index; ?>]" size="10" class="rex488-form-widget-select">';
+      <?php
+
+      $lightbox_items = explode(',', $value['fieldvalue_1']);
+
+      if(sizeof($lightbox_items) > 0)
+      {
+        foreach($lightbox_items as $lightbox_item)
+        {
+          if($lightbox_item == "") continue;
+          echo '<option value="' . $lightbox_item . '">' . $lightbox_item . '</option>';
+        }
+      }
+
+      ?>
+    </select>
+  </p>
+
+  <p class="rex488-form-icon">
+    <a href="#" class="rex488-mediapool" onclick="openREXMedialist(<?php echo $index; ?>);return false;"><span>Auswählen</span></a>
+    <a href="#" class="rex488-mediapool-add" onclick="addREXMedialist(<?php echo $index; ?>);return false;"><span>Hinzufügen</span></a>
+    <a href="#" class="rex488-mediapool-delete" onclick="deleteREXMedialist(<?php echo $index; ?>);return false;"><span>Entfernen</span></a>
+    <a href="#" class="rex488-mediapool-up" onclick="moveREXMedialist(<?php echo $index; ?>,'up');return false;"><span>Aufwärts</span></a>
+    <a href="#" class="rex488-mediapool-down" onclick="moveREXMedialist(<?php echo $index; ?>,'down');return false;"><span>Abwärts</span></a>
+    <a href="#" class="rex488-mediapool-top" onclick="moveREXMedialist(<?php echo $index; ?>,'top');return false;"><span>Oben</span></a>
+    <a href="#" class="rex488-mediapool-bottom" onclick="moveREXMedialist(<?php echo $index; ?>,'bottom');return false;"><span>Unten</span></a>
+  </p>
+
+</div>

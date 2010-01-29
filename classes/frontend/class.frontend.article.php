@@ -19,7 +19,8 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
   private static $the_article_date;
   private static $the_article_user;
   private static $the_article_pathlist;
-  private static $the_article_settings;
+  private static $the_article_meta_settings;
+  private static $the_article_plugin_settings;
 
   public static function get_article_overview($the_page_amount)
   {
@@ -40,12 +41,13 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
         {
           if($category_value == parent::$category_id)
           {
-            self::$the_article_title    = $value['title'];
-            self::$the_article_date     = $value['create_date'];
-            self::$the_article_user     = $value['create_user'];
-            self::$the_article_post     = unserialize(stripslashes($value['article_post']));
-            self::$the_article_settings = unserialize(stripslashes($value['article_settings']));
-            self::$the_article_permlink = self::prepare_url($value['url'][$category_key]);
+            self::$the_article_title           = $value['title'];
+            self::$the_article_date            = $value['create_date'];
+            self::$the_article_user            = $value['create_user'];
+            self::$the_article_post            = unserialize(stripslashes($value['article_post']));
+            self::$the_article_meta_settings   = unserialize(stripslashes($value['article_meta_settings']));
+            self::$the_article_plugin_settings = unserialize(stripslashes($value['article_plugin_settings']));
+            self::$the_article_permlink        = self::prepare_url($value['url'][$category_key]);
 
             include _rex488_PATH . 'templates/frontend/template.article.phtml';
           }
@@ -68,12 +70,13 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
           if($category_value == parent::$category_id) $current_category_id = $category_key;
         }
 
-        self::$the_article_title    = $value['title'];
-        self::$the_article_date     = $value['create_date'];
-        self::$the_article_user     = $value['create_user'];
-        self::$the_article_post     = unserialize(stripslashes($value['article_post']));
-        self::$the_article_settings = unserialize(stripslashes($value['article_settings']));
-        self::$the_article_permlink = self::prepare_url($value['url'][$current_category_id]);
+        self::$the_article_title           = $value['title'];
+        self::$the_article_date            = $value['create_date'];
+        self::$the_article_user            = $value['create_user'];
+        self::$the_article_post            = unserialize(stripslashes($value['article_post']));
+        self::$the_article_meta_settings   = unserialize(stripslashes($value['article_meta_settings']));
+        self::$the_article_plugin_settings = unserialize(stripslashes($value['article_plugin_settings']));
+        self::$the_article_permlink        = self::prepare_url($value['url'][$current_category_id]);
 
         include _rex488_PATH . 'templates/frontend/template.article.phtml';
       }
@@ -90,14 +93,19 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
     return self::$the_article_permlink;
   }
 
+  public static function _rex488_the_article_settings()
+  {
+    return self::$the_article_meta_settings;
+  }
+
   public static function _rex488_the_article_post()
   {
     $the_article_content  = self::$the_article_post;
-    $the_article_settings = self::$the_article_settings;
+    $the_article_plugin_settings = self::$the_article_plugin_settings;
 
     ob_start();
 
-    foreach($the_article_settings as $index => $the_plugin_settings)
+    foreach($the_article_plugin_settings as $index => $the_plugin_settings)
     {
       $the_plugin_content = $the_article_content[$index];
         eval("include _rex488_PATH . 'classes/plugins/templates/frontend/template." . $the_plugin_settings['type'] . ".phtml';");
@@ -124,13 +132,13 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
   public static function _rex488_the_article_excerpt()
   {
     $the_article_content  = self::$the_article_post;
-    $the_article_settings = self::$the_article_settings;
+    $the_article_plugin_settings = self::$the_article_plugin_settings;
 
-    if(self::is_excerpt($the_article_settings))
+    if(self::is_excerpt($the_article_plugin_settings))
     {
       ob_start();
 
-      foreach($the_article_settings as $index => $the_plugin_settings) {
+      foreach($the_article_plugin_settings as $index => $the_plugin_settings) {
         if($the_plugin_settings['excerpt'] == 'on') {
           $the_plugin_content = $the_article_content[$index];
             eval("include _rex488_PATH . 'classes/plugins/templates/frontend/template." . $the_plugin_settings['type'] . ".phtml';");
@@ -145,7 +153,7 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
     {
       ob_start();
 
-      foreach($the_article_settings as $index => $the_plugin_settings) {
+      foreach($the_article_plugin_settings as $index => $the_plugin_settings) {
         $the_plugin_content = $the_article_content[$index];
           eval("include _rex488_PATH . 'classes/plugins/templates/frontend/template." . $the_plugin_settings['type'] . ".phtml';");
             $the_article_buffer = ob_get_contents();
