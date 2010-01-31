@@ -15,48 +15,80 @@ abstract class _rex488_FrontendPagination extends _rex488_FrontendBase
 {
   private static $url_prepend_part;
   private static $url_append_part;
-  private static $prev_page;
-  private static $next_page;
 
   public static function get_pagination()
   {
     self::$url_prepend_part = substr(parent::$url, 0, strrpos(parent::$url, '/'));
-    self::$url_append_part = substr(parent::$url, strrpos(parent::$url, '/'), strlen(parent::$url));
+    self::$url_append_part  = substr(parent::$url, strrpos(parent::$url, '/'), strlen(parent::$url));
 
-    if(parent::$the_page_current > 0) {
+    if(parent::$the_page_current > 0)
+    {
       $pagination .= '<li class="prev"><a href="' . self::prepare_prev_url() . '">' . _rex488_FrontendDesignator::prev_button() . '</a></li>' . "\n";
     }
 
-    if(_rex488_FrontendCategories::get_category_post_count(parent::$category_id) > 0) {
-      if((parent::$the_page_current + 1) < parent::$the_page_max) {
+    if(parent::$the_page_count > parent::$the_page_amount)
+    {
+      if((parent::$the_page_current + 1) < parent::$the_page_max)
+      {
         $pagination .= '<li class="next"><a href="' . self::prepare_next_url() . '">' . _rex488_FrontendDesignator::next_button() . '</a></li>' . "\n";
       }
     }
 
-    if(_rex488_FrontendCategories::get_category_post_count(parent::$category_id) > 0) {
+    if(parent::$the_page_count > parent::$the_page_amount)
+    {
       $pagination = '<ul id="_rex488_pagination">' . "\n" . $pagination . '</ul>' . "\n" . '<div class="clearfix"></div>' . "\n";
     }
-    
+
     return $pagination;
   }
 
   private static function prepare_prev_url()
   {
-    if(parent::$the_page_current > 1) {
-      return parent::get_article_base() . '/' . self::$url_prepend_part . '/page/' . (parent::$the_page_current) . self::$url_append_part;
-    } else {
-      return parent::get_article_base() . '/' . parent::$url;
+    if(parent::$rewrite === false)
+    {
+      if(parent::$the_page_current > 1)
+      {
+        parent::$resource_params['page'] = parent::$the_page_current;
+        return parent::parse_article_resource(parent::$url);
+      } else
+      {
+        return parent::parse_article_resource(parent::$url);
+      }
+    } else
+    {
+      if(parent::$the_page_current > 1)
+      {
+        return parent::get_article_base() . '/' . self::$url_prepend_part . '/page/' . (parent::$the_page_current) . self::$url_append_part;
+      } else
+      {
+        return parent::get_article_base() . '/' . parent::$url;
+      }
     }
   }
 
   private static function prepare_next_url()
   {
-    if(parent::$the_page_current >= 1) {
-      return parent::get_article_base() . '/' . self::$url_prepend_part . '/page/' . (parent::$the_page_current + 2) . self::$url_append_part;
-    } else {
-      return parent::get_article_base() . '/' . self::$url_prepend_part . '/page/2' . self::$url_append_part;
+    if(parent::$rewrite === false)
+    {
+      if(parent::$the_page_current >= 1)
+      {
+        parent::$resource_params['page'] = (parent::$the_page_current + 2);
+        return parent::parse_article_resource(parent::$url);
+      } else
+      {
+        parent::$resource_params['page'] = '2';
+        return parent::parse_article_resource(parent::$url);
+      }
+    } else
+    {
+      if(parent::$the_page_current >= 1)
+      {
+        return parent::get_article_base() . '/' . self::$url_prepend_part . '/page/' . (parent::$the_page_current + 2) . self::$url_append_part;
+      } else
+      {
+        return parent::get_article_base() . '/' . self::$url_prepend_part . '/page/2' . self::$url_append_part;
+      }
     }
   }
 }
-
 ?>

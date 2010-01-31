@@ -18,21 +18,27 @@ class _rex488_FrontendBase
   protected static $url;
   protected static $category_path;
   protected static $article_path;
+  protected static $category_pathlist;
   protected static $article_pathlist;
   protected static $category_id = 0;
   protected static $article_id;
+  protected static $article_base;
 
   protected static $rewrite;
   protected static $include_path = '';
   protected static $prefix = 'rex_';
   protected static $sql;
 
+  protected static $resource_params = null;
+
   protected static $the_page_amount;
   protected static $the_page_current;
   protected static $the_page_max;
+  protected static $the_page_count;
 
   public static $is_category = false;
   public static $is_article = false;
+  public static $is_alternate = false;
 
   /**
    * singleton
@@ -66,26 +72,43 @@ class _rex488_FrontendBase
   {
     global $REX;
 
-    self::$rewrite = $REX['MOD_REWRITE'];
+    self::$rewrite      = $REX['MOD_REWRITE'];
     self::$include_path = $REX['INCLUDE_PATH'];
-    self::$prefix = $REX['TABLE_PREFIX'];
-    self::$sql = rex_sql::getInstance();
+    self::$prefix       = $REX['TABLE_PREFIX'];
+    self::$sql          = rex_sql::getInstance();
 
     self::$url = rex_request('_rex488_uri', 'string');
     self::$url = str_replace('%20', '+', self::$url);
     self::$url = str_replace(' ', '+', self::$url);
 
-    if(file_exists(self::$include_path . '/generated/files/_rex488_categories.inc.php')) {
+    $article = OOArticle::getArticleById(rex_request('article_id', 'int'));
+    self::$article_base = rex_parse_article_name($article->getName());
+    self::$article_base = strtolower(self::$article_base);
+
+    if(file_exists(self::$include_path . '/generated/files/_rex488_categories.inc.php'))
+    {
       require self::$include_path . '/generated/files/_rex488_categories.inc.php';
-        self::$category_path = $REX['ADDON']['rexblog']['categories'];
-    } else {
+      self::$category_path = $REX['ADDON']['rexblog']['categories'];
+    } else
+    {
       self::$category_path = array();
     }
 
-    if(file_exists(self::$include_path . '/generated/files/_rex488_article.pathlist.inc.php')) {
+    if(file_exists(self::$include_path . '/generated/files/_rex488_category.pathlist.inc.php'))
+    {
+      require self::$include_path . '/generated/files/_rex488_category.pathlist.inc.php';
+      self::$category_pathlist = $REX['ADDON']['rexblog']['category_pathlist'];
+    } else
+    {
+      self::$category_pathlist = array();
+    }
+
+    if(file_exists(self::$include_path . '/generated/files/_rex488_article.pathlist.inc.php'))
+    {
       require self::$include_path . '/generated/files/_rex488_article.pathlist.inc.php';
-        self::$article_pathlist = $REX['ADDON']['rexblog']['article']['pathlist'];
-    } else {
+      self::$article_pathlist = $REX['ADDON']['rexblog']['pathlist'];
+    } else
+    {
       self::$article_pathlist = array();
     }
   }
@@ -97,8 +120,11 @@ class _rex488_FrontendBase
    * @return
    * @throws
    */
-  
-  public function __clone() {}
+
+  public function __clone()
+  {
+
+  }
 
   /**
    * set category id
@@ -110,26 +136,32 @@ class _rex488_FrontendBase
    * @throws
    */
 
-  public static function set_category_id()
+  public static function set_is_category()
   {
     global $REX;
 
+    /*
+    print '<pre>';
+    print_r(self::$category_path);
+    print '</pre>';
+    */
+    
     foreach(self::$category_path as $key => $value)
     {
       if($value['url'] == self::$url)
       {
         self::$category_id = $value['id'];
-        self::set_is_category(true);
+        self::$is_category = true;
 
-        if(file_exists(self::$include_path . '/generated/files/_rex488_article.' . self::$category_id . '.inc.php'))
-          require self::$include_path . '/generated/files/_rex488_article.' . self::$category_id . '.inc.php';
-
-        if(!isset($REX['ADDON']['rexblog']['article'][self::$category_id]))
-        {
-          $REX['ADDON']['rexblog']['article'][self::$category_id] = array();
+        foreach($value['articles'] as $article) {
+          if(file_exists(self::$include_path . '/generated/files/_rex488_article.' . $article. '.inc.php'))
+            require self::$include_path . '/generated/files/_rex488_article.' . $article . '.inc.php';
         }
 
-        self::$article_path = $REX['ADDON']['rexblog']['article'][self::$category_id];
+        if(!isset($REX['ADDON']['rexblog']['article']))
+          $REX['ADDON']['rexblog']['article'] = array();
+
+        self::$article_path = $REX['ADDON']['rexblog']['article'];
       }
     }
   }
@@ -144,7 +176,7 @@ class _rex488_FrontendBase
    * @throws
    */
 
-  public static function set_article_id()
+  public static function set_is_article()
   {
     global $REX;
 
@@ -155,12 +187,12 @@ class _rex488_FrontendBase
         if($url_value == self::$url)
         {
           self::$category_id = $value['categories'][$url_key];
-          self::$article_id = $value['id'];
-          self::set_is_article(true);
+          self::$article_id  = $value['id'];
+          self::$is_article  = true;
 
-          if(file_exists(self::$include_path . '/generated/files/_rex488_article.' . self::$category_id . '.inc.php')) {
-            require self::$include_path . '/generated/files/_rex488_article.' . self::$category_id . '.inc.php';
-              self::$article_path = $REX['ADDON']['rexblog']['article'][self::$category_id];
+          if(file_exists(self::$include_path . '/generated/files/_rex488_article.' . self::$article_id . '.inc.php')) {
+            require self::$include_path . '/generated/files/_rex488_article.' . self::$article_id . '.inc.php';
+              self::$article_path = $REX['ADDON']['rexblog']['article'];
           }
         }
       }
@@ -168,33 +200,23 @@ class _rex488_FrontendBase
   }
 
   /**
-   * set category state
+   * set_is_alternate
    *
-   * sets the current category state
-   *
-   * @param
-   * @return
-   * @throws
-   */
-
-  public static function set_is_category($state = false)
-  {
-    self::$is_category = $state;
-  }
-
-  /**
-   * set article state
-   *
-   * sets the current article state
+   * sets the current category id
    *
    * @param
    * @return
    * @throws
    */
 
-  public static function set_is_article($state = false)
+  public static function set_is_alternate()
   {
-    self::$is_article = $state;
+    global $REX;
+    
+    if((boolean) self::$category_id === false)
+    {
+      self::$is_alternate = true;
+    }
   }
 
   /**
@@ -239,8 +261,9 @@ class _rex488_FrontendBase
 
   public static function set_base()
   {
-    self::set_category_id();
-    self::set_article_id();
+    self::set_is_category();
+    self::set_is_article();
+    self::set_is_alternate();
   }
 
   /**
@@ -255,11 +278,38 @@ class _rex488_FrontendBase
 
   public static function get_article_base()
   {
-    $article = OOArticle::getArticleById(rex_request('article_id', 'int'));
-    $article_name = rex_parse_article_name($article->getName());
-    $article_name = strtolower($article_name);
-    return $article_name;
+    return self::$article_base;
   }
+
+  /**
+   * parse_article_resource
+   *
+   * parses a given resource to fit current rewrite environment
+   *
+   * @param string $resource given resource
+   * @param array $extended_params params to extend resource
+   * @return string $parsed_resource parsed resource
+   * @throws
+   */
+
+  protected static function parse_article_resource($resource, $extended_params = null, $eliminate = false)
+  {
+    if((boolean) self::$rewrite === true) {
+      $parsed_resource = self::$article_base . '/' . $resource;
+    } else
+    {
+      if(isset(self::$resource_params) && count(self::$resource_params) > 0 && $eliminate === false) {
+        foreach(self::$resource_params as $param => $value) {
+          $extend .= '&' . $param . "=" . $value;
+        }
+      }
+
+      $parsed_resource = rex_getUrl(rex_request('article_id', 'int')) . '&_rex488_uri=' . $resource . $extend;
+    }
+
+    return $parsed_resource;
+  }
+
 }
 
 ?>

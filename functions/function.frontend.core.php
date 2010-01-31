@@ -148,12 +148,73 @@ function _rex488_the_content($pagination = 4)
 {
   if(_rex488_is_article())
   {
-    return _rex488_FrontendArticle::get_article_details();
+    return _rex488_FrontendArticle::the_detail_content();
   }
   else if(_rex488_is_category())
   {
-    return _rex488_FrontendArticle::get_article_overview($pagination);
+    return _rex488_FrontendArticle::the_overview_content($pagination);
   }
+  else
+  {
+    return rex_register_extension_point('REX488_ALTERNATE_CONTENT', '', array('pagination' => $pagination), true);
+  }
+}
+
+/**
+ * _rex488_the_archive
+ *
+ * @param
+ * @return
+ * @throws
+ */
+
+function _rex488_the_archive()
+{
+  return _rex488_FrontendArchive::_rex488_the_archive();
+}
+
+/**
+ * _rex488_the_archive_link
+ *
+ * @param
+ * @return
+ * @throws
+ */
+
+function _rex488_the_archive_permlink()
+{
+  return _rex488_FrontendArchive::_rex488_the_archive_permlink();
+}
+
+/**
+ * _rex488_the_archive_date
+ *
+ * @param
+ * @return
+ * @throws
+ */
+
+function _rex488_the_archive_title()
+{
+  return _rex488_FrontendArchive::_rex488_the_archive_title();
+}
+
+/**
+ * _rex488_the_archive_excerpt
+ *
+ * erzeugt den beitragstext basierend auf dem aktuellen state. einstellungen
+ * und formatierungen an der ausgabe k�nnen direkt in der separaten
+ * post.inc.php datei im template verzeichnis gemacht werden.
+ *
+ * @throws
+ * @global
+ * @param
+ * @return
+ */
+
+function _rex488_the_archive_excerpt()
+{
+  return _rex488_FrontendArchive::_rex488_the_archive_excerpt();
 }
 
 /**
@@ -332,6 +393,23 @@ function _rex488_is_category()
 function _rex488_is_article()
 {
   return _rex488_FrontendBase::$is_article;
+}
+
+/**
+ * _rex488_is_alternate
+ *
+ * pr�ft anhand der �bergebenen url den status und setzt
+ * anhand des ergebnisses den neuen template state.
+ *
+ * @throws
+ * @global
+ * @param
+ * @return
+ */
+
+function _rex488_is_alternate()
+{
+  return _rex488_FrontendBase::$is_alternate;
 }
 
 ?>

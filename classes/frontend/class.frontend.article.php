@@ -22,7 +22,7 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
   private static $the_article_meta_settings;
   private static $the_article_plugin_settings;
 
-  public static function get_article_overview($the_page_amount)
+  public static function the_overview_content($the_page_amount)
   {
     self::$the_article_pathlist = parent::$article_path;
 
@@ -30,6 +30,7 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
     parent::$the_page_current = rex_request('page', 'int');
     parent::$the_page_current = (parent::$the_page_current > 1) ? parent::$the_page_current - 1 : parent::$the_page_current;
     parent::$the_page_max     = ceil(count(parent::$article_path) / parent::$the_page_amount);
+    parent::$the_page_count   = count(parent::$article_path);
 
     $paginated_article = array_chunk(self::$the_article_pathlist, parent::$the_page_amount);
 
@@ -58,8 +59,8 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
       return '<p>' . _rex488_FrontendDesignator::category_no_article() . '</p>';
     }
   }
-
-  public static function get_article_details()
+  
+  public static function the_detail_content()
   {
     foreach(parent::$article_path as $key => $value)
     {
@@ -82,6 +83,9 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
       }
     }
   }
+
+  ///////////////////////////////////////////////////////////////////////////
+  // article functions
 
   public static function _rex488_the_article_title()
   {
@@ -164,6 +168,9 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
       return $the_article_buffer;
     }
   }
+
+  ///////////////////////////////////////////////////////////////////////////
+  // internal functions
 
   public static function is_excerpt($the_article_settings)
   {

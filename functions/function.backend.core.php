@@ -48,6 +48,7 @@ function _rex488_write_category_cache() {
 
 function _rex488_write_article_cache() {
   _rex488_BackendBase::get_instance();
+  _rex488_BackendCache::write_category_cache();
   _rex488_BackendCache::write_article_cache();
   _rex488_BackendCache::write_article_pathlist();
 }
@@ -57,6 +58,7 @@ function _rex488_write_cache_all() {
   _rex488_BackendCache::write_category_cache();
   _rex488_BackendCache::write_article_cache();
   _rex488_BackendCache::write_article_pathlist();
+  _rex488_BackendCache::write_archive_pathlist();
 }
 
 function _rex488_read_content_plugins() {

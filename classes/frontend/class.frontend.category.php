@@ -29,11 +29,12 @@ abstract class _rex488_FrontendCategory extends _rex488_FrontendCategories
   {
     $category  .= '<a' . $selector . ' href="' . self::prepare_url($value['url']) . '">';
     $category  .= $value['title'];
-    $category  .= '</a>';
 
     if($show_post_count === true) {
-      $category .=  '<span> (' . _rex488_FrontendCategories::get_category_post_count($value['id']) . ')</span>';
+      $category .=  ' (' . _rex488_FrontendCategories::get_category_post_count($value['id']) . ')';
     }
+
+    $category  .= '</a>';
 
     return $category;
   }

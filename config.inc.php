@@ -64,6 +64,7 @@ function _rex488_autoload($params)
     '_rex488_FrontendMetadataCategory'  => 'classes/frontend/class.frontend.metadata.category.php',
     '_rex488_FrontendMetadataArticle'   => 'classes/frontend/class.frontend.metadata.article.php',
     '_rex488_FrontendArticle'           => 'classes/frontend/class.frontend.article.php',
+    '_rex488_FrontendArchive'           => 'classes/frontend/class.frontend.archive.php',
     '_rex488_FrontendPagination'        => 'classes/frontend/class.frontend.pagination.php',
   );
 
