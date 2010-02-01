@@ -69,18 +69,18 @@ abstract class _rex488_FrontendArchive extends _rex488_FrontendBase
    * @throws
    */
 
-  public static function the_archive_overview($params)
+public static function the_archive_overview($params)
+{
+  foreach(self::$archive_pathlist as $key => $value)
   {
-    foreach(self::$archive_pathlist as $key => $value)
+    if(rex_request('archive', 'string') == $key)
     {
-      if(rex_request('archive', 'string') == $key)
+      foreach($value['articles'] as $article)
       {
-        foreach($value['articles'] as $article)
+        if(file_exists(parent::$include_path . '/generated/files/_rex488_article.' . $article . '.inc.php'))
         {
-          if(file_exists(parent::$include_path . '/generated/files/_rex488_article.' . $article . '.inc.php')) {
-            require parent::$include_path . '/generated/files/_rex488_article.' . $article . '.inc.php';
-              self::$archive_path = $REX['ADDON']['rexblog']['article'];
-          }
+          require parent::$include_path . '/generated/files/_rex488_article.' . $article . '.inc.php';
+          self::$archive_path = $REX['ADDON']['rexblog']['article'];
         }
       }
 
@@ -103,6 +103,7 @@ abstract class _rex488_FrontendArchive extends _rex488_FrontendBase
       }
     }
   }
+}
 
   /**
    * read_archive_cache
