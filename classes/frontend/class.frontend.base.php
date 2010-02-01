@@ -145,7 +145,7 @@ class _rex488_FrontendBase
     print_r(self::$category_path);
     print '</pre>';
     */
-    
+
     foreach(self::$category_path as $key => $value)
     {
       if($value['url'] == self::$url)
@@ -153,7 +153,8 @@ class _rex488_FrontendBase
         self::$category_id = $value['id'];
         self::$is_category = true;
 
-        foreach($value['articles'] as $article) {
+        foreach($value['articles'] as $article)
+        {
           if(file_exists(self::$include_path . '/generated/files/_rex488_article.' . $article. '.inc.php'))
             require self::$include_path . '/generated/files/_rex488_article.' . $article . '.inc.php';
         }
@@ -190,9 +191,10 @@ class _rex488_FrontendBase
           self::$article_id  = $value['id'];
           self::$is_article  = true;
 
-          if(file_exists(self::$include_path . '/generated/files/_rex488_article.' . self::$article_id . '.inc.php')) {
+          if(file_exists(self::$include_path . '/generated/files/_rex488_article.' . self::$article_id . '.inc.php'))
+          {
             require self::$include_path . '/generated/files/_rex488_article.' . self::$article_id . '.inc.php';
-              self::$article_path = $REX['ADDON']['rexblog']['article'];
+            self::$article_path = $REX['ADDON']['rexblog']['article'];
           }
         }
       }
@@ -212,11 +214,11 @@ class _rex488_FrontendBase
   public static function set_is_alternate()
   {
     global $REX;
-    
+
     if((boolean) self::$category_id === false)
     {
       self::$is_alternate = true;
-    }
+    }   
   }
 
   /**
@@ -294,12 +296,15 @@ class _rex488_FrontendBase
 
   protected static function parse_article_resource($resource, $extended_params = null, $eliminate = false)
   {
-    if((boolean) self::$rewrite === true) {
+    if((boolean) self::$rewrite === true)
+    {
       $parsed_resource = self::$article_base . '/' . $resource;
     } else
     {
-      if(isset(self::$resource_params) && count(self::$resource_params) > 0 && $eliminate === false) {
-        foreach(self::$resource_params as $param => $value) {
+      if(isset(self::$resource_params) && count(self::$resource_params) > 0 && $eliminate === false)
+      {
+        foreach(self::$resource_params as $param => $value)
+        {
           $extend .= '&' . $param . "=" . $value;
         }
       }

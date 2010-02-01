@@ -18,6 +18,8 @@ abstract class _rex488_FrontendPagination extends _rex488_FrontendBase
 
   public static function get_pagination()
   {
+    $pagination = '';
+    
     self::$url_prepend_part = substr(parent::$url, 0, strrpos(parent::$url, '/'));
     self::$url_append_part  = substr(parent::$url, strrpos(parent::$url, '/'), strlen(parent::$url));
 

@@ -43,11 +43,11 @@ abstract class _rex488_FrontendArchive extends _rex488_FrontendBase
       rex_register_extension('REX488_ALTERNATE_CONTENT', array(_rex488_FrontendArchive, 'the_archive_overview'));
         parent::$resource_params  = array('archive' => $archive_resource[1] . $archive_resource[2]);
     }
-
+    
     foreach(self::$archive_pathlist as $key => $value)
     {
       $the_archive_url          = parent::parse_article_resource($value['url']);
-      $the_archive_date         = date('m/Y', $value['archive_date']);
+      $the_archive_date         = strftime('%B %Y', $value['archive_date']);
       $the_archive_class        = (rex_request('archive', 'string') == $key) ? ' class="current"' : '';
 
       $archive .= '<li><a' . $the_archive_class . ' href="' . $the_archive_url . '">' . $the_archive_date . '</a></li>';

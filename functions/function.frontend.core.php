@@ -146,6 +146,12 @@ function _rex488_the_meta_description()
 
 function _rex488_the_content($pagination = 4)
 {
+  if(rex_extension_is_registered('REX488_ALTERNATE_CONTENT') === true) {
+    echo "<p>Es ist eine Extension eingehakt.</p>";
+  } else {
+    echo "<p>Es ist keine Extension eingehakt.</p>";
+  }
+
   if(_rex488_is_article())
   {
     return _rex488_FrontendArticle::the_detail_content();
@@ -154,7 +160,7 @@ function _rex488_the_content($pagination = 4)
   {
     return _rex488_FrontendArticle::the_overview_content($pagination);
   }
-  else
+  else if(_rex488_is_alternate())
   {
     return rex_register_extension_point('REX488_ALTERNATE_CONTENT', '', array('pagination' => $pagination), true);
   }
