@@ -28,30 +28,18 @@ rex_register_extension('ALL_GENERATED', '_rex488_write_cache_all');
 
 // category extension points
 
-rex_register_extension('REX488_CAT_ADDED', '_rex488_write_category_cache');
-rex_register_extension('REX488_CAT_PRIORITY', '_rex488_write_category_cache');
-rex_register_extension('REX488_CAT_UPDATED', '_rex488_write_category_cache');
-rex_register_extension('REX488_CAT_DELETED', '_rex488_write_category_cache');
-rex_register_extension('REX488_CAT_STATUS', '_rex488_write_category_cache');
+rex_register_extension('REX488_CAT_ADDED', '_rex488_write_cache_all');
+rex_register_extension('REX488_CAT_PRIORITY', '_rex488_write_cache_all');
+rex_register_extension('REX488_CAT_UPDATED', '_rex488_write_cache_all');
+rex_register_extension('REX488_CAT_DELETED', '_rex488_write_cache_all');
+rex_register_extension('REX488_CAT_STATUS', '_rex488_write_cache_all');
 
 // article extension points
 
-rex_register_extension('REX488_ART_ADDED', '_rex488_write_article_cache');
-rex_register_extension('REX488_ART_UPDATED', '_rex488_write_article_cache');
-rex_register_extension('REX488_ART_DELETED', '_rex488_write_article_cache');
-rex_register_extension('REX488_ART_STATUS', '_rex488_write_article_cache');
-
-function _rex488_write_category_cache() {
-  _rex488_BackendBase::get_instance();
-  _rex488_BackendCache::write_category_cache();
-}
-
-function _rex488_write_article_cache() {
-  _rex488_BackendBase::get_instance();
-  _rex488_BackendCache::write_category_cache();
-  _rex488_BackendCache::write_article_cache();
-  _rex488_BackendCache::write_article_pathlist();
-}
+rex_register_extension('REX488_ART_ADDED', '_rex488_write_cache_all');
+rex_register_extension('REX488_ART_UPDATED', '_rex488_write_cache_all');
+rex_register_extension('REX488_ART_DELETED', '_rex488_write_cache_all');
+rex_register_extension('REX488_ART_STATUS', '_rex488_write_cache_all');
 
 function _rex488_write_cache_all() {
   _rex488_BackendBase::get_instance();

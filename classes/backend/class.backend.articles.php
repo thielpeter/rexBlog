@@ -58,11 +58,22 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
     } else {
 
+      /* fix for backend pagination
+
+
       self::$next = rex_request('next', 'int');
 
       $articles = parent::$sql->getArray(
         sprintf("SELECT * FROM %s ORDER BY %s ASC LIMIT %d, 10",
           parent::$prefix . '488_articles', 'create_date', self::$next
+        )
+      );
+
+      */
+
+      $articles = parent::$sql->getArray(
+        sprintf("SELECT * FROM %s ORDER BY %s DESC",
+          parent::$prefix . '488_articles', 'create_date'
         )
       );
 

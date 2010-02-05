@@ -136,7 +136,7 @@ if($REX['REDAXO'])
   // Stylesheets und Javascript einbinden
 
   require dirname(__FILE__) . '/functions/function.backend.core.php';
-
+  
   // Backend Funktionen inkludieren
 
   if(rex_request('page', 'string') == 'rexblog')
@@ -145,6 +145,10 @@ if($REX['REDAXO'])
 }
   else
 {
+  // Frontend Extension Points setzten
+    
+  rex_register_extension('REX488_SET_BASE', '_rex488_frontend_setbase');
+
   // Frontend Funktionen inkludieren
 
   require dirname(__FILE__) . '/functions/function.frontend.core.php';

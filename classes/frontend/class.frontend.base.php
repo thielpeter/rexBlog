@@ -15,11 +15,13 @@ class _rex488_FrontendBase
 {
   private static $instance = null;
 
-  protected static $url;
+  public static $url;
+
   protected static $category_path;
   protected static $article_path;
   protected static $category_pathlist;
   protected static $article_pathlist;
+  protected static $archive_pathlist;
   protected static $category_id = 0;
   protected static $article_id;
   protected static $article_base;
@@ -29,7 +31,7 @@ class _rex488_FrontendBase
   protected static $prefix = 'rex_';
   protected static $sql;
 
-  protected static $resource_params = null;
+  public static $resource_params = null;
 
   protected static $the_page_amount;
   protected static $the_page_current;
@@ -122,6 +124,16 @@ class _rex488_FrontendBase
         self::$article_pathlist = $REX['ADDON']['rexblog']['pathlist'];
     } else {
       self::$article_pathlist = array();
+    }
+
+    ///////////////////////////////////////////////////////////////////////////
+    // check for existing archive path cache file and include
+
+    if(file_exists(self::$include_path . '/generated/files/_rex488_archive.pathlist.inc.php')) {
+      require self::$include_path . '/generated/files/_rex488_archive.pathlist.inc.php';
+        self::$archive_pathlist = $REX['ADDON']['rexblog']['archive']['pathlist'];
+    } else {
+      self::$archive_pathlist = array();
     }
   }
 
@@ -278,12 +290,14 @@ class _rex488_FrontendBase
     self::set_is_category();
     self::set_is_article();
     self::set_is_alternate();
+
+    rex_register_extension_point('REX488_SET_BASE', '', array('url' => self::$url, 'category_id' => self::$category_id, 'article_id' => self::$article_id), true);
   }
 
   /**
    * get_article_base
    *
-   * liefert den startartikel des blogs zur�ck.
+   * liefert den startartikel des blogs zurück.
    *
    * @param
    * @return string $article_name formatierter artikelname

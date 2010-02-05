@@ -13,7 +13,6 @@
 
 abstract class _rex488_FrontendArchive extends _rex488_FrontendBase
 {
-  private static $archive_pathlist;
   private static $archive_path;
 
   private static $the_archive_title;
@@ -36,15 +35,7 @@ abstract class _rex488_FrontendArchive extends _rex488_FrontendBase
 
   public static function _rex488_the_archive()
   {
-    if(!isset(self::$archive_pathlist)) self::read_archive_cache();
-
-    if(preg_match('/archive\/([0-9]{1,4})\-([0-9]{1,2})\/archive.html/', parent::$url, $archive_resource))
-    {
-      rex_register_extension('REX488_ALTERNATE_CONTENT', array(_rex488_FrontendArchive, 'the_archive_overview'));
-        parent::$resource_params  = array('archive' => $archive_resource[1] . $archive_resource[2]);
-    }
-    
-    foreach(self::$archive_pathlist as $key => $value)
+    foreach(parent::$archive_pathlist as $key => $value)
     {
       $the_archive_url          = parent::parse_article_resource($value['url']);
       $the_archive_date         = strftime('%B %Y', $value['archive_date']);
@@ -71,7 +62,7 @@ abstract class _rex488_FrontendArchive extends _rex488_FrontendBase
 
 public static function the_archive_overview($params)
 {
-  foreach(self::$archive_pathlist as $key => $value)
+  foreach(parent::$archive_pathlist as $key => $value)
   {
     if(rex_request('archive', 'string') == $key)
     {
@@ -104,26 +95,6 @@ public static function the_archive_overview($params)
     }
   }
 }
-
-  /**
-   * read_archive_cache
-   *
-   * ließt das cachefile der archive
-   * pfadliste aus und bindet diese
-   * in die umgebung mit ein
-   *
-   * @params
-   * @return
-   * @throws
-   */
-
-  private static function read_archive_cache()
-  {
-    if(file_exists(parent::$include_path . '/generated/files/_rex488_archive.pathlist.inc.php')) {
-      require_once parent::$include_path . '/generated/files/_rex488_archive.pathlist.inc.php';
-        self::$archive_pathlist = $REX['ADDON']['rexblog']['archive']['pathlist'];
-    }
-  }
 
   ///////////////////////////////////////////////////////////////////////////
   // frontend getters and setters
