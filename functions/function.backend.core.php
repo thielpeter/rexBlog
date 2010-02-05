@@ -22,6 +22,33 @@ function _rex488_add_pageheader()
   return $page_header;
 }
 
+function _rex488_read_plugin_directory()
+{
+  global $REX;
+
+  $plugin_direcoty = dir(dirname(__FILE__) . '/../classes/plugins');
+
+  while (false !== ($classfile = $plugin_direcoty->read()))
+  {
+    if($classfile == '.' || $classfile == '..' || $classfile == 'templates' || $classfile == 'files') continue;
+
+    require_once dirname(__FILE__) . '/../classes/plugins/' . $classfile;
+
+    $classname = str_replace('plugin.', '', $classfile);
+    $classname = str_replace('.php', '', $classname);
+
+    $plugin_id   = "return _rex488_content_plugin_" . $classname . '::read_id();';
+    $plugin_name = "return _rex488_content_plugin_" . $classname . '::read_name();';
+
+    $REX['ADDON']['rexblog']['plugins'][eval($plugin_id)] = eval($plugin_name);
+
+  }
+
+  asort($REX['ADDON']['rexblog']['plugins']);
+
+  $plugin_direcoty->close();
+}
+
 // global extension points
 
 rex_register_extension('ALL_GENERATED', '_rex488_write_cache_all');

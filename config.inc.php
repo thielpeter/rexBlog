@@ -49,7 +49,6 @@ function _rex488_autoload($params)
   static $classes = array(
     '_rex488_BackendBase'               => 'classes/backend/class.backend.base.php',
     '_rex488_BackendCache'              => 'classes/backend/class.backend.cache.php',
-    '_rex488_BackendException'          => 'classes/backend/class.backend.exception.php',
     '_rex488_BackendErrorHandling'      => 'classes/backend/class.backend.errorhandling.php',
     '_rex488_BackendCategoryInterface'  => 'classes/backend/interface/interface.backend.categories.php',
     '_rex488_BackendArticleInterface'   => 'classes/backend/interface/interface.backend.articles.php',
@@ -109,35 +108,20 @@ if($REX['REDAXO'])
 
   $REX['ADDON']['rexblog']['SUBPAGES'] = array(
     array('categories', 'Kategorien', '', array('clang' => $REX['CUR_CLANG'])),
-    array('articles', 'Artikel', '', array('clang' => $REX['CUR_CLANG']))
+    array('articles', 'Artikel', '', array('clang' => $REX['CUR_CLANG'])),
+    array('comments', 'Kommentare', '', array('clang' => $REX['CUR_CLANG'])),
+    array('settings', 'Einstellungen', '', array('clang' => $REX['CUR_CLANG']))
   );
 
-  // content plugin directory auslesen
-
-  $plugin_direcoty = dir(dirname(__FILE__) . '/classes/plugins');
-
-  while (false !== ($classfile = $plugin_direcoty->read()))
-  {
-    if($classfile == '.' || $classfile == '..' || $classfile == 'templates' || $classfile == 'files') continue;
-    require_once dirname(__FILE__) . '/classes/plugins/' . $classfile;
-
-    $classname = str_replace('plugin.', '', $classfile);
-    $classname = str_replace('.php', '', $classname);
-
-    $plugin_id = "return _rex488_content_plugin_" . $classname . '::read_id();';
-    $plugin_name = "return _rex488_content_plugin_" . $classname . '::read_name();';
-    
-    $REX['ADDON']['rexblog']['plugins'][eval($plugin_id)] = eval($plugin_name);
-    
-  }
-
-  $plugin_direcoty->close();
-
-  // Stylesheets und Javascript einbinden
+  // Backend Funktionen einbinden
 
   require dirname(__FILE__) . '/functions/function.backend.core.php';
-  
-  // Backend Funktionen inkludieren
+
+  // Contentplugins directory auslesen
+
+  _rex488_read_plugin_directory();
+
+  // Backend Pageheader einbinden
 
   if(rex_request('page', 'string') == 'rexblog')
     rex_register_extension('PAGE_HEADER', '_rex488_add_pageheader');

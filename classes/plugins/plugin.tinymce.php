@@ -14,7 +14,7 @@
 class _rex488_content_plugin_tinymce
 {
   const ID   = 'tinymce';
-  const NAME = '01.03 - Tinymce Editor';
+  const NAME = '01.04 - Tinymce Editor';
 
   public static function read_element($index, $value, $article_plugin_settings)
   {
