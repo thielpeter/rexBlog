@@ -70,7 +70,13 @@ class _rex488_FrontendBase
 
   public function __construct()
   {
+    ///////////////////////////////////////////////////////////////////////////
+    // global redaxo var
+
     global $REX;
+
+    ///////////////////////////////////////////////////////////////////////////
+    // set base parameters
 
     self::$rewrite      = $REX['MOD_REWRITE'];
     self::$include_path = $REX['INCLUDE_PATH'];
@@ -81,34 +87,40 @@ class _rex488_FrontendBase
     self::$url = str_replace('%20', '+', self::$url);
     self::$url = str_replace(' ', '+', self::$url);
 
+    ///////////////////////////////////////////////////////////////////////////
+    // set base article
+
     $article = OOArticle::getArticleById(rex_request('article_id', 'int'));
     self::$article_base = rex_parse_article_name($article->getName());
     self::$article_base = strtolower(self::$article_base);
 
-    if(file_exists(self::$include_path . '/generated/files/_rex488_categories.inc.php'))
-    {
+    ///////////////////////////////////////////////////////////////////////////
+    // check for existing category cache file and include
+
+    if(file_exists(self::$include_path . '/generated/files/_rex488_categories.inc.php')) {
       require self::$include_path . '/generated/files/_rex488_categories.inc.php';
-      self::$category_path = $REX['ADDON']['rexblog']['categories'];
-    } else
-    {
+        self::$category_path = $REX['ADDON']['rexblog']['categories'];
+    } else {
       self::$category_path = array();
     }
 
-    if(file_exists(self::$include_path . '/generated/files/_rex488_category.pathlist.inc.php'))
-    {
+    ///////////////////////////////////////////////////////////////////////////
+    // check for existing category path cache file and include
+
+    if(file_exists(self::$include_path . '/generated/files/_rex488_category.pathlist.inc.php')) {
       require self::$include_path . '/generated/files/_rex488_category.pathlist.inc.php';
-      self::$category_pathlist = $REX['ADDON']['rexblog']['category_pathlist'];
-    } else
-    {
+        self::$category_pathlist = $REX['ADDON']['rexblog']['category_pathlist'];
+    } else {
       self::$category_pathlist = array();
     }
 
-    if(file_exists(self::$include_path . '/generated/files/_rex488_article.pathlist.inc.php'))
-    {
+    ///////////////////////////////////////////////////////////////////////////
+    // check for existing article path cache file and include
+
+    if(file_exists(self::$include_path . '/generated/files/_rex488_article.pathlist.inc.php')) {
       require self::$include_path . '/generated/files/_rex488_article.pathlist.inc.php';
-      self::$article_pathlist = $REX['ADDON']['rexblog']['pathlist'];
-    } else
-    {
+        self::$article_pathlist = $REX['ADDON']['rexblog']['pathlist'];
+    } else {
       self::$article_pathlist = array();
     }
   }
