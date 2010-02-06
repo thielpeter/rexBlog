@@ -8,17 +8,28 @@
  * folgenden Web-Adressen eingesehen werden.
  *
  * http://www.opensource.org/licenses/mit-license.php
- * http://de.wikipedia.org/wiki/MIT-Lizenz
+ * http://de.wikipedia.org/wiki/MIT-Lizenz 
  */
 
 function _rex488_add_pageheader()
 {
+  ///////////////////////////////////////////////////////////////////////////
+  // define subpage for filehandling
+    
+  $subpage_filename = rex_request('subpage', 'string') == "" ? 'categories' : rex_request('subpage', 'string');
+  
+  ///////////////////////////////////////////////////////////////////////////
+  // create pageheader injection
+  
   $page_header = "\n";
-  $page_header .= '<link rel="stylesheet" type="text/css" href="include/addons/rexblog/files/css/' . rex_request('subpage', 'string') . '.css" />' . "\n";
+  $page_header .= '<link rel="stylesheet" type="text/css" href="include/addons/rexblog/files/css/' . $subpage_filename . '.css" />' . "\n";
   $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.tablednd.js"></script>' . "\n";
   $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.validate.pack.js"></script>' . "\n";
-  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/' . rex_request('subpage', 'string') . '.js"></script>' . "\n";
+  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/' . $subpage_filename . '.js"></script>' . "\n";
 
+  ///////////////////////////////////////////////////////////////////////////
+  // create pageheader injection
+  
   return $page_header;
 }
 

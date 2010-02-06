@@ -118,7 +118,7 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
     ///////////////////////////////////////////////////////////////////////////
     // prepare article plugin settings
-
+    
     $article_plugin_settings = rex_request('_rex488_plugin_settings', 'array');
     $article_plugin_settings = self::stripslashes_deep($article_plugin_settings);
     $article_plugin_settings = array_values($article_plugin_settings);
