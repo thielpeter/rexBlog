@@ -17,7 +17,7 @@ if(!rex_request('output', 'boolean'))
 // Title definieren
 
 if(!rex_request('output', 'boolean'))
-  rex_title('rexblog (mercurial hg version ' . $REX['ADDON']['version']['rexblog'] . ')', $REX['ADDON']['rexblog']['SUBPAGES']);
+  rex_title('rexblog (mercurial repo version ' . $REX['ADDON']['version']['rexblog'] . ')', $REX['ADDON']['rexblog']['SUBPAGES']);
 
 // Subpages auswerten
 

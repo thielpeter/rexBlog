@@ -18,10 +18,14 @@ abstract class _rex488_FrontendPagination extends _rex488_FrontendBase
 
   public static function get_pagination()
   {
-    $pagination = '';
-    
     self::$url_prepend_part = substr(parent::$url, 0, strrpos(parent::$url, '/'));
     self::$url_append_part  = substr(parent::$url, strrpos(parent::$url, '/'), strlen(parent::$url));
+
+    if(parent::$url == self::$url_append_part) {
+      self::$url_append_part = '/' . self::$url_append_part;
+    } else {
+      self::$url_prepend_part = self::$url_prepend_part . '/';
+    }
 
     if(parent::$the_page_current > 0)
     {
@@ -60,7 +64,7 @@ abstract class _rex488_FrontendPagination extends _rex488_FrontendBase
     {
       if(parent::$the_page_current > 1)
       {
-        return parent::get_article_base() . '/' . self::$url_prepend_part . '/page/' . (parent::$the_page_current) . self::$url_append_part;
+        return parent::get_article_base() . '/' . self::$url_prepend_part . 'page/' . (parent::$the_page_current) . self::$url_append_part;
       } else
       {
         return parent::get_article_base() . '/' . parent::$url;
@@ -85,10 +89,10 @@ abstract class _rex488_FrontendPagination extends _rex488_FrontendBase
     {
       if(parent::$the_page_current >= 1)
       {
-        return parent::get_article_base() . '/' . self::$url_prepend_part . '/page/' . (parent::$the_page_current + 2) . self::$url_append_part;
+        return parent::get_article_base() . '/' . self::$url_prepend_part . 'page/' . (parent::$the_page_current + 2) . self::$url_append_part;
       } else
       {
-        return parent::get_article_base() . '/' . self::$url_prepend_part . '/page/2' . self::$url_append_part;
+        return parent::get_article_base() . '/' . self::$url_prepend_part . 'page/2' . self::$url_append_part;
       }
     }
   }

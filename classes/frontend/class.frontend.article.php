@@ -13,6 +13,7 @@
 
 abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
 {
+  private static $the_article_index;
   private static $the_article_title;
   private static $the_article_permlink;
   private static $the_article_post;
@@ -81,6 +82,40 @@ abstract class _rex488_FrontendArticle extends _rex488_FrontendBase
 
         include _rex488_PATH . 'templates/frontend/template.article.phtml';
       }
+    }
+  }
+
+  public static function the_article_index($params)
+  {
+    parent::$is_category = true;
+
+    foreach(parent::$article_pathlist as $k => $v)
+    {
+      if(file_exists(parent::$include_path . '/generated/files/_rex488_article.' . $k . '.inc.php')) {
+        require parent::$include_path . '/generated/files/_rex488_article.' . $k . '.inc.php';
+          self::$the_article_index = $REX['ADDON']['rexblog']['article'];
+      }
+    }
+
+    parent::$the_page_amount  = $params['pagination'];
+    parent::$the_page_current = rex_request('page', 'int');
+    parent::$the_page_current = (parent::$the_page_current > 1) ? parent::$the_page_current - 1 : parent::$the_page_current;
+    parent::$the_page_max     = ceil(count(self::$the_article_index) / parent::$the_page_amount);
+    parent::$the_page_count   = count(self::$the_article_index);
+
+    $paginated_article = array_chunk(self::$the_article_index, parent::$the_page_amount);
+
+    foreach($paginated_article[parent::$the_page_current] as $key => $value)
+    {
+      self::$the_article_title           = $value['title'];
+      self::$the_article_date            = $value['create_date'];
+      self::$the_article_user            = $value['create_user'];
+      self::$the_article_post            = unserialize(stripslashes($value['article_post']));
+      self::$the_article_meta_settings   = unserialize(stripslashes($value['article_meta_settings']));
+      self::$the_article_plugin_settings = unserialize(stripslashes($value['article_plugin_settings']));
+      self::$the_article_permlink        = parent::parse_article_resource($value['url'][0], null, true);
+
+      include _rex488_PATH . 'templates/frontend/template.article.phtml';
     }
   }
 

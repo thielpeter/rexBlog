@@ -29,10 +29,31 @@ function _rex488_base_loader()
 
 function _rex488_frontend_setbase($params)
 {
-  if(preg_match('/archive\/([0-9]{1,4})\-([0-9]{1,2})\/archive.html/', $params['url'], $archive_resource))
+  ///////////////////////////////////////////////////////////////////////////
+  // validate if archive is requested by url
+
+  if(preg_match('/archive\/([0-9]{1,4})\-([0-9]{1,2})\/archive.html/', $params['url'], $archive_resource) && $params['category_id'] == "0")
   {
+    ///////////////////////////////////////////////////////////////////////////
+    // register archive extension output function
+
     rex_register_extension('REX488_ALTERNATE_CONTENT', array(_rex488_FrontendArchive, 'the_archive_overview'));
-      _rex488_FrontendBase::$resource_params  = array('archive' => $archive_resource[1] . $archive_resource[2]);
+
+    ///////////////////////////////////////////////////////////////////////////
+    // and set additional url params to out base class
+
+    _rex488_FrontendBase::$resource_params = array('archive' => $archive_resource[1] . $archive_resource[2]);
+  }
+
+  ///////////////////////////////////////////////////////////////////////////
+  // if nothing is registered with the extension point, output the index
+
+  else if(rex_extension_is_registered('REX488_ALTERNATE_CONTENT') === false && $params['category_id'] == "0")
+  {
+   ///////////////////////////////////////////////////////////////////////////
+    // register index extension output function
+
+    rex_register_extension('REX488_ALTERNATE_CONTENT', array(_rex488_FrontendArticle, 'the_article_index'));
   }
 }
 

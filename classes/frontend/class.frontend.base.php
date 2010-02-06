@@ -24,7 +24,7 @@ class _rex488_FrontendBase
   protected static $archive_pathlist;
   protected static $category_id = 0;
   protected static $article_id;
-  protected static $article_base;
+  public static $article_base;
 
   protected static $rewrite;
   protected static $include_path = '';
