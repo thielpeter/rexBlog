@@ -79,8 +79,6 @@ function _rex488_autoload($params)
 
     return true;
   }
-
-  return false;
 }
 
 // Prüft ob bereits eine autoload Funktion definiert wurde
@@ -89,7 +87,7 @@ if(!function_exists('__autoload'))
 {
   function __autoload($classname)
   {
-    if(_rex488_autoload(array('subject' => $classname)) === false)
+    if(_rex488_autoload(array('subject' => $classname)) !== true)
     {
       rex_register_extension_point('__AUTOLOAD', $classname);
     }
