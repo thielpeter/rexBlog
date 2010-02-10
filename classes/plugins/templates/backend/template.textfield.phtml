@@ -19,7 +19,7 @@
   </p>
 
   <p class="rex488-form-text">
-    <input id="_rex488_element_<?php echo $index; ?>[]" name="_rex488_element[<?php echo $index; ?>][<?php echo self::ID; ?>][fieldvalue_1]" type="text" class="rex488-form-text" value="<?php echo $value['fieldvalue_1']; ?>" />
+    <input id="_rex488_element_<?php echo $index; ?>[]" name="_rex488_element[<?php echo $index; ?>][<?php echo self::ID; ?>][fieldvalue_1]" type="text" class="rex488-form-text" value="<?php echo !empty($value['fieldvalue_1']) ? $value['fieldvalue_1'] : ''; ?>" />
   </p>
 
 </div>
