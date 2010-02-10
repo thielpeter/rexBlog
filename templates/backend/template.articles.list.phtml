@@ -46,7 +46,7 @@ $articles = _rex488_BackendArticles::read();
         <tr>
           <td class="rex-icon"><a href="index.php?page=rexblog&subpage=articles&func=edit&id=<?php echo $article['id']; ?>"><span class="rex-i-element rex-i-article"><span class="rex-i-element-text">Editieren</span></span></a></td>
           <td><?php echo $article['id']; ?></td>
-          <td><a href="index.php?page=rexblog&subpage=articles&func=edit&id=<?php echo $article['id']; ?>"><?php echo $article['title']; ?></a></td>
+          <td><a href="index.php?page=rexblog&subpage=articles&func=edit&id=<?php echo $article['id']; ?>"><?php echo htmlspecialchars($article['title']); ?></a></td>
           <td><a href="index.php?page=rexblog&subpage=articles&func=edit&id=<?php echo $article['id']; ?>">ändern</a></td>
           <td><a href="index.php?page=rexblog&subpage=articles&func=delete&id=<?php echo $article['id']; ?>" onclick="return confirm('Sicher löschen?');">löschen</a></td>
           <td><a href="index.php?page=rexblog&subpage=articles&func=visualize&id=<?php echo $article['id']; ?>" class="<?php echo $status_classname; ?>"><?php echo $status_description; ?></a></td>

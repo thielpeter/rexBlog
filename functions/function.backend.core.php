@@ -15,8 +15,9 @@ function _rex488_add_pageheader()
 {
   ///////////////////////////////////////////////////////////////////////////
   // define subpage for filehandling
-    
-  $subpage_filename = rex_request('subpage', 'string') == "" ? 'categories' : rex_request('subpage', 'string');
+  
+  $subpage          = rex_request('subpage', 'string');
+  $subpage_filename = !in_array($subpage, array('articles', 'categories')) ? 'categories' : $subpage;
   
   ///////////////////////////////////////////////////////////////////////////
   // create pageheader injection
@@ -48,11 +49,10 @@ function _rex488_read_plugin_directory()
     $classname = str_replace('plugin.', '', $classfile);
     $classname = str_replace('.php', '', $classname);
 
-    $plugin_id   = "return _rex488_content_plugin_" . $classname . '::read_id();';
-    $plugin_name = "return _rex488_content_plugin_" . $classname . '::read_name();';
+    $plugin_id   = call_user_func(array('_rex488_content_plugin_'.$classname, 'read_id'));
+    $plugin_name = call_user_func(array('_rex488_content_plugin_'.$classname, 'read_name'));
 
-    $REX['ADDON']['rexblog']['plugins'][eval($plugin_id)] = eval($plugin_name);
-
+    $REX['ADDON']['rexblog']['plugins'][$plugin_id] = $plugin_name;
   }
 
   asort($REX['ADDON']['rexblog']['plugins']);

@@ -49,8 +49,8 @@
             </div>
             <div class="rex488-form-row">
               <p class="rex488-form-text">
-                <input id="_rex488_permanent_link_readonly" name="_rex488_permanent_link_readonly" type="text" readonly="readonly" class="rex488-form-text" value="<?php echo $article['article_permlink']; ?>.html" />
-                <input id="_rex488_permanent_link" name="_rex488_permanent_link" type="text" class="rex488-form-text" value="<?php echo $article['article_permlink']; ?>" />
+                <input id="_rex488_permanent_link_readonly" name="_rex488_permanent_link_readonly" type="text" readonly="readonly" class="rex488-form-text" value="<?php echo htmlspecialchars($article['article_permlink']); ?>.html" />
+                <input id="_rex488_permanent_link" name="_rex488_permanent_link" type="text" class="rex488-form-text" value="<?php echo htmlspecialchars($article['article_permlink']); ?>" />
               </p>
             </div>
 
@@ -59,7 +59,7 @@
             </div>
             <div class="rex488-form-row">
               <p class="rex488-form-textarea">
-                <textarea id="_rex488_metadata_keywords" name="_rex488_metadata_keywords" class="rex488-form-textarea" rows="5" cols="10"><?php echo $article['keywords']; ?></textarea>
+                <textarea id="_rex488_metadata_keywords" name="_rex488_metadata_keywords" class="rex488-form-textarea" rows="5" cols="10"><?php echo htmlspecialchars($article['keywords']); ?></textarea>
               </p>
             </div>
 
@@ -68,7 +68,7 @@
             </div>
             <div class="rex488-form-row">
               <p class="rex488-form-textarea">
-                <textarea id="_rex488_metadata_description" name="_rex488_metadata_description" class="rex488-form-textarea" rows="5" cols="10"><?php echo $article['description']; ?></textarea>
+                <textarea id="_rex488_metadata_description" name="_rex488_metadata_description" class="rex488-form-textarea" rows="5" cols="10"><?php echo htmlspecialchars($article['description']); ?></textarea>
               </p>
             </div>
 
@@ -81,7 +81,7 @@
             </div>
             <div class="rex488-form-row">
               <p class="rex488-form-textarea">
-                <textarea id="rex488_meta_trackbacks" name="rex488_meta_trackbacks" class="rex488-form-textarea" rows="5" cols="10"><?php echo $article['article_trackbacks']; ?></textarea>
+                <textarea id="rex488_meta_trackbacks" name="rex488_meta_trackbacks" class="rex488-form-textarea" rows="5" cols="10"><?php echo htmlspecialchars($article['article_trackbacks']); ?></textarea>
                 <span class="rex488-form-notice">Trackbacks müssen durch Leerzeichen getrennt werden.</span>
               </p>
             </div>
@@ -95,7 +95,7 @@
             </div>
             <div class="rex488-form-row">
               <p class="rex488-form-textarea">
-                <textarea id="rex488_meta_tags" name="rex488_meta_tags" class="rex488-form-textarea" rows="5" cols="10"><?php echo $article['article_tags']; ?></textarea>
+                <textarea id="rex488_meta_tags" name="rex488_meta_tags" class="rex488-form-textarea" rows="5" cols="10"><?php echo htmlspecialchars($article['article_tags']); ?></textarea>
                 <span class="rex488-form-notice">Schlagwörter müssen durch Leerzeichen getrennt werden.</span>
               </p>
             </div>
@@ -132,7 +132,7 @@
           </div>
           <div class="rex488-form-row">
             <p class="rex488-form-text">
-              <input id="title" name="title" type="text" class="rex488-form-text" value="<?php echo $article['title']; ?>" />
+              <input id="title" name="title" type="text" class="rex488-form-text" value="<?php echo htmlspecialchars($article['title']); ?>" />
             </p>
           </div>
           <!-- /article title -->
@@ -152,7 +152,7 @@
                 foreach($categories_tree as $category_id => $title)
                 {
                   $selected = in_array($category_id, $categories_selected) ? ' selected="selected"' : '';
-                  echo '<option value="' . $category_id . '"' . $selected .' name="category_id">' . $title . '</option>';
+                  echo '<option value="' . $category_id . '"' . $selected .' name="category_id">' . htmlspecialchars($title) . '</option>';
                 }
 
                 ?>
@@ -172,7 +172,7 @@
 
                 foreach($content_plugins as $id => $name)
                 {
-                  echo '<option value="' . $id . '" name="content_plugin_type">' . $name . '</option>';
+                  echo '<option value="' . $id . '" name="content_plugin_type">' . htmlspecialchars($name) . '</option>';
                 }
 
                 ?>

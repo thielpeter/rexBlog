@@ -104,15 +104,15 @@ function _rex488_the_meta_title($prepend = false, $spacer = ' | ')
 {
   if(_rex488_is_article())
   {
-    return _rex488_FrontendMetadataArticle::get_article_title($prepend, $spacer);
+    return htmlspecialchars(_rex488_FrontendMetadataArticle::get_article_title($prepend, $spacer));
   }
   else if(_rex488_is_category())
   {
-    return _rex488_FrontendMetadataCategory::get_category_title($prepend, $spacer);
+    return htmlspecialchars(_rex488_FrontendMetadataCategory::get_category_title($prepend, $spacer));
   }
   else
   {
-    return _rex488_FrontendMetadata::get_blog_title();
+    return htmlspecialchars(_rex488_FrontendMetadata::get_blog_title());
   }
 }
 
@@ -131,15 +131,15 @@ function _rex488_the_meta_keywords()
 {
   if(_rex488_is_article())
   {
-    return _rex488_FrontendMetadataArticle::get_article_keywords();
+    return htmlspecialchars(_rex488_FrontendMetadataArticle::get_article_keywords());
   }
   else if(_rex488_is_category())
   {
-    return _rex488_FrontendMetadataCategory::get_category_keywords();
+    return htmlspecialchars(_rex488_FrontendMetadataCategory::get_category_keywords());
   }
   else
   {
-    return _rex488_FrontendMetadata::get_blog_keywords();
+    return htmlspecialchars(_rex488_FrontendMetadata::get_blog_keywords());
   }
 }
 
@@ -158,15 +158,15 @@ function _rex488_the_meta_description()
 {
   if(_rex488_is_article())
   {
-    return _rex488_FrontendMetadataArticle::get_article_description();
+    return htmlspecialchars(_rex488_FrontendMetadataArticle::get_article_description());
   }
   else if(_rex488_is_category())
   {
-    return _rex488_FrontendMetadataCategory::get_category_description();
+    return htmlspecialchars(_rex488_FrontendMetadataCategory::get_category_description());
   }
   else
   {
-    return _rex488_FrontendMetadata::get_blog_description();
+    return htmlspecialchars(_rex488_FrontendMetadata::get_blog_description());
   }
 }
 

@@ -23,7 +23,7 @@ $breadcrumb = _rex488_BackendCategories::breadcrumb('Startseite');
         <?php
         foreach($breadcrumb as $value)
         {
-          echo '<li> : <a href="index.php?page=rexblog&subpage=categories&parent=' . $value['parent_id'] . '">' . $value['title'] . '</a></li>';
+          echo '<li> : <a href="index.php?page=rexblog&subpage=categories&parent='.$value['parent_id'].'">'.htmlspecialchars($value['title']).'</a></li>';
         }
         ?>
       </ul>
@@ -62,7 +62,7 @@ $breadcrumb = _rex488_BackendCategories::breadcrumb('Startseite');
         <tr id="rex-category-<?php echo $category['id']; ?>">
           <td class="rex-icon"><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>"><span class="rex-i-element rex-i-category"><span class="rex-i-element-text">Editieren</span></span></a></td>
           <td><?php echo $category['id']; ?></td>
-          <td><a href="index.php?page=rexblog&subpage=categories&parent=<?php echo $category['id']; ?>"><?php echo $category['title']; ?></a></td>
+          <td><a href="index.php?page=rexblog&subpage=categories&parent=<?php echo $category['id']; ?>"><?php echo htmlspecialchars($category['title']); ?></a></td>
           <td class="handle"></td>
           <td><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>">ändern</a></td>
           <td><a href="index.php?page=rexblog&subpage=categories&func=delete&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" onclick="return confirm('Sicher löschen?');">löschen</a></td>

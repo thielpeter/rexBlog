@@ -36,7 +36,7 @@
           <div class="rex-form-row">
             <p class="rex-form-text">
               <label for="title">Kategorie</label>
-              <input id="title" name="title" type="text" class="rex-form-text" value="<?php echo $category['title']; ?>" />
+              <input id="title" name="title" type="text" class="rex-form-text" value="<?php echo htmlspecialchars($category['title']); ?>" />
             </p>
           </div>
           <!-- /category name -->
@@ -45,7 +45,7 @@
           <div class="rex-form-row">
             <p class="rex-form-textarea">
               <label for="keywords">Suchbegriffe</label>
-              <textarea id="keywords" name="keywords" class="rex-form-textarea" rows="5"><?php echo $category['keywords']; ?></textarea>
+              <textarea id="keywords" name="keywords" class="rex-form-textarea" rows="5"><?php echo htmlspecialchars($category['keywords']); ?></textarea>
             </p>
           </div>
           <!-- /category keywords -->
@@ -54,7 +54,7 @@
           <div class="rex-form-row">
             <p class="rex-form-textarea">
               <label for="description">Beschreibung</label>
-              <textarea id="description" name="description" class="rex-form-textarea" rows="10"><?php echo $category['description']; ?></textarea>
+              <textarea id="description" name="description" class="rex-form-textarea" rows="10"><?php echo htmlspecialchars($category['description']); ?></textarea>
             </p>
           </div>
           <!-- /category description -->
