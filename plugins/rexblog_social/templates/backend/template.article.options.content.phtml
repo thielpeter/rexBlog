@@ -1,0 +1,32 @@
+<?php
+
+/**
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ *
+ * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
+ * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
+ * folgenden Web-Adressen eingesehen werden.
+ *
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://de.wikipedia.org/wiki/MIT-Lizenz
+ */
+
+?>
+<div class="rex488_meta_social rex488_extra_settings">
+  <div class="rex-content-editmode-module-name">
+    <h3 class="rex-hl4">Social Links</h3>
+  </div>
+  <div class="rex488-form-row">
+    <p class="rex488-form-textarea">
+      <label class="rex488-form-label rex488-form-first">Social Links</label>
+      <select id="rex721_meta_social" name="rex721_meta_social[]" class="rex488-form-select" size="10" multiple="multiple">
+        <?php
+
+          echo _rex721_BackendSocial::_rex721_read_social_vendors();
+
+        ?>
+      </select>
+      <span class="rex488-form-notice">Mehrfachauswahl mit gedrückter STRG Taste möglich.</span>
+    </p>
+  </div>
+</div>

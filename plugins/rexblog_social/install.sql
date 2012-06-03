@@ -1,0 +1,1 @@
+ALTER TABLE `%TABLE_PREFIX%488_articles` ADD `article_social_links` text character set utf8 NOT NULL;

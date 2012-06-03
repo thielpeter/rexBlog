@@ -1,0 +1,38 @@
+@charset "utf-8";
+/* CSS Document */
+
+div._rex488_comment_form label
+{
+	display:block;
+}
+
+div._rex488_comment_form input[type=text],
+div._rex488_comment_form textarea
+{
+	-moz-border-radius-bottomleft:2px;
+	-moz-border-radius-bottomright:2px;
+	-moz-border-radius-topleft:2px;
+	-moz-border-radius-topright:2px;
+	background:#FEFEEE;
+	border-color:#8E8E8E #E1E1E1 #E1E1E1 #8E8E8E;
+	border-style:solid;
+	border-width:1px;
+  font-family:Verdana, Geneva, sans-serif;
+	font-size:100%;
+	margin:0;
+	padding:2px;
+	width:450px;
+	line-height:140%;
+}
+
+div._rex488_comment_form p.error
+{
+	color:#C66;
+}
+
+div._rex488_comment
+{
+	width:100%;
+	float:left;
+	margin:0 0 20px 0;
+}

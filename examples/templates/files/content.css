@@ -1,0 +1,17 @@
+@charset "utf-8";
+/* CSS Document */
+
+div#_rex488_content
+{
+  float:left;
+  width:720px;
+}
+
+div#_rex488_content p.permlink
+{
+  font-size:15px;
+	background-color:#FF9;
+	padding:2px;
+	float:left;
+	clear:both;
+}

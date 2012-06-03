@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+
+div._rex488_article_overview,
+div._rex488_article_details
+{
+	float:left;
+	margin:0 0 20px 0;
+}
+
+ul._rex488_article_categories
+{
+	float:left;
+	clear:both;
+	list-style:none;
+}
+
+ul._rex488_article_categories li
+{
+	float:left;
+	margin:0 0 0 5px;
+	border-left:1px solid #DDD;
+	padding:0 0 0 5px;
+}
+
+ul._rex488_article_categories li:first-child
+{
+	margin:0;
+	padding:0;
+	border:none;
+}
+
+ul._rex488_article_categories li p
+{
+	margin:0 !important;
+}

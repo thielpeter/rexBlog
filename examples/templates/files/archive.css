@@ -1,0 +1,31 @@
+@charset "utf-8";
+/* CSS Document */
+
+ul#_rex670_archive
+{
+  margin:0 20px 20px 0;
+  float:left;
+  width:180px;
+}
+
+ul#_rex670_archive li
+{
+  list-style:none;
+  font-size:75%;
+  font-weight:normal;
+}
+
+ul#_rex670_archive li a
+{
+	display:block;
+  font-size:12px;
+  font-weight:normal;
+  padding:0;
+	line-height:22px;
+	border-bottom:1px dashed #EAEAEA;
+}
+
+ul#_rex670_archive li a.current
+{
+  font-weight:900;
+}

@@ -1,0 +1,77 @@
+@charset "utf-8";
+/* CSS Document */
+
+*
+{
+	outline:0;
+}
+
+body
+{
+  font-family:Verdana, Geneva, sans-serif;
+}
+
+div#_rex488_wrapper
+{
+  font-size:100%;
+	line-height:22px;
+  padding:20px;
+  width:920px;
+  margin:0 auto;
+}
+
+div#_rex488_wrapper h1
+{
+	font-family:Georgia, "Times New Roman", Times, serif;
+  font-size:30px;
+  font-weight:100;
+  margin:0 0 20px 0;
+	letter-spacing:-0.02em;
+	float:left;
+	clear:both;
+}
+
+div#_rex488_wrapper h2
+{
+  color:#660;
+	font-family:Verdana, Geneva, sans-serif;
+  font-size:12px;
+  font-weight:900;
+  margin:0;
+	float:left;
+	clear:both;
+}
+
+div#_rex488_wrapper p
+{
+  font-size:12px;
+  margin:0 0 10px 0;
+	float:left;
+	clear:both;
+}
+
+div#_rex488_wrapper a
+{
+  color:#660;
+  text-decoration:none;
+}
+
+div#_rex488_wrapper a:hover
+{
+  text-decoration:underline;
+}
+
+div#_rex488_wrapper div.clearfix
+{
+  display:block;
+}
+
+div#_rex488_wrapper div.clearfix:after
+{
+  content:"\0020";
+  display:block;
+  height:0;
+  clear:both;
+  visibility:hidden;
+  overflow:hidden;
+}

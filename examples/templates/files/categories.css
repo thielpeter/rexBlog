@@ -1,0 +1,47 @@
+@charset "utf-8";
+/* CSS Document */
+
+ul#_rex488_categories
+{
+  margin:0 20px 20px 0;
+  float:left;
+  width:180px;
+}
+
+ul#_rex488_categories ul
+{
+}
+
+ul#_rex488_categories li
+{
+  list-style:none;
+  font-size:75%;
+  font-weight:normal;
+}
+
+ul#_rex488_categories li a
+{
+	display:block;
+  font-size:12px;
+  font-weight:normal;
+  padding:0;
+	line-height:22px;
+	border-bottom:1px dashed #EAEAEA;
+}
+
+ul#_rex488_categories li li a
+{
+	padding:0 0 0 20px;
+	line-height:22px;
+}
+
+ul#_rex488_categories li li li a
+{
+	padding:0 0 0 40px;
+	line-height:22px;
+}
+
+ul#_rex488_categories li a.current
+{
+  font-weight:900;
+}
