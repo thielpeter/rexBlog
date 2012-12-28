@@ -23,6 +23,7 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
   protected static $entry_id = 0;
   protected static $next = 0;
   protected static $article_content = '';
+  protected static $article_full_permlink;
 
   /**
    * write
@@ -56,21 +57,8 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
       return $article;
 
-    } else {
-
-      /* fix for backend pagination
-
-
-      self::$next = rex_request('next', 'int');
-
-      $articles = parent::$sql->getArray(
-        sprintf("SELECT * FROM %s ORDER BY %s ASC LIMIT %d, 10",
-          parent::$prefix . '488_articles', 'create_date', self::$next
-        )
-      );
-
-      */
-
+    } else
+    {
       $articles = parent::$sql->getArray(
         sprintf("SELECT * FROM %s ORDER BY %s DESC",
           parent::$prefix . '488_articles', 'create_date'
@@ -131,10 +119,17 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
     $article_meta_settings = serialize($article_meta_settings);
 
     ///////////////////////////////////////////////////////////////////////////
+    // prepare article trackbacks
+
+    $article_trackbacks = rex_request('rex488_meta_trackbacks', 'array');
+    $article_trackbacks = self::stripslashes_deep($article_trackbacks);
+    $article_trackbacks = serialize($article_trackbacks);
+
+    ///////////////////////////////////////////////////////////////////////////
     // prepare article permlink settings
 
-    $permanent_link   = rex_request('_rex488_permanent_link', 'string') == "" ? rex_request('title', 'string') : rex_request('_rex488_permanent_link', 'string');
-    $permanent_link   = strtolower(rex_parse_article_name($permanent_link));
+    $permanent_link = rex_request('_rex488_permanent_link', 'string') == "" ? rex_request('title', 'string') : rex_request('_rex488_permanent_link', 'string');
+    $permanent_link = strtolower(rex_parse_article_name($permanent_link));
 
     if(self::$mode == 'insert')
     {
@@ -145,7 +140,8 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
       parent::$sql->setValue('description' , mysql_real_escape_string(rex_request('_rex488_metadata_description', 'string')));
       parent::$sql->setValue('article_post', mysql_real_escape_string($article_content));
       parent::$sql->setValue('article_tags', mysql_real_escape_string(rex_request('rex488_meta_tags', 'string')));
-      parent::$sql->setValue('article_trackbacks', mysql_real_escape_string(rex_request('rex488_meta_trackbacks', 'string')));
+      parent::$sql->setValue('article_trackbacks', mysql_real_escape_string($article_trackbacks));
+      parent::$sql->setValue('article_trackbacks_excerpt', mysql_real_escape_string(rex_request('rex488_meta_trackbacks_excerpt', 'string')));
       parent::$sql->setValue('article_permlink', $permanent_link);
       parent::$sql->setValue('article_meta_settings', $article_meta_settings);
       parent::$sql->setValue('article_plugin_settings', $article_plugin_settings);
@@ -164,9 +160,20 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
       if(parent::$sql->insert())
       {
-        $article = rex_register_extension_point('REX488_ART_ADDED', parent::$sql, array(
-          'title'         => rex_request('title', 'string'),
-          'article_post'  => mysql_real_escape_string($article_content)
+        $article = rex_register_extension_point('REX488_ARTICLE_ADDED', parent::$sql, array(
+          'title'                      => rex_request('title', 'string'),
+          'categories'                 => $article_categories,
+          'keywords'                   => mysql_real_escape_string(rex_request('_rex488_metadata_keywords', 'string')),
+          'description'                => mysql_real_escape_string(rex_request('_rex488_metadata_description', 'string')),
+          'article_post'               => mysql_real_escape_string($article_content),
+          'article_tags'               => mysql_real_escape_string(rex_request('rex488_meta_tags', 'string')),
+          'article_trackbacks'         => mysql_real_escape_string($article_trackbacks),
+          'article_trackbacks_excerpt' => mysql_real_escape_string(rex_request('rex488_meta_trackbacks_excerpt', 'string')),
+          'article_permlink'           => $permanent_link,
+          'article_meta_settings'      => $article_meta_settings,
+          'article_plugin_settings'    => $article_plugin_settings,
+          'create_user'                => parent::$user,
+          'create_date'                => time()
         ));
 
         header('location: index.php?page=' . parent::PAGE . '&subpage=' . self::SUBPAGE . '&parent=' . parent::$parent_id  . '&info=1');
@@ -184,7 +191,8 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
       parent::$sql->setValue('description' , mysql_real_escape_string(rex_request('_rex488_metadata_description', 'string')));
       parent::$sql->setValue('article_post', mysql_real_escape_string($article_content));
       parent::$sql->setValue('article_tags', mysql_real_escape_string(rex_request('rex488_meta_tags', 'string')));
-      parent::$sql->setValue('article_trackbacks', mysql_real_escape_string(rex_request('rex488_meta_trackbacks', 'string')));
+      parent::$sql->setValue('article_trackbacks', mysql_real_escape_string($article_trackbacks));
+      parent::$sql->setValue('article_trackbacks_excerpt', mysql_real_escape_string(rex_request('rex488_meta_trackbacks_excerpt', 'string')));
       parent::$sql->setValue('article_permlink', $permanent_link);
       parent::$sql->setValue('article_meta_settings', $article_meta_settings);
       parent::$sql->setValue('article_plugin_settings', $article_plugin_settings);
@@ -203,10 +211,21 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
       if(parent::$sql->update())
       {
-        $category = rex_register_extension_point('REX488_ART_UPDATED', parent::$sql, array(
-          'id'            => parent::$entry_id,
-          'title'         => rex_request('title', 'string'),
-          'article_post'  => mysql_real_escape_string($article_content)
+        $category = rex_register_extension_point('REX488_ARTICLE_UPDATED', parent::$sql, array(
+          'id'                         => parent::$entry_id,
+          'title'                      => rex_request('title', 'string'),
+          'categories'                 => $article_categories,
+          'keywords'                   => mysql_real_escape_string(rex_request('_rex488_metadata_keywords', 'string')),
+          'description'                => mysql_real_escape_string(rex_request('_rex488_metadata_description', 'string')),
+          'article_post'               => mysql_real_escape_string($article_content),
+          'article_tags'               => mysql_real_escape_string(rex_request('rex488_meta_tags', 'string')),
+          'article_trackbacks'         => mysql_real_escape_string($article_trackbacks),
+          'article_trackbacks_excerpt' => mysql_real_escape_string(rex_request('rex488_meta_trackbacks_excerpt', 'string')),
+          'article_permlink'           => $permanent_link,
+          'article_meta_settings'      => $article_meta_settings,
+          'article_plugin_settings'    => $article_plugin_settings,
+          'update_user'                => parent::$user,
+          'update_date'                => time()
         ));
 
         // redirect to proper page
@@ -225,7 +244,7 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
   private static function stripslashes_deep($value)
   {
     $value = is_array($value) ? array_map(array(self, 'stripslashes_deep'), $value) : stripslashes($value);
-    return $value;
+      return $value;
   }
 
   /**
@@ -246,7 +265,7 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
     if(parent::$sql->delete())
     {
-      $article = rex_register_extension_point('REX488_ART_DELETED', parent::$sql, array(
+      $article = rex_register_extension_point('REX488_ARTICLE_DELETED', parent::$sql, array(
         'id' => parent::$entry_id
       ));
 
@@ -283,7 +302,7 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
     if(parent::$sql->update())
     {
-      $category = rex_register_extension_point('REX488_ART_STATUS', parent::$sql, array(
+      $category = rex_register_extension_point('REX488_ARTICLE_STATUS', parent::$sql, array(
         'id'      => parent::$entry_id,
         'status'  => $visualization
       ));
@@ -317,30 +336,49 @@ abstract class _rex488_BackendArticles extends _rex488_BackendBase implements _r
 
     foreach($article_post as $key => $value) {
       foreach($value as $plugin => $content) {
-        eval("echo _rex488_content_plugin_" . $plugin . "::read_element(" . $key . ", \$content, \$article_plugin_settings[\$key]);");
+        call_user_func(array('_rex488_content_plugin_' . $plugin, 'read_element'), $key, $content, $article_plugin_settings[$key]);
       }
     }
   }
 
   /**
    * load_article_settings
-   *
-   * load article meta settings
-   *
-   * @param
-   * @return
-   * @throws
-   *
+   * 
+   * @param <type> $article_id
+   * @return <type>
    */
 
-  public static function load_article_settings($id)
+  public static function _rex488_load_article_settings($article_id)
   {
-    parent::$sql->setQuery("SELECT article_meta_settings FROM " . parent::$prefix . "488_articles WHERE ( id = '" . $id . "' )");
+    parent::$sql->setQuery("SELECT article_meta_settings FROM " . parent::$prefix . "488_articles WHERE ( id = '" . $article_id . "' )");
 
     $article_meta_settings = parent::$sql->getValue('article_meta_settings');
     $article_meta_settings = unserialize($article_meta_settings);
 
     return $article_meta_settings;
+  }
+
+  /**
+   * _rex488_load_article_trackbacks
+   * 
+   * @param <type> $article_id
+   * @return <type>
+   */
+
+  public static function _rex488_load_article_trackbacks($article_id)
+  {
+    parent::$sql->setQuery("SELECT article_trackbacks FROM " . parent::$prefix . "488_articles WHERE ( id = '" . $article_id . "' )");
+
+    $article_trackbacks = parent::$sql->getValue('article_trackbacks');
+    $article_trackbacks = unserialize($article_trackbacks);
+
+    if(is_array($article_trackbacks) && count($article_trackbacks) > 0) {
+      $article_trackbacks = implode(',', $article_trackbacks);
+    } else {
+      $article_trackbacks = "";
+    }
+
+    return $article_trackbacks;
   }
 }
 ?>

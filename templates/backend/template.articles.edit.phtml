@@ -77,13 +77,79 @@
           <div class="rex488_meta_trackbacks rex488_extra_settings">
 
             <div class="rex-content-editmode-module-name">
-              <h3 class="rex-hl4">Trackbacks</h3>
+              <h3 class="rex-hl4">Trackback hinzufügen</h3>
+            </div>
+            <div class="rex488-form-row">
+              <p class="rex488-form-text">
+                <input id="_rex488_trackbacks_input" name="_rex488_trackbacks_input" type="text" class="rex488-form-text" value="" onkeydown="Rexblog.Article.AddTrackbackUrl(this, event);" />
+              </p>
+            </div>
+
+            <div class="rex488-form-row">
+              <div id="_rex488_trackbacks_in_queue" class="_rex488_trackbacks_queue_list">
+                <ul>
+                  <li class="added"><span>Die Bearbeitungsliste ist leer.</span></li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="rex-content-editmode-module-name">
+              <h3 class="rex-hl4">Trackbacks ausstehend</h3>
+            </div>
+            <div class="rex488-form-row">
+              <div class="_rex488_trackbacks_queue_list">
+                <ul>
+                <?php
+
+                $article_trackbacks = unserialize($article['article_trackbacks']);
+
+                if(is_array($article_trackbacks) && count($article_trackbacks) > 0) {
+                  foreach($article_trackbacks as $article_trackback)
+                  {
+                      echo '<li class="queued"><span>' . htmlspecialchars($article_trackback) . '</span></li><input type="hidden" value="' . htmlspecialchars($article_trackback) . '" name="rex488_meta_trackbacks[]" />';
+                  }
+                } else {
+                  echo '<li class="queued"><span>Keine Trackbacks in der Queue vorhanden.</span></li>';
+                }
+
+                ?>
+                </ul>
+              </div>
+           </div>
+
+           <div class="rex-content-editmode-module-name">
+              <h3 class="rex-hl4">Trackbacks bearbeitet</h3>
+            </div>
+            <div class="rex488-form-row">
+              <div class="_rex488_trackbacks_queue_list">
+                <ul>
+                <?php
+
+                $article_trackbacks_send = unserialize($article['article_trackbacks_send']);
+
+                if(is_array($article_trackbacks_send) && count($article_trackbacks_send) > 0 && !empty($article_trackbacks_send[0])) {
+                  foreach($article_trackbacks_send as $trackback_send)
+                  {
+                    $response_class = ((int) $trackback_send['response'] === 1) ? ' success' : ' error';
+                    echo '<li class="approved' . $response_class . '"><span>' . htmlspecialchars($trackback_send['trackback']) . '</span></li>';
+                  }
+                } else {
+                  echo '<li class="approved"><span>Für diesen Artikel wurden noch keine Trackbacks bearbeitet.</span></li>';
+                }
+
+                ?>
+                </ul>
+              </div>
+            </div>
+
+             <div class="rex-content-editmode-module-name">
+              <h3 class="rex-hl4">Trackback Excerpt</h3>
             </div>
             <div class="rex488-form-row">
               <p class="rex488-form-textarea">
-                <textarea id="rex488_meta_trackbacks" name="rex488_meta_trackbacks" class="rex488-form-textarea" rows="5" cols="10"><?php echo htmlspecialchars($article['article_trackbacks']); ?></textarea>
-                <span class="rex488-form-notice">Trackbacks müssen durch Leerzeichen getrennt werden.</span>
-              </p>
+                <textarea id="rex488_meta_trackbacks_excerpt" name="rex488_meta_trackbacks_excerpt" class="rex488-form-textarea" rows="5" cols="10"><?php echo htmlspecialchars($article['article_trackbacks_excerpt']); ?></textarea>
+                <span class="rex488-form-notice">Excerpt des Trackbacks für die Übermittlung.</span>
+             </p>
             </div>
 
           </div>
@@ -164,7 +230,7 @@
           <!-- plugin selector -->
           <div class="rex488-form-row rex488-form-plugin-select">
             <p class="rex-form-col-a rex488-form-select rex488-form-plugin-select">
-              <select name="_rex488_content_plugins" size="1" class="rex488-form-select" onchange="Rexblog.Article.AddSlice(this); return false;" id="_rex488_content_plugins">
+              <select name="_rex488_content_plugins" size="1" class="rex488-form-select" onchange="Rexblog.Article.AddSlice(this);" id="_rex488_content_plugins">
                 <option value="">----------------------------  Plugin hinzufügen</option>
                 <?php
 

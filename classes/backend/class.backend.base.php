@@ -44,7 +44,7 @@ class _rex488_BackendBase
 
   public static function get_instance()
   {
-    if (self::$instance === NULL)
+    if (self::$instance === null)
     {
       self::$instance = new self();
     }
@@ -59,7 +59,7 @@ class _rex488_BackendBase
    *
    */
 
-  private function  __construct()
+  public function  __construct()
   {
     global $REX;
 

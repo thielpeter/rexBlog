@@ -59,6 +59,23 @@ abstract class _rex488_BackendErrorHandling extends _rex488_BackendBase
           3 => '',
           4 => 'Der Status des Artikels konnte nicht geändert werden.'
         )
+      ),
+      'comments' => array(
+        'info' => array(
+          1 => '',
+          2 => '',
+          3 => 'Der Kommentar wurde erfolgreich gelöscht.',
+          4 => 'Der Status des Kommentars wurde erfolgreich geändert.',
+          5 => 'Die Eingabe wurde erfolgreich abgebrochen.',
+          6 => 'Der Kommentar wurde erfolgreich bearbeitet.',
+          7 => 'Die Kommentare wurden erfolgreich bearbeitet.'
+        ),
+        'warning' => array(
+          1 => '',
+          2 => '',
+          3 => '',
+          4 => 'Der Status des Kommentars konnte nicht geändert werden.'
+        )
       )
 
     );

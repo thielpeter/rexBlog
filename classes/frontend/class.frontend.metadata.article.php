@@ -29,7 +29,7 @@ abstract class _rex488_FrontendMetadataArticle extends _rex488_FrontendMetadata
 
   public static function get_article_title($prepend, $spacer)
   {
-    self::$article_title = parent::$article_path[parent::$article_id]['title'];
+    self::$article_title = parent::$article_cache_pathlist[parent::$article_id]['title'];
 
     if($prepend === true) {
       self::$article_title = parent::get_blog_title() . $spacer . self::$article_title;
@@ -50,7 +50,7 @@ abstract class _rex488_FrontendMetadataArticle extends _rex488_FrontendMetadata
 
   public static function get_article_keywords()
   {
-    self::$article_keywords = parent::$article_path[parent::$article_id]['keywords'];
+    self::$article_keywords = parent::$article_cache_pathlist[parent::$article_id]['keywords'];
 
     if(empty(self::$article_keywords)) {
       self::$article_keywords = parent::get_blog_keywords();
@@ -71,7 +71,7 @@ abstract class _rex488_FrontendMetadataArticle extends _rex488_FrontendMetadata
 
   public static function get_article_description()
   {
-    self::$article_description = parent::$article_path[parent::$article_id]['description'];
+    self::$article_description = parent::$article_cache_pathlist[parent::$article_id]['description'];
 
     if(empty(self::$article_description)) {
       self::$article_description = parent::get_blog_description();

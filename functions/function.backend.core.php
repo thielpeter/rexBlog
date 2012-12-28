@@ -11,27 +11,33 @@
  * http://de.wikipedia.org/wiki/MIT-Lizenz 
  */
 
-function _rex488_add_pageheader()
+function _rex488_add_pageheader($params)
 {
   ///////////////////////////////////////////////////////////////////////////
   // define subpage for filehandling
   
   $subpage          = rex_request('subpage', 'string');
-  $subpage_filename = !in_array($subpage, array('articles', 'categories')) ? 'categories' : $subpage;
+  $subpage_filename = !in_array($subpage, array('articles', 'categories', 'comments')) ? 'categories' : $subpage;
   
   ///////////////////////////////////////////////////////////////////////////
   // create pageheader injection
   
-  $page_header = "\n";
-  $page_header .= '<link rel="stylesheet" type="text/css" href="include/addons/rexblog/files/css/' . $subpage_filename . '.css" />' . "\n";
-  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.tablednd.js"></script>' . "\n";
-  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.validate.pack.js"></script>' . "\n";
-  $page_header .= '<script type="text/javascript" src="include/addons/rexblog/files/js/' . $subpage_filename . '.js"></script>' . "\n";
+  $content = "\n";
+  $content .= '<link rel="stylesheet" type="text/css" href="include/addons/rexblog/files/css/' . $subpage_filename . '.css" />' . "\n";
+  $content .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.tablednd.js"></script>' . "\n";
+  $content .= '<script type="text/javascript" src="include/addons/rexblog/files/js/jquery.validate.pack.js"></script>' . "\n";
+  $content .= '<script type="text/javascript" src="include/addons/rexblog/files/js/' . $subpage_filename . '.js"></script>' . "\n";
 
   ///////////////////////////////////////////////////////////////////////////
   // create pageheader injection
-  
+
+  $page_header = str_replace('</head>', $content . '</head>', $params['subject']);
+
+  ///////////////////////////////////////////////////////////////////////////
+  // return pageheader injection
+
   return $page_header;
+  
 }
 
 function _rex488_read_plugin_directory()
@@ -66,66 +72,40 @@ rex_register_extension('ALL_GENERATED', '_rex488_write_cache_all');
 
 // category extension points
 
-rex_register_extension('REX488_CAT_ADDED', '_rex488_write_cache_all');
-rex_register_extension('REX488_CAT_PRIORITY', '_rex488_write_cache_all');
-rex_register_extension('REX488_CAT_UPDATED', '_rex488_write_cache_all');
-rex_register_extension('REX488_CAT_DELETED', '_rex488_write_cache_all');
-rex_register_extension('REX488_CAT_STATUS', '_rex488_write_cache_all');
+rex_register_extension('REX488_CATEGORY_ADDED', '_rex488_write_cache_category');
+rex_register_extension('REX488_CATEGORY_PRIORITY', '_rex488_write_cache_category');
+rex_register_extension('REX488_CATEGORY_UPDATED', '_rex488_write_cache_category');
+rex_register_extension('REX488_CATEGORY_DELETED', '_rex488_write_cache_category');
+rex_register_extension('REX488_CATEGORY_STATUS', '_rex488_write_cache_category');
 
 // article extension points
 
-rex_register_extension('REX488_ART_ADDED', '_rex488_write_cache_all');
-rex_register_extension('REX488_ART_UPDATED', '_rex488_write_cache_all');
-rex_register_extension('REX488_ART_DELETED', '_rex488_write_cache_all');
-rex_register_extension('REX488_ART_STATUS', '_rex488_write_cache_all');
+rex_register_extension('REX488_ARTICLE_ADDED', '_rex488_write_cache_article');
+rex_register_extension('REX488_ARTICLE_UPDATED', '_rex488_write_cache_article');
+rex_register_extension('REX488_ARTICLE_DELETED', '_rex488_write_cache_article');
+rex_register_extension('REX488_ARTICLE_STATUS', '_rex488_write_cache_article');
 
 function _rex488_write_cache_all() {
   _rex488_BackendBase::get_instance();
   _rex488_BackendCache::write_category_cache();
   _rex488_BackendCache::write_article_cache();
   _rex488_BackendCache::write_article_pathlist();
-  _rex488_BackendCache::write_archive_pathlist();
+}
+
+function _rex488_write_cache_category() {
+  _rex488_BackendBase::get_instance();
+  _rex488_BackendCache::write_category_cache();
+}
+
+function _rex488_write_cache_article() {
+  _rex488_BackendBase::get_instance();
+  _rex488_BackendCache::write_article_cache();
+  _rex488_BackendCache::write_article_pathlist();
 }
 
 function _rex488_read_content_plugins() {
   global $REX;
-  return $REX['ADDON']['rexblog']['plugins'];
-}
-
-/**
- * _rex488_push_user_page
- *
- * pushed eine subpage eines addons anhand der
- * übergebenen variable den reiter in die
- * hauptstruktur der addon navigation
- *
- * @param string $custom_permission custom permission to push
- * @param string $custom_tile custom title
- */
-
-function _rex488_push_user_page($custom_permission, $custom_title)
-{
-  global $REX;
-
-  preg_match('/(.*)\[(.*)\]/', $custom_permission, $custom_split);
-
-  $pages = array();
-
-  foreach($REX['USER']->pages as $k => $v)
-  {
-    $pages[$k] = $v;
-  }
-
-  unset($pages[$custom_split[1]]);
-
-  $pages[$custom_split[1] . '&subpage=' . $custom_split[2]] = array(
-    0 => $custom_title,
-    1 => 1,
-    2 => 1,
-    3 => ''
-  );
-
-  $REX['USER']->pages = $pages;
+    return $REX['ADDON']['rexblog']['plugins'];
 }
 
 ?>

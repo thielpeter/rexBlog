@@ -99,16 +99,6 @@ if($REX['REDAXO'])
   else
 {
   ///////////////////////////////////////////////////////////////////////////
-  // check for existing tags strength cache file and include
-
-  if(file_exists($REX['INCLUDE_PATH'] . '/generated/files/_rex717_tags.strength.inc.php')) {
-    include $REX['INCLUDE_PATH'] . '/generated/files/_rex717_tags.strength.inc.php';
-      _rex717_FrontendTags::$tags_cache_strength = $REX['ADDON']['rexblog']['tags']['strength'];
-  } else {
-    _rex717_FrontendTags::$tags_cache_strength = array();
-  }
-
-  ///////////////////////////////////////////////////////////////////////////
   // check for existing tags pathlist cache file and include
 
   if(file_exists($REX['INCLUDE_PATH'] . '/generated/files/_rex717_tags.pathlist.inc.php')) {
@@ -117,7 +107,6 @@ if($REX['REDAXO'])
   } else {
     _rex717_FrontendTags::$tags_cache_pathlist = array();
   }
-
   ///////////////////////////////////////////////////////////////////////////
   // Frontend Funktionen inkludieren
 

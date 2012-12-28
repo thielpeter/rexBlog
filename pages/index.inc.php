@@ -17,7 +17,7 @@ if(!rex_request('output', 'boolean'))
 // Title definieren
 
 if(!rex_request('output', 'boolean'))
-  rex_title('rexblog (mercurial repo version ' . $REX['ADDON']['version']['rexblog'] . ')', $REX['ADDON']['rexblog']['SUBPAGES']);
+  rex_title('WAM_Rexblog (mercurial repo version ' . $REX['ADDON']['version']['rexblog'] . ')', $REX['ADDON']['rexblog']['SUBPAGES']);
 
 // Subpages auswerten
 
@@ -28,6 +28,9 @@ switch(rex_request('subpage', 'string'))
     break;
   case 'categories':
     require _rex488_PATH . 'pages/categories.inc.php';
+    break;
+  case 'comments':
+    require _rex488_PATH . 'pages/comments.inc.php';
     break;
   default:
     require _rex488_PATH . 'pages/categories.inc.php';

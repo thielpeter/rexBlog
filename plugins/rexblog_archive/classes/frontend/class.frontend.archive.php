@@ -34,10 +34,8 @@ abstract class _rex670_FrontendArchive extends _rex488_FrontendBase
    * @throws
    */
 
-public static function _rex670_the_archive()
-{
-  if(count(self::$archive_cache_pathlist) > 0) {
-
+  public static function _rex670_the_archive()
+  {
     foreach(self::$archive_cache_pathlist as $key => $value)
     {
       $the_archive_url          = parent::parse_article_resource($value['url']);
@@ -48,13 +46,7 @@ public static function _rex670_the_archive()
     }
 
     return $archive;
-
-  } else {
-
-    return '<li><p>Es sind keine Archiveinträge vorhanden.</p></li>';
-
   }
-}
 
   /**
    * the_archive_overview
@@ -99,19 +91,7 @@ public static function the_archive_overview($params)
         self::$the_archive_post            = unserialize(stripslashes($value['article_post']));
         self::$the_archive_plugin_settings = unserialize(stripslashes($value['article_plugin_settings']));
 
-        rex_register_extension_point('REX488_FRONTEND_ARTICLE_SHOW_BEFORE', '', array(
-          'id' => $value['id'],
-          'title' => self::$the_archive_title,
-          'article_permlink' => self::$the_archive_permlink
-        ));
-
         include _rex670_PATH . 'templates/frontend/template.archive.phtml';
-
-        rex_register_extension_point('REX488_FRONTEND_ARTICLE_SHOW_AFTER', '', array(
-          'id' => $value['id'],
-          'title' => self::$the_archive_title,
-          'article_permlink' => self::$the_archive_permlink
-        ));
       }
     }
   }

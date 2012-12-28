@@ -18,7 +18,7 @@ abstract class _rex488_content_plugin_textfield
 
   public static function read_element($index, $value, $article_plugin_settings)
   {
-    $article_plugin_settings['excerpt'] = (!empty($article_plugin_settings['excerpt']) && $article_plugin_settings['excerpt'] == 'on') ? ' checked="checked"' : '';
+    $article_plugin_settings['excerpt'] = ($article_plugin_settings['excerpt'] == 'on') ? ' checked="checked"' : '';
 
     eval("include _rex488_PATH . 'classes/plugins/templates/backend/template." . self::ID . ".phtml';");
   }

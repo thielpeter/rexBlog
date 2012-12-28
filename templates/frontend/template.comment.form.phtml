@@ -1,0 +1,28 @@
+<div class="_rex488_comment_form">
+  <h1>Kommentar schreiben</h1>
+  <?php
+    _rex488_the_comment_validation();
+  ?>
+  <form action="<?php echo _rex488_the_article_permlink(); ?>#the_comment_form" method="post" id="the_comment_form">
+    <input type="hidden" name="the_comment_article" value="<?php echo _rex488_the_article_id(); ?>"
+    <p>
+      <label for="author">Author *</label>
+      <input type="text" name="the_comment_author" id="author" value="<?php echo _rex488_the_comment_author(); ?>" />
+    </p>
+    <p>
+      <label for="email">E-Mailadresse *</label>
+      <input type="text" name="the_comment_email" id="email" value="<?php echo _rex488_the_comment_email(); ?>" />
+    </p>
+    <p>
+      <label for="website">Homepage (http://)</label>
+      <input type="text" name="the_comment_website" id="website" value="<?php echo _rex488_the_comment_website(); ?>" />
+    </p>
+    <p>
+      <label for="comment">Kommentar *</label>
+      <textarea name="the_comment_comment" id="comment" rows="10" cols="5"><?php echo _rex488_the_comment_comment(); ?></textarea>
+    </p>
+    <p>
+      <input type="submit" name="submit" value="Kommentar absenden" />
+    </p>
+  </form>
+</div>

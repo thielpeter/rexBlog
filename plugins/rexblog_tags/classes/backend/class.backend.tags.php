@@ -16,10 +16,10 @@ abstract class _rex717_BackendTags extends _rex488_BackendBase
   private static $the_article_tags = array();
 
   /**
-   * write_tags_strength
+   * write_tags_pathlist
    */
 
-  public static function _rex717_write_tags_strength()
+  public static function write_tags_pathlist()
   {
     $query = sprintf("SELECT %s FROM %s WHERE %s ORDER BY %s",
              "id, article_tags",
@@ -33,7 +33,7 @@ abstract class _rex717_BackendTags extends _rex488_BackendBase
     // create cache file header
 
     $content = "<?php\n\n";
-    $content .= "\$REX['ADDON']['rexblog']['tags']['strength'] = array (";
+    $content .= "\$REX['ADDON']['rexblog']['tags']['pathlist'] = array (";
 
     ///////////////////////////////////////////////////////////////////////////
     // loop through tags
@@ -90,92 +90,12 @@ abstract class _rex717_BackendTags extends _rex488_BackendBase
     ///////////////////////////////////////////////////////////////////////////
     // assign path for cache file
 
-    $file = parent::$include_path . '/generated/files/_rex717_tags.strength.inc.php';
-
-    ///////////////////////////////////////////////////////////////////////////
-    // write cache file
-
-    rex_put_file_contents($file, $content);
-  }
-
-  /**
-   * _rex717_write_tags_pathlist
-   */
-
-  public static function _rex717_write_tags_pathlist()
-  {
-    $query = sprintf("SELECT %s FROM %s WHERE %s ORDER BY %s",
-             "id, article_tags",
-             parent::$prefix . "488_articles",
-             "( status = '1')",
-             "id DESC");
-
-    $tags = parent::$sql->getArray($query);
-
-    ///////////////////////////////////////////////////////////////////////////
-    // create cache file header
-
-    $content = "<?php\n\n";
-    $content .= "\$REX['ADDON']['rexblog']['tags']['pathlist'] = array (";
-
-    foreach($tags as $key => $value)
-    {
-      $content .= $value['id'] . " => '" . $value['article_tags'] . "',";
-    }
-
-    $content .= ");\n";
-    $content .= "\n?>";
-
-    ///////////////////////////////////////////////////////////////////////////
-    // assign path for cache file
-
     $file = parent::$include_path . '/generated/files/_rex717_tags.pathlist.inc.php';
 
     ///////////////////////////////////////////////////////////////////////////
     // write cache file
 
     rex_put_file_contents($file, $content);
-  }
-
-  /**
-   * _rex717_write_tab_content
-   *
-   * @param <type> $params
-   */
-
-  public static function _rex717_write_tab_content($params)
-  {
-    $article_id = $params['id'];
-    $tags       = strtolower(rex_request('rex717_meta_tags', 'string'));
-
-    parent::$sql->setQuery(
-      sprintf("UPDATE %s SET %s WHERE ( %s )",
-        parent::$prefix . "488_articles",
-        "article_tags = '" . $tags . "'",
-        "id = '" . $article_id . "'"
-      )
-    );
-  }
-
-  /**
-   * _rex717_read_tab_content
-   *
-   * @return <type>
-   */
-
-  public static function _rex717_read_tab_content()
-  {
-    if((boolean) parent::$entry_id  !== false) {
-      parent::$sql->setQuery(
-        sprintf("SELECT %s FROM %s WHERE ( %s )",
-          "article_tags",
-          parent::$prefix . "488_articles",
-          "id = '" . parent::$entry_id . "'"
-        )
-      );
-
-      return parent::$sql->getValue('article_tags');
-    }
   }
 }
 ?>

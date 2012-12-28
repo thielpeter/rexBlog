@@ -1,4 +1,4 @@
- <?php
+<?php
 
 /**
  * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
@@ -11,14 +11,7 @@
  * http://de.wikipedia.org/wiki/MIT-Lizenz
  */
 
-function _rex721_append_social_links($params)
-{
-  return _rex721_FrontendSocial::_rex721_read_social_link($params);
+abstract class _rex488_BackendTrackback extends _rex488_BackendBase
+{  
 }
-
-function _rex721_the_social_links()
-{
-  return _rex721_FrontendSocial::_rex721_the_social_links();
-}
-
 ?>

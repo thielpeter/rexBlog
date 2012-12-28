@@ -20,7 +20,7 @@ $lightbox = explode(',', $the_plugin_content[$the_plugin_settings['type']]['fiel
   <?php
 
   foreach($lightbox as $item) {
-    echo '<a href="files/' . $item . '" rel="prettyPhoto[gallery' . $index . ']"><img src="index.php?rex_resize=140a__' . $item . '" /></a>';
+    echo '<a href="/files/' . $item . '" rel="lightbox" class="thumb"><img src="index.php?rex_resize=140a__' . $item . '" /></a>';
   }
 
   ?>

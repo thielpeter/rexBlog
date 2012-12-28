@@ -33,8 +33,8 @@ $breadcrumb = _rex488_BackendCategories::breadcrumb('Startseite');
     <table class="rex-table" id="rex-categories">
       <caption>Liste der Kategorien</caption>
       <colgroup>
-        <col width="40" />
-        <col width="40" />
+        <col width="30" />
+        <col width="30" />
         <col width="*" />
         <col width="40" />
         <col width="50" />
@@ -43,11 +43,11 @@ $breadcrumb = _rex488_BackendCategories::breadcrumb('Startseite');
       </colgroup>
       <thead>
         <tr>
-          <th class="rex-icon"><a class="rex-i-element rex-i-category-add" href="index.php?page=rexblog&subpage=categories&func=add&parent=<?php echo rex_request('parent', 'int'); ?>"><span class="rex-i-element-text">hinzufügen</span></a></th>
+          <th class="rex-icon"><a class="rex-i-element rex-i-category-add _rex488_icon_category-new" href="index.php?page=rexblog&subpage=categories&func=add&parent=<?php echo rex_request('parent', 'int'); ?>"><span class="rex-i-element-text">hinzufügen</span></a></th>
           <th>ID</th>
           <th>Kategorie</th>
           <th>Prio</th>
-          <th colspan="3">Status/Funktion</th>
+          <th colspan="3">Einstellungen</th>
         </tr>
       </thead>
       <tbody>
@@ -60,13 +60,13 @@ $breadcrumb = _rex488_BackendCategories::breadcrumb('Startseite');
             $status_classname = ($category['status'] == 1) ? 'rex-online' : 'rex-offline';
             ?>
         <tr id="rex-category-<?php echo $category['id']; ?>">
-          <td class="rex-icon"><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>"><span class="rex-i-element rex-i-category"><span class="rex-i-element-text">Editieren</span></span></a></td>
+          <td class="rex-icon"><a class="rex-i-element rex-i-category _rex488_icon_category" href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>"><span class="rex-i-element-text">Editieren</span></a></td>
           <td><?php echo $category['id']; ?></td>
           <td><a href="index.php?page=rexblog&subpage=categories&parent=<?php echo $category['id']; ?>"><?php echo htmlspecialchars($category['title']); ?></a></td>
           <td class="handle"></td>
-          <td><a href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>">ändern</a></td>
-          <td><a href="index.php?page=rexblog&subpage=categories&func=delete&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" onclick="return confirm('Sicher löschen?');">löschen</a></td>
-          <td><a href="index.php?page=rexblog&subpage=categories&func=visualize&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" class="<?php echo $status_classname; ?>"><?php echo $status_description; ?></a></td>
+          <td><a class="_rex488_icon_edit" href="index.php?page=rexblog&subpage=categories&func=edit&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>">editieren</a></td>
+          <td><a class="_rex488_icon_delete" href="index.php?page=rexblog&subpage=categories&func=delete&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>" onclick="return confirm('Sicher löschen?');">löschen</a></td>
+          <td><a class="<?php echo $status_classname; ?> _rex488_icon_status" href="index.php?page=rexblog&subpage=categories&func=visualize&id=<?php echo $category['id']; ?>&parent=<?php echo rex_request('parent', 'int'); ?>"><?php echo $status_description; ?></a></td>
         </tr>
             <?php
           }

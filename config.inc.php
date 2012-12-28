@@ -30,13 +30,19 @@ $REX['ADDON']['version']['rexblog']     = file_get_contents(_rex488_PATH . 'vers
 
 $REX['ADDON']['rxid']['rexblog']        = '488';
 $REX['ADDON']['page']['rexblog']        = 'rexblog';
-$REX['ADDON']['name']['rexblog']        = 'rexblog';
+$REX['ADDON']['name']['rexblog']        = 'Rexblog';
 $REX['ADDON']['perm']['rexblog']        = "rexblog[]";
 
 // Addon-Auhtor-Informationen
 
 $REX['ADDON']['author']['rexblog']      = 'mediastuttgart werbeagentur';
 $REX['ADDON']['supportpage']['rexblog'] = 'http://bitbucket.org/mediastuttgart/rexblog/wiki/';
+
+// Barely legal run Configuration
+
+$REX['ADDON']['frontend']['rexblog']['base']     = true;
+$REX['ADDON']['comment']['rexblog']['status']    = 0;
+$REX['ADDON']['comment']['rexblog']['pagelimit'] = 10;
 
 // Addon-Permissions
 
@@ -47,13 +53,18 @@ $REX['PERM'][] = "rexblog[]";
 function _rex488_autoload($params)
 {
   static $classes = array(
+    '_rex488_BackendCategoryInterface'  => 'classes/backend/interface/interface.backend.categories.php',
+    '_rex488_BackendArticleInterface'   => 'classes/backend/interface/interface.backend.articles.php',
+
     '_rex488_BackendBase'               => 'classes/backend/class.backend.base.php',
     '_rex488_BackendCache'              => 'classes/backend/class.backend.cache.php',
     '_rex488_BackendErrorHandling'      => 'classes/backend/class.backend.errorhandling.php',
-    '_rex488_BackendCategoryInterface'  => 'classes/backend/interface/interface.backend.categories.php',
-    '_rex488_BackendArticleInterface'   => 'classes/backend/interface/interface.backend.articles.php',
     '_rex488_BackendCategories'         => 'classes/backend/class.backend.categories.php',
     '_rex488_BackendArticles'           => 'classes/backend/class.backend.articles.php',
+    '_rex488_BackendTrackback'          => 'classes/backend/class.backend.trackback.php',
+    '_rex488_BackendComments'           => 'classes/backend/class.backend.comments.php',
+    '_rex488_BackendCommentsObserver'   => 'classes/backend/class.backend.comments.observer.php',
+    '_rex488_BackendPagination'         => 'classes/backend/class.backend.pagination.php',
     
     '_rex488_FrontendBase'              => 'classes/frontend/class.frontend.base.php',
     '_rex488_FrontendDesignator'        => 'classes/frontend/class.frontend.designator.php',
@@ -63,8 +74,12 @@ function _rex488_autoload($params)
     '_rex488_FrontendMetadataCategory'  => 'classes/frontend/class.frontend.metadata.category.php',
     '_rex488_FrontendMetadataArticle'   => 'classes/frontend/class.frontend.metadata.article.php',
     '_rex488_FrontendArticle'           => 'classes/frontend/class.frontend.article.php',
-    '_rex488_FrontendArchive'           => 'classes/frontend/class.frontend.archive.php',
+    '_rex488_FrontendComment'           => 'classes/frontend/class.frontend.comment.php',
+    '_rex488_FrontendCommentObserver'   => 'classes/frontend/class.frontend.comment.observer.php',
+    '_rex488_FrontendTrackback'         => 'classes/frontend/class.frontend.trackback.php',
     '_rex488_FrontendPagination'        => 'classes/frontend/class.frontend.pagination.php',
+
+    'b8'                                => 'external/b8/b8.php',
   );
 
   $classname = $params['subject'];
@@ -107,8 +122,7 @@ if($REX['REDAXO'])
   $REX['ADDON']['rexblog']['SUBPAGES'] = array(
     array('categories', 'Kategorien', '', array('clang' => $REX['CUR_CLANG'])),
     array('articles', 'Artikel', '', array('clang' => $REX['CUR_CLANG'])),
-    array('comments', 'Kommentare', '', array('clang' => $REX['CUR_CLANG'])),
-    array('settings', 'Einstellungen', '', array('clang' => $REX['CUR_CLANG']))
+    array('comments', 'Kommentare', '', array('clang' => $REX['CUR_CLANG']))
   );
 
   // Backend Funktionen einbinden
@@ -122,16 +136,13 @@ if($REX['REDAXO'])
   // Backend Pageheader einbinden
 
   if(rex_request('page', 'string') == 'rexblog')
-    rex_register_extension('PAGE_HEADER', '_rex488_add_pageheader');
+    rex_register_extension('OUTPUT_FILTER', '_rex488_add_pageheader');
 
 }
   else
 {
-  // Frontend Extension Points setzten
-    
-  rex_register_extension('REX488_SET_BASE', '_rex488_frontend_setbase');
-
   // Frontend Funktionen inkludieren
 
   require dirname(__FILE__) . '/functions/function.frontend.core.php';
 }
+?>

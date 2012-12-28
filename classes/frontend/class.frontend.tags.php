@@ -11,6 +11,9 @@
  * http://de.wikipedia.org/wiki/MIT-Lizenz
  */
 
-$REX['ADDON']['install']['rexblog_social'] = false;
+abstract class _rex488_FrontendTags extends _rex488_FrontendBase
+{
+  
+}
 
 ?>

@@ -37,7 +37,7 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
 
     // loop through the category pathlist
 
-    foreach(parent::$category_path as $key => $value)
+    foreach(parent::$category_cache as $key => $value)
     {
       if($value['parent_id'] === 0 && $value['status'] == '1')
       {
@@ -92,7 +92,7 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
   {
     self::$categories .=  '<ul>' . "\n";
 
-    foreach(parent::$category_path as $key => $value)
+    foreach(parent::$category_cache as $key => $value)
     {
       if($value['parent_id'] == $id && $value['status'] == '1')
       {
@@ -135,7 +135,7 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
 
   private static function get_parents($id)
   {
-    foreach(parent::$category_path as $key => $value)
+    foreach(parent::$category_cache as $key => $value)
     {
       if($key == $id)
       {
@@ -164,6 +164,31 @@ abstract class _rex488_FrontendCategories extends _rex488_FrontendBase
     parent::$sql->setQuery("SELECT * FROM " . parent::$prefix . "488_articles WHERE ( FIND_IN_SET(" . $category_id . ", REPLACE(categories, ',', ',')) AND status = '1' )");
     return parent::$sql->getRows();
   }
+
+  /**
+   * get_category_title_by_id
+   *
+   * @param <type> $category_id
+   * @return <type>
+   */
+
+  public static function get_category_title_by_id($category_id)
+  {
+    return parent::$category_cache[$category_id]['title'];
+  }
+
+  /**
+   * get_category_permlink_by_id
+   *
+   * @param <type> $category_id
+   * @return <type>
+   */
+
+  public static function get_category_permlink_by_id($category_id)
+  {
+    return parent::$category_cache[$category_id]['url'];
+  }
+
 }
 
 ?>

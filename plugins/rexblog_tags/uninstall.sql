@@ -1,1 +1,0 @@
-ALTER TABLE `%TABLE_PREFIX%488_articles` DROP `article_tags`;

@@ -29,12 +29,18 @@ $REX['ADDON']['version']['rexblog_archive'] = file_get_contents(_rex670_PATH . '
 $REX['ADDON']['rxid']['rexblog_archive'] = '670';
 $REX['ADDON']['page']['rexblog_archive'] = 'rexblog_archive';
 $REX['ADDON']['name']['rexblog_archive'] = 'WAM_Rexblog_Archive';
+$REX['ADDON']['perm']['rexblog_archive'] = "rexblog_archive[]";
 
 ///////////////////////////////////////////////////////////////////////////
 // Addon-Auhtor-Informationen
 
 $REX['ADDON']['author']['rexblog_archive']      = 'mediastuttgart werbeagentur';
 $REX['ADDON']['supportpage']['rexblog_archive'] = 'http://bitbucket.org/mediastuttgart/rexblog/wiki/';
+
+///////////////////////////////////////////////////////////////////////////
+// Addon-Permissions
+
+$REX['PERM'][] = "rexblog_archive[]";
 
 ///////////////////////////////////////////////////////////////////////////
 // Autoload für Klassen

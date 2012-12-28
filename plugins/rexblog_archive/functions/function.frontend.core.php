@@ -15,7 +15,7 @@ function _rex670_frontend_vendor($params)
     ///////////////////////////////////////////////////////////////////////////
     // register archive extension output function
 
-    rex_register_extension('REX488_FRONTEND_CONTENT_VENDOR', array(_rex670_FrontendArchive, 'the_archive_overview'));
+    rex_register_extension('REX488_ALTERNATE_CONTENT', array(_rex670_FrontendArchive, 'the_archive_overview'));
 
     ///////////////////////////////////////////////////////////////////////////
     // and set additional url params to out base class

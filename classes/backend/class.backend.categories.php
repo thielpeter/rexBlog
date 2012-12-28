@@ -114,7 +114,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
       if(parent::$sql->update())
       {
-        $category = rex_register_extension_point('REX488_CAT_ADDED', parent::$sql, array(
+        $category = rex_register_extension_point('REX488_CATEGORY_ADDED', parent::$sql, array(
           'id'          => $category_id,
           'category_id' => $category_id,
           'clang'       => 0,
@@ -140,7 +140,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
       if(parent::$sql->update())
       {
-        $category = rex_register_extension_point('REX488_CAT_UPDATED', parent::$sql, array(
+        $category = rex_register_extension_point('REX488_CATEGORY_UPDATED', parent::$sql, array(
           'category_id' => parent::$entry_id,
           'title'       => rex_request('title', 'string'),
           'keywords'    => rex_request('keywords', 'string'),
@@ -182,7 +182,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
       parent::$sql->update();
     }
 
-    $category = rex_register_extension_point('REX488_CAT_PRIORITY', parent::$sql, array(
+    $category = rex_register_extension_point('REX488_CATEGORY_PRIORITY', parent::$sql, array(
       'categories' => $categories
     ));
 
@@ -215,7 +215,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
     if(parent::$sql->delete())
     {
-      $category = rex_register_extension_point('REX488_CAT_DELETED', parent::$sql, array(
+      $category = rex_register_extension_point('REX488_CATEGORY_DELETED', parent::$sql, array(
         'id'          => parent::$entry_id,
         'category_id' => parent::$entry_id
       ));
@@ -252,7 +252,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
 
     if(parent::$sql->update())
     {
-      $category = rex_register_extension_point('REX488_CAT_STATUS', parent::$sql, array(
+      $category = rex_register_extension_point('REX488_CATEGORY_STATUS', parent::$sql, array(
         'id'          => parent::$entry_id,
         'category_id' => parent::$entry_id,
         'status'      => $visualization
@@ -303,7 +303,7 @@ abstract class _rex488_BackendCategories extends _rex488_BackendBase implements 
     $categories = parent::$sql->getArray("SELECT title, category_id, parent_id FROM " . parent::$prefix . "488_categories WHERE ( parent_id = '" . $id . "' ) ");
 
     if($id > 0)
-      $spacer = $spacer . "&nbsp;&nbsp;&nbsp;";
+      $spacer = $spacer . "   ";
 
     foreach($categories as $key => $value) {
       self::$categories[$value['category_id']] = $spacer . $value['title'];

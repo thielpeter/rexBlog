@@ -1,0 +1,209 @@
+<?php
+
+/**
+ * Copyright (c) 2010, mediastuttgart werbeagentur, http://www.mediastuttgart.de
+ *
+ * Diese Datei steht unter der MIT-Lizenz. Der Lizenztext befindet sich in der
+ * beiliegenden Lizenz Datei. Alternativ kann der Lizenztext auch unter
+ * folgenden Web-Adressen eingesehen werden.
+ *
+ * http://www.opensource.org/licenses/mit-license.php
+ * http://de.wikipedia.org/wiki/MIT-Lizenz
+ */
+
+$comments = _rex488_BackendComments::read($REX['ADDON']['comment']['rexblog']['pagelimit'], $next);
+
+?>
+<div class="rex-addon-output-v2">
+  <form action="index.php?page=rexblog&amp;subpage=comments" method="post">
+    <p>
+    <input type="hidden" name="filter" value="<?php echo $filter; ?>" />
+    <input type="hidden" name="next" value="<?php echo $next; ?>" />
+    <input type="hidden" name="type" value="<?php echo $type; ?>" />
+    <input type="hidden" name="multiple" value="multiple" />
+    </p>
+    <div class="rex-toolbar">
+      <div class="rex-toolbar-content">
+        <p>Kommentare anzeigen |
+          <a<?php if($filter == 'open' || $filter == '') echo ' class="_rex488_active"'; ?> href="index.php?page=rexblog&amp;subpage=comments&amp;filter=open&amp;type=<?php echo $type; ?>">ausstehend (<?php echo _rex488_BackendComments::_rex488_comment_count('open'); ?>)</a> |
+          <a<?php if($filter == 'approved') echo ' class="_rex488_active"'; ?> href="index.php?page=rexblog&amp;subpage=comments&amp;filter=approved&amp;type=<?php echo $type; ?>">genehmigt (<?php echo _rex488_BackendComments::_rex488_comment_count('approved'); ?>)</a> |
+          <a<?php if($filter == 'denied') echo ' class="_rex488_active"'; ?> href="index.php?page=rexblog&amp;subpage=comments&amp;filter=denied&amp;type=<?php echo $type; ?>">zurückgewiesen (<?php echo _rex488_BackendComments::_rex488_comment_count('denied'); ?>)</a> |
+          <a<?php if($filter == 'all') echo ' class="_rex488_active"'; ?> href="index.php?page=rexblog&amp;subpage=comments&amp;filter=all&amp;type=<?php echo $type; ?>">alle (<?php echo _rex488_BackendComments::_rex488_comment_count('all'); ?>)</a></p>
+      </div>
+    </div>
+    <?php
+    if($total > $REX['ADDON']['comment']['rexblog']['pagelimit']) {
+    ?>
+    <div class="rex-toolbar rex-toolbar-has-form">
+      <div class="rex-toolbar-content">
+        <div class="rex-form">
+          <div class="rex-fl-lft">
+            <ul class="_rex488_pagination"><?php echo _rex488_BackendPagination::_rex488_show_pagination(); ?></ul>
+          </div>
+        </div>
+        <div class="rex-clearer"></div>
+      </div>
+    </div>
+    <?php
+    }
+    ?>
+    <div class="rex-toolbar rex-toolbar-has-form">
+      <div class="rex-toolbar-content">
+        <div class="rex-form">
+          <div class="rex-fl-lft">
+            <select name="action" class="rex-form-select">
+              <option value="0">-------------  auswählen</option>
+              <?php
+              if($filter == 'open' || $filter == '') {
+              ?>
+              <option value="1">Alle genehmigen</option>
+              <option value="2">Alle zurückweisen</option>
+              <option value="5">Alle löschen</option>
+              <?php
+              } else if($filter == 'approved') {
+              ?>
+              <option value="3">Alle genehmigen widerrufen</option>
+              <option value="5">Alle löschen</option>
+              <?php
+              } else if($filter == 'denied') {
+              ?>
+              <option value="4">Alle zurückweisen widerrufen</option>
+              <option value="5">Alle löschen</option>
+              <?php
+              } else if($filter == 'all') {
+              ?>
+              <option value="5">Alle löschen</option>
+              <?php
+              }
+              ?>
+            </select>
+            <input class="rex-form-submit" type="submit" value="Ausführen" />
+          </div>
+          <div class="rex-fl-rght">
+            <select name="type" class="rex-form-select">
+              <option value="0">-------------  auswählen</option>
+              <option value="all">Alle zeigen</option>
+              <option value="comments"<?php if($type == 'comments') echo ' selected="selected"' ?>>Nur Kommentare zeigen</option>
+              <option value="trackbacks"<?php if($type == 'trackbacks') echo ' selected="selected"' ?>>Nur Trackbacks zeigen</option>
+            </select>
+            <input class="rex-form-submit" type="submit" value="Anzeigen" />
+            <!--
+            <input class="rex-form-submit" type="submit" name="search" value="Suchen" />
+            <input class="rex-form-text" type="text" value="" name="keyword" />
+            -->
+          </div>
+        </div>
+        <div class="rex-clearer"></div>
+      </div>
+    </div>
+    <table class="rex-table rex-table-mrgn" id="rex-comments">
+      <caption>Liste der Kommentare</caption>
+      <colgroup>
+        <col width="40" />
+        <col width="400" />
+        <col width="*" />
+      </colgroup>
+      <thead>
+        <tr>
+          <th><input type="checkbox" onchange="Rexblog.ToggleCommentCheckbox(event);" class="_rex488_checkbox" /></th>
+          <th>Author</th>
+          <th>Einstellungen</th>
+        </tr>
+      </thead>
+      <tbody>
+        <?php
+        if(is_array($comments) && count($comments) > 0)
+        {
+          foreach($comments as $key => $comment)
+          {
+            $status_description  = ($comment['status'] == 1) ? 'online' : 'offline';
+            $status_classname    = ($comment['status'] == 1) ? 'rex-online' : 'rex-offline';
+            $comment_author      = (!empty($comment['comment_website'])) ? '<a href="' . $comment['comment_website'] . '">' . htmlspecialchars($comment['comment_author']) . '</a>' : htmlspecialchars($comment['comment_author']);
+            $comment_author_type = ($comment['comment_type'] == "comment") ? '_rex488_icon_user' : '_rex488_icon_machine';
+            $comment_write_type  = ($comment['comment_type'] == "comment") ? 'Kommentiert' : 'Trackback gesendet';
+
+            switch($comment['rating']) {
+              case '0':
+                $rating_body = ' neutral';
+                $rating_head = ' neutral_info';
+              break;
+              case '1':
+                $rating_body = ' accepted';
+                $rating_head = ' accepted_info';
+              break;
+              case '2':
+                $rating_body = ' declined';
+                $rating_head = ' declined_info';
+              break;
+            }
+        ?>
+        <tr>
+          <td rowspan="2"><input type="checkbox" class="_rex488_checkbox" name="comments[]" value="<?php echo $comment['id']; ?>" /></td>
+          <td class="_rex488_tablecell_info<?php echo $rating_head; ?>">
+            <p class="_rex488_comment_info <?php echo $comment_author_type; ?>"><?php echo $comment_author; ?></p>
+          </td>
+          <td class="_rex488_tablecell_info<?php echo $rating_head; ?>">
+            <ul class="_rex488_comment_action">
+              <?php
+              if((int) $comment['rating'] === 0) {
+              ?>
+              <li><p class="_rex488_comment_info"><a class="_rex488_icon_ham" href="index.php?page=rexblog&amp;subpage=comments&amp;func=ham&amp;id=<?php echo $comment['id']; ?>&amp;filter=<?php echo $filter; ?>&amp;type=<?php echo $type; ?>&amp;next=<?php echo $next; ?>">genehmigen</a>&nbsp;|&nbsp;</p></li>
+              <li><p class="_rex488_comment_info"><a class="_rex488_icon_spam" href="index.php?page=rexblog&amp;subpage=comments&amp;func=spam&amp;id=<?php echo $comment['id']; ?>&amp;filter=<?php echo $filter; ?>&amp;type=<?php echo $type; ?>&amp;next=<?php echo $next; ?>">zurückweisen</a>&nbsp;|&nbsp;</p></li>
+              <?php
+              } else {
+                if((int) $comment['rating'] === 1) {
+              ?>
+              <li><p class="_rex488_comment_info"><a class="_rex488_icon_unham" href="index.php?page=rexblog&amp;subpage=comments&amp;func=unham&amp;id=<?php echo $comment['id']; ?>&amp;filter=<?php echo $filter; ?>&amp;type=<?php echo $type; ?>&amp;next=<?php echo $next; ?>">genehmigen widerrufen</a>&nbsp;|&nbsp;</p></li>
+              <?php
+                } else if((int) $comment['rating'] === 2) {
+              ?>
+              <li><p class="_rex488_comment_info"><a href="index.php?page=rexblog&amp;subpage=comments&amp;func=unspam&amp;id=<?php echo $comment['id']; ?>&amp;filter=<?php echo $filter; ?>&amp;type=<?php echo $type; ?>&amp;next=<?php echo $next; ?>">zurückweisen widerrufen</a>&nbsp;|&nbsp;</p></li>
+              <?php
+                }
+              }
+              ?>
+              <li><p class="_rex488_comment_info"><a class="_rex488_icon_delete" href="index.php?page=rexblog&amp;subpage=comments&amp;func=delete&amp;id=<?php echo $comment['id']; ?>&amp;filter=<?php echo $filter; ?>&amp;type=<?php echo $type; ?>&amp;next=<?php echo $next; ?>" onclick="return confirm('Sicher löschen?');">löschen</a>&nbsp;|&nbsp;</p></li>
+              <li><p class="_rex488_comment_info"><a class="_rex488_icon_status <?php echo $status_classname; ?>" href="index.php?page=rexblog&amp;subpage=comments&amp;func=visualize&amp;id=<?php echo $comment['id']; ?>&amp;filter=<?php echo $filter; ?>&amp;type=<?php echo $type; ?>&amp;next=<?php echo $next; ?>"><?php echo $status_description; ?></a></p></li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="_rex488_tablecell<?php echo $rating_body; ?>" colspan="2">
+            <p class="_rex488_comment">
+              <?php echo htmlspecialchars(strip_tags($comment['comment_comment'])); ?>
+            </p>
+            <p>&mdash;</p>
+            <p>
+              <?php echo $comment_write_type; ?> am <?php echo strftime ('%A, %d.%m.%Y' , $comment['create_date']); ?> unter <a href="index.php?page=rexblog&amp;subpage=articles&amp;func=edit&amp;id=<?php echo _rex488_BackendComments::_rex488_article_id_by_id($comment['comment_article']); ?>"><?php echo _rex488_BackendComments::_rex488_article_title_by_id($comment['comment_article']); ?></a>
+            </p>
+          </td>
+        </tr>
+        <?php
+          }
+        } else
+        {
+        ?>
+        <tr>
+          <td colspan="2" align="center">
+            <p>Es sind keine Einträge vorhanden.</p>
+          </td>
+        </tr>
+        <?php
+        }
+        ?>
+      </tbody>
+    </table>
+    <?php
+    if($total > $REX['ADDON']['comment']['rexblog']['pagelimit']) {
+    ?>
+    <div class="rex-toolbar rex-toolbar-has-form">
+      <div class="rex-toolbar-content">
+        <ul class="_rex488_pagination"><?php echo _rex488_BackendPagination::_rex488_show_pagination(); ?></ul>
+        <div class="rex-clearer"></div>
+      </div>
+    </div>
+    <?php
+    }
+    ?>
+  </form>
+</div>

@@ -72,8 +72,9 @@ switch(rex_request('func', 'string'))
 
   case 'edit':
     $article = _rex488_BackendArticles::read(rex_request('id', 'int'));
-      $article_meta_settings = _rex488_BackendArticles::load_article_settings(rex_request('id', 'int'));
-        include _rex488_PATH . 'templates/backend/template.articles.edit.phtml';
+      $article_meta_settings = _rex488_BackendArticles::_rex488_load_article_settings(rex_request('id', 'int'));
+        $article_trackbacks = _rex488_BackendArticles::_rex488_load_article_trackbacks(rex_request('id', 'int'));
+          include _rex488_PATH . 'templates/backend/template.articles.edit.phtml';
   break;
 
   /**

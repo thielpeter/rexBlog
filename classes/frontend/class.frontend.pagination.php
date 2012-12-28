@@ -21,9 +21,11 @@ abstract class _rex488_FrontendPagination extends _rex488_FrontendBase
     self::$url_prepend_part = substr(parent::$url, 0, strrpos(parent::$url, '/'));
     self::$url_append_part  = substr(parent::$url, strrpos(parent::$url, '/'), strlen(parent::$url));
 
-    if(parent::$url == self::$url_append_part) {
+    if(parent::$url == self::$url_append_part)
+    {
       self::$url_append_part = '/' . self::$url_append_part;
-    } else {
+    } else
+    {
       self::$url_prepend_part = self::$url_prepend_part . '/';
     }
 

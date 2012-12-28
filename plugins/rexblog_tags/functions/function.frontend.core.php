@@ -1,19 +1,6 @@
 <?php
 
 /**
- * _rex717_append_tags
- *
- * @param
- * @return
- * @throws
- */
-
-function _rex717_append_tags($params)
-{
-  return _rex717_FrontendTags::_rex717_append_tags($params);
-}
-
-/**
  * _rex717_url_vendor
  *
  * @param
@@ -28,28 +15,13 @@ function _rex717_frontend_vendor($params)
     ///////////////////////////////////////////////////////////////////////////
     // register archive extension output function
 
-    rex_register_extension('REX488_FRONTEND_CONTENT_VENDOR', array(_rex717_FrontendTags, 'the_tags_overview'));
+    rex_register_extension('REX488_ALTERNATE_CONTENT', array(_rex717_FrontendTags, 'the_tags_overview'));
 
     ///////////////////////////////////////////////////////////////////////////
     // and set additional url params to out base class
 
     _rex488_FrontendBase::$resource_params = array('tags' => $archive_resource[1]);
   }
-}
-
-
-/**
- * _rex717_the_article_tags
- *
- * @param
- * @return
- * @throws
- *
- */
-
-function _rex717_the_article_tags()
-{
-  return _rex717_FrontendTags::_rex717_the_article_tags();
 }
 
 /**
@@ -107,32 +79,5 @@ function _rex717_the_tags_excerpt()
 {
   return _rex717_FrontendTags::_rex717_the_tags_excerpt();
 }
-
-/**
- * _rex717_the_tags_permlink
- *
- * @param
- * @return
- * @throws
- */
-
-function _rex717_the_tags_tag_permlink()
-{
-  return _rex717_FrontendTags::_rex717_the_tags_tag_permlink();
-}
-
-/**
- * _rex717_the_tags_title
- *
- * @param
- * @return
- * @throws
- */
-
-function _rex717_the_tags_tag_title()
-{
-  return _rex717_FrontendTags::_rex717_the_tags_tag_title();
-}
-
 
 ?>

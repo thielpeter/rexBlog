@@ -6,12 +6,6 @@
 $article_settings = _rex488_the_article_settings();
 
 ///////////////////////////////////////////////////////////////////////////
-// handle article settings
-
-$article_settings['comments']   = ($article_settings['comments'] == "1") ? 'zugelassen' : 'nicht zugelassen';
-$article_settings['trackbacks'] = ($article_settings['trackbacks'] == "1") ? 'zugelassen' : 'nicht zugelassen';
-
-///////////////////////////////////////////////////////////////////////////
 // handle article output
 
 if(_rex488_is_category())
@@ -23,6 +17,14 @@ if(_rex488_is_category())
   <p class="permlink">Permanent Link &mdash; <?php echo _rex488_the_article_permlink(); ?></p>
     <?php echo _rex488_the_article_excerpt(); ?>
   <p>Geposted am <?php echo _rex488_the_article_date('d.m.Y'); ?> um <?php echo _rex488_the_article_date('H:i'); ?> Uhr von <?php echo _rex488_the_article_user(); ?></p>
+  <h2>Eingetragen unter</h2>
+  <ul class="_rex488_article_categories">
+    <?php echo _rex488_the_article_categories(); ?>    
+  </ul>
+  <h2>Schlagwörter</h2>
+  <ul class="_rex488_article_tags">
+    <?php echo _rex488_the_article_tags(); ?>
+  </ul>
 </div>
 <?php
 
@@ -35,13 +37,49 @@ if(_rex488_is_category())
   <p class="permlink">Permanent Link &mdash; <?php echo _rex488_the_article_permlink(); ?></p>
   <?php echo _rex488_the_article_post(); ?>
   <p>Geposted am <?php echo _rex488_the_article_date('d.m.Y'); ?> um <?php echo _rex488_the_article_date('H:i'); ?> Uhr von <?php echo _rex488_the_article_user(); ?></p>
-  <p>
-    Kommentare sind &mdash; <b><?php echo $article_settings['comments']; ?></b><br />
-    Trackbacks sind &mdash; <b><?php echo $article_settings['trackbacks']; ?></b>
-  </p>
+  <h2>Eingetragen unter</h2>
+  <ul class="_rex488_article_categories">
+    <?php echo _rex488_the_article_categories(); ?>
+  </ul>
+  <h2>Schlagwörter</h2>
+  <ul class="_rex488_article_tags">
+    <?php echo _rex488_the_article_tags(); ?>
+  </ul>
 </div>
+
+<div class="clearfix"></div>
+
+<h1>Kommentare</h1>
+
+<div class="clearfix"></div>
+
 <?php
 
-}
+  if((boolean) $article_settings['comments'] === true)
+  {
+    echo _rex488_the_article_comments();
+    echo _rex488_the_comment_form();
+  } else {
+    echo'<p>Kommentare sind für diesen Artikel &mdash; nicht erlaubt &mdash;</p>';
+  }
+} else if(_rex488_is_alternate())
+{
 
+?>
+<div class="_rex488_article_overview">
+  <h1><a href="<?php echo _rex488_the_article_permlink(); ?>"><?php echo _rex488_the_article_title(); ?></a></h1>
+  <p class="permlink">Permanent Link &mdash; <?php echo _rex488_the_article_permlink(); ?></p>
+    <?php echo _rex488_the_article_excerpt(); ?>
+  <p>Geposted am <?php echo _rex488_the_article_date('d.m.Y'); ?> um <?php echo _rex488_the_article_date('H:i'); ?> Uhr von <?php echo _rex488_the_article_user(); ?></p>
+  <h2>Eingetragen unter</h2>
+  <ul class="_rex488_article_categories">
+    <?php echo _rex488_the_article_categories(); ?>
+  </ul>
+  <h2>Schlagwörter</h2>
+  <ul class="_rex488_article_tags">
+    <?php echo _rex488_the_article_tags(); ?>
+  </ul>
+</div>
+<?php
+}
 ?>

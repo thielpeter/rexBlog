@@ -1,3 +1,9 @@
+#rex-categories th,
+#rex-categories td
+{
+  line-height:140%;
+}
+
 #rex-categories td.handle
 {
   background:transparent url(../img/priority.gif) center center no-repeat;

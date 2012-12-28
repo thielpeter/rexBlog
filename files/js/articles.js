@@ -162,12 +162,52 @@ Rexblog.Article =
   },
 
   /////////////////////////////////////////////////////////////
+  // function to add trackback to queue
+
+  AddTrackbackUrl: function(element, event)
+  {
+    if(event.keyCode == 13)
+    {
+      if(event.returnValue) event.returnValue = false;
+      if(event.preventDefault) event.preventDefault();
+      
+      var new_trackback_value = jQuery(element).val();
+
+      if(jQuery('#_rex488_trackbacks_in_queue ul').find('li').eq(0).text() == "Die Bearbeitungsliste ist leer.") {
+        jQuery('#_rex488_trackbacks_in_queue ul').find('li').eq(0).remove();
+      }
+
+      jQuery('#_rex488_trackbacks_in_queue ul').append('<li class="added"><input type="hidden" value="' + new_trackback_value + '" name="rex488_meta_trackbacks[]" /><span>' + new_trackback_value + '</span><a href="#" onclick="Rexblog.Article.RemoveTrackbackUrl(this, event);">löschen</a></li>');
+      jQuery(element).val('');
+    }
+
+    return false;
+  },
+
+  /////////////////////////////////////////////////////////////
+  // function to remove trackback from queue
+
+  RemoveTrackbackUrl: function(element, event)
+  {
+    if(event.returnValue) event.returnValue = false;
+    if(event.preventDefault) event.preventDefault();
+   
+   jQuery(element).parent().remove();
+    if(jQuery('#_rex488_trackbacks_in_queue ul').find('li').length == 0) {
+      jQuery('#_rex488_trackbacks_in_queue ul').append('<li><span>Die Bearbeitungsliste ist leer.</span></li>');
+    }
+
+    return false;
+  },
+
+  /////////////////////////////////////////////////////////////
   // function to toggle article extra settings
   
   ToggleExtraSettings: function(element, event)
   {
-    event.preventDefault();
-
+    if(event.returnValue) event.returnValue = false;
+    if(event.preventDefault) event.preventDefault();
+    
     var selector  = jQuery(element).attr('rel');
     var item      = jQuery('div.rex488_meta_' + selector);
 
@@ -222,7 +262,9 @@ Rexblog.Article =
   DeleteSlice : function(element)
   {
     if(confirm('Löschen?'))
-      jQuery(element).parents('div.rex488-form-row').animate({ height : 'toggle', opacity : 0}, 500, function() { jQuery(this).remove(); });
+      jQuery(element).parents('div.rex488-form-row').animate({height : 'toggle', opacity : 0}, 500, function() {jQuery(this).remove();});
+
+    return false;
   },
 
   /////////////////////////////////////////////////////////////
@@ -251,6 +293,8 @@ Rexblog.Article =
         tinyMCE.execCommand('mceAddControl', false, jQuery(this).attr('id'));
       })
     }
+
+    return false;
   },
 
   /////////////////////////////////////////////////////////////
@@ -278,8 +322,9 @@ Rexblog.Article =
       jQuery('textarea.rex488-form-tinymce').each(function(){
         tinyMCE.execCommand('mceAddControl', false, jQuery(this).attr('id'));
       })
-
     }
+
+    return false;
   },
 
   /////////////////////////////////////////////////////////////
@@ -287,8 +332,6 @@ Rexblog.Article =
 
   ForceAsTeaser : function(element)
   {
-    console.log(jQuery('input.rex488-form-checkbox:checked').size());
-    
     if(jQuery('input.rex488-form-checkbox:checked').size() > 1)
     {
       alert('Es kann nur ein Plugin als Einleitung selektiert sein.')

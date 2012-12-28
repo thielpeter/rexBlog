@@ -30,7 +30,7 @@ abstract class _rex488_FrontendMetadataCategory extends _rex488_FrontendMetadata
 
   public static function get_category_title($prepend, $spacer)
   {
-    self::$category_title = parent::$category_path[parent::$category_id]['title'];
+    self::$category_title = parent::$category_cache[parent::$category_id]['title'];
 
     if($prepend === true) {
       self::$category_title = parent::get_blog_title() . $spacer . self::$category_title;
@@ -51,7 +51,7 @@ abstract class _rex488_FrontendMetadataCategory extends _rex488_FrontendMetadata
 
   public static function get_category_keywords()
   {
-    self::$category_keywords = parent::$category_path[parent::$category_id]['keywords'];
+    self::$category_keywords = parent::$category_cache[parent::$category_id]['keywords'];
 
     if(empty(self::$category_keywords)) {
       self::$category_keywords = parent::get_blog_keywords();
@@ -72,7 +72,7 @@ abstract class _rex488_FrontendMetadataCategory extends _rex488_FrontendMetadata
 
   public static function get_category_description()
   {
-    self::$category_description = parent::$category_path[parent::$category_id]['description'];
+    self::$category_description = parent::$category_cache[parent::$category_id]['description'];
 
     if(empty(self::$category_description)) {
       self::$category_description = parent::get_blog_description();
